@@ -1,0 +1,105 @@
+<!-- ProductDetail.svelte -->
+
+<script lang='ts'>
+    import { page } from '$app/stores';
+    import { Socks } from '../products';
+    import Button from "$lib/components/ui/button/button.svelte";
+    import * as Select from "$lib/components/ui/select/index.js";
+  // Get the productId from the URL params
+  let socksId: number = parseInt($page.params.socksId);
+
+    // Ensure productId is within valid range
+ 
+    const quanitity = [
+    { value: "one", label: "1" },
+    { value: "two", label: "2" },
+    { value: "three", label: "3" },
+    { value: "four", label: "4" },
+    { value: "five", label: "5" },
+  ];
+
+    const selectedProduct = Socks[socksId - 1];  
+
+
+</script>
+
+
+<div class="flex flex-col mx-10 md:flex-row md:space-x-8 my-24">
+  <!-- Product Images -->
+  <div class="w-full md:w-1/2">
+    <div class="grid grid-cols-2 gap-4">
+      {#each selectedProduct.urls as item}
+        <div class="relative overflow-hidden rounded-lg aspect-w-1 aspect-h-1">
+          <img
+            src={item}
+            alt={selectedProduct.name}
+            class="object-cover w-full h-full rounded-lg"
+          />
+        </div>
+      {/each}
+    </div>
+  </div>
+
+  <!-- Selected Items -->
+  <div class="w-full md:w-1/2 mt-4 md:mt-0">
+    <div class="p-6 rounded-lg border border-gradient-purple-blue">
+      <h2 class="text-3xl mb-2">{selectedProduct.name}</h2>
+      <div class="mb-2">
+        <p class="text-2xl">{selectedProduct.price}</p>
+      </div>
+
+      <hr class="mb-2" />
+
+      <p class="text-gray-500">{selectedProduct.description}</p>
+      <br />
+      <Select.Root>
+        <Select.Trigger class="w-[80px] border-gray-400">
+          <Select.Value placeholder="Qty 1" />
+        </Select.Trigger>
+        <Select.Content>
+          <Select.Group>
+            {#each quanitity as number}
+              <Select.Item value={number.value} label={number.label}
+                >{number.label}</Select.Item
+              >
+            {/each}
+          </Select.Group>
+        </Select.Content>
+        <Select.Input name="quantity" />
+      </Select.Root>
+    </div>
+    <div>
+      <Button class="lg:w-1/4 md:w-1/2 text-xl my-10">Add to Cart</Button>
+      <Button class="lg:w-1/4 md:w-1/2 text-xl my-10">Buy now</Button>
+      <br />
+      <hr />
+      <br />
+      <h1><span class="font-bold">Sold By:</span> Sock Vibes</h1>
+      <h1><span class="font-bold">Ships From:</span> Sock Vibes</h1>
+      <h1>
+        <span class="font-bold">Store locations:</span>
+        <span class="text-blue-700"> Read more </span>
+      </h1>
+      <h1>
+        <span class="font-bold">Return Policy:</span>
+        <span class="text-blue-700"> Read more </span>
+      </h1>
+      <br />
+      <Button class="bg-gray-100 text-black hover:text-white"
+        >Contact Support</Button
+      >
+    </div>
+  </div>
+</div>
+
+
+<style>
+  .border-gradient-purple-blue {
+    border: 2px solid transparent;
+    border-image: linear-gradient(to right, #ed1b68, #3b82f6) 1;
+  }
+
+  * {
+    font-family: "Jura", sans-serif;
+  }
+</style>
