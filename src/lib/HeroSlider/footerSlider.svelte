@@ -4,6 +4,8 @@
     import * as Carousel from "$lib/components/ui/carousel/";
     import Autoplay from "embla-carousel-autoplay";
     import { braclets } from "../../routes/CheckOut/products/Braclets/products";
+    import { Progress } from "$lib/components/ui/progress/index.js";
+    import { type CarouselAPI } from "$lib/components/ui/carousel/context.js";
 
     
     function navigateToProductDetail(footerId: any) {
@@ -22,10 +24,22 @@
     }
   }
 
+
+  let api: CarouselAPI;
+    let count = 0;
+    let current = 0;
+  
+    $: if (api) {
+      count = api.scrollSnapList().length;
+      current = api.selectedScrollSnap() + 1;
+      api.on("select", () => {
+        current = api.selectedScrollSnap() + 1;
+      });
+    }
   </script>
    
  
-   <Carousel.Root  plugins={[plugin]}
+   <Carousel.Root bind:api plugins={[plugin]}
 
    on:mousenter={plugin.stop}
    on:mouseleave={plugin.reset} 
@@ -59,6 +73,7 @@
     </Carousel.Content>
     <Carousel.Previous />
     <Carousel.Next />
+    <Progress value={current} max={6} class='h-1 my-10' />
   </Carousel.Root>
   
  

@@ -2,9 +2,15 @@
    import Button from "$lib/components/ui/button/button.svelte";
     import * as Card from "$lib/components/ui/card/";
     import * as Carousel from "$lib/components/ui/carousel/";
+
+    
     import Autoplay from "embla-carousel-autoplay";
     import { Socks } from "../../routes/CheckOut/products/Socks/products";
     import { goto } from "$app/navigation";
+    import { type CarouselAPI } from "$lib/components/ui/carousel/context.js";
+    import { Progress } from "$lib/components/ui/progress/index.js";
+
+
 
     function navigateToSocks(socksId: any) {
         goto(`CheckOut/products/Socks/${socksId}`);
@@ -21,10 +27,23 @@
    
   const plugin = Autoplay({ delay: 4000, stopOnInteraction: true });
 
+
+  let api: CarouselAPI;
+    let count = 0;
+    let current = 0;
+  
+    $: if (api) {
+      count = api.scrollSnapList().length;
+      current = api.selectedScrollSnap() + 1;
+      api.on("select", () => {
+        current = api.selectedScrollSnap() + 1;
+      });
+    }
+
   </script>
    
 
-   <Carousel.Root  plugins={[plugin]}
+   <Carousel.Root bind:api  plugins={[plugin]}
 
    on:mousenter={plugin.stop}
    on:mouseleave={plugin.reset} 
@@ -65,7 +84,7 @@
     <Carousel.Previous />
     
     <Carousel.Next />
-    
+    <Progress value={current} max={6} class='h-1 my-10' />
   </Carousel.Root>
 
 
