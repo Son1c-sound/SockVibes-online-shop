@@ -1,24 +1,21 @@
-// products.ts
-
 export const braclets = [
     {
-        id: 1,
-        name: 'Sock',
+        id: 701,
+        name: 'Celestial Charm',
         type: 'image',
         urls: [
             'https://i.ibb.co/8jwXbMQ/New-Project-3-5.png',
             'https://i.ibb.co/0hDXTPC/New-Project-3-6.png',
-            'https://i.ibb.co/x6jXrw1/New-Project-3-1.png',
-            'https://i.ibb.co/xYmCL6t/New-Project-3-3.png'
+            'https://i.ibb.co/0hDXTPC/New-Project-3-6.png',
+            'https://i.ibb.co/8jwXbMQ/New-Project-3-5.png'
         ],
-        price: '11.33$',
-        link: 'https://example.com/link1',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin faucibus magna sed ex ultrices, vitae lacinia lectus consectetur.',
-        status: 'In Stock'
+        price: '13.45$',
+        link: 'https://example.com/new-link1',
+        description: 'A dazzling bracelet that captures the essence of the night sky with its celestial design.'
     },
     {
-        id: 2,
-        name: 'Sock',
+        id: 802,
+        name: 'Radiant Blossom',
         type: 'image',
         urls: [
             'https://i.ibb.co/0hDXTPC/New-Project-3-6.png',
@@ -26,14 +23,13 @@ export const braclets = [
             'https://i.ibb.co/0hDXTPC/New-Project-3-6.png',
             'https://i.ibb.co/0hDXTPC/New-Project-3-6.png'
         ],
-        price: '22.50$',
-        link: 'https://example.com/link2',
-        description: 'Nulla vel sem nec eros eleifend elementum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.',
-        status: 'In Stock'
+        price: '18.75$',
+        link: 'https://example.com/new-link2',
+        description: 'A vibrant bracelet inspired by blooming flowers, adding a touch of nature’s beauty to your style.'
     },
     {
-        id: 3,
-        name: 'Sock',
+        id: 903,
+        name: 'Eternal Echo',
         type: 'image',
         urls: [
             'https://i.ibb.co/0hDXTPC/New-Project-3-6.png',
@@ -41,14 +37,13 @@ export const braclets = [
             'https://i.ibb.co/0hDXTPC/New-Project-3-6.png',
             'https://i.ibb.co/0hDXTPC/New-Project-3-6.png'
         ],
-        price: '15.99$',
-        link: 'https://example.com/link3',
-        description: 'Fusce vel risus sit amet erat tincidunt tincidunt eget nec ante. Donec nec tortor sed elit eleifend vehicula.',
-        status: 'In Stock'
+        price: '20.89$',
+        link: 'https://example.com/new-link3',
+        description: 'A timeless design that echoes elegance and sophistication with every glance.'
     },
     {
-        id: 4,
-        name: 'Sock',
+        id: 1004,
+        name: 'Urban Pulse',
         type: 'image',
         urls: [
             'https://i.ibb.co/x6jXrw1/New-Project-3-1.png',
@@ -56,14 +51,13 @@ export const braclets = [
             'https://i.ibb.co/x6jXrw1/New-Project-3-1.png',
             'https://i.ibb.co/x6jXrw1/New-Project-3-1.png'
         ],
-        price: '19.95$',
-        link: 'https://example.com/link4',
-        description: 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur vel arcu id justo feugiat sagittis.',
-        status: 'In Stock'
+        price: '25.60$',
+        link: 'https://example.com/new-link4',
+        description: 'A modern bracelet that captures the rhythm of the city with its bold and dynamic design.'
     },
     {
-        id: 5,
-        name: 'Sock',
+        id: 1105,
+        name: 'Vintage Elegance',
         type: 'image',
         urls: [
             'https://i.ibb.co/8jwXbMQ/New-Project-3-5.png',
@@ -71,14 +65,13 @@ export const braclets = [
             'https://i.ibb.co/8jwXbMQ/New-Project-3-5.png',
             'https://i.ibb.co/8jwXbMQ/New-Project-3-5.png'
         ],
-        price: '24.99$',
-        link: 'https://example.com/link5',
-        description: 'Nam fermentum nisi nec est molestie, eget egestas nunc auctor. Integer euismod felis non sem rutrum, sit amet hendrerit nunc consectetur.',
-        status: 'In Stock'
+        price: '22.40$',
+        link: 'https://example.com/new-link5',
+        description: 'A classic bracelet with a vintage touch, perfect for those who appreciate timeless beauty.'
     },
     {
-        id: 6,
-        name: 'Sock',
+        id: 1206,
+        name: 'Tropical Flair',
         type: 'image',
         urls: [
             'https://i.ibb.co/xYmCL6t/New-Project-3-3.png',
@@ -86,9 +79,8 @@ export const braclets = [
             'https://i.ibb.co/xYmCL6t/New-Project-3-3.png',
             'https://i.ibb.co/xYmCL6t/New-Project-3-3.png'
         ],
-        price: '18.50$',
-        link: 'https://example.com/link6',
-        description: 'Vivamus tincidunt sapien in lectus tempor, a dapibus risus sagittis. Nunc pulvinar turpis in magna ultricies, eget ultricies nulla placerat.',
-        status: 'In Stock'
+        price: '17.80$',
+        link: 'https://example.com/new-link6',
+        description: 'Infuse your style with a burst of tropical colors and patterns, making every day feel like a vacation.'
     }
 ];

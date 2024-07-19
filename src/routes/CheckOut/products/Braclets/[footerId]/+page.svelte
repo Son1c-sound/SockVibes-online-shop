@@ -11,6 +11,8 @@
   import type { CarouselAPI } from "$lib/components/ui/carousel/context.js";
   import { onMount } from "svelte";
   import { Progress } from "$lib/components/ui/progress/index.js";
+  import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
+    import DropIcon from '../../../../../lib/Icons/dropdwon.svelte'
 
   // Get the productId from the URL params
   const footerId: any = $page.params.footerId;
@@ -38,6 +40,10 @@
       current = api.selectedScrollSnap() + 1;
     });
   }
+
+  let showStatusBar = true;
+  let showActivityBar = false;
+  let showPanel = false;
 </script>
 
 <!-- Checkout.svelte -->
@@ -82,13 +88,28 @@
     </div>
 
   
-
   <!-- Selected Items -->
   <div class="w-full md:w-1/2 mt-4 md:mt-0">
+   
     <div class="p-6 border border-gradient-purple-blue">
+       
       <h2 class="text-3xl mb-2 font-bold">{selectedProduct.name}</h2>
       <div class="mb-2">
         <p class="text-2xl ">{selectedProduct.price}</p>
+        <DropdownMenu.Root>
+            <DropdownMenu.Trigger asChild let:builder>
+              <Button class='bg-white hover:bg-white mx-8 w-10 text-blue-600' builders={[builder]}>Free returns     <DropIcon></DropIcon>
+              </Button>
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Content class="w-56">   
+              <DropdownMenu.Label>Return this item for free: <br> <span class="font-light">We offer easy, convenient returns for any item. <br> <span class="text-blue-500 font-bold"> Read more about our return policy </span>
+               </span>
+                
+            </DropdownMenu.Label>
+
+
+            </DropdownMenu.Content>
+          </DropdownMenu.Root>
       </div>
 
       <hr class="mb-2" />
@@ -123,6 +144,7 @@
       <br />
       <hr />
       <br />
+
       <h1><span class="font-bold">Sold By:</span> Sock Vibes</h1>
       <h1><span class="font-bold">Ships From:</span> Sock Vibes</h1>
       <h1>

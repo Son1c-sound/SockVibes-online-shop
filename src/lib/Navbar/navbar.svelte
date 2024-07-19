@@ -5,7 +5,9 @@
     import CartIc from "./cartIc.svelte";
     import SearchIc from "./searchIc.svelte";
     import { goto } from '$app/navigation'
-    
+
+   
+
     let categories = [
       { name: 'men', link: '/category1' },
       { name: 'Woman', link: '/category2' },
@@ -22,7 +24,7 @@
 
 
     function menucart() {
-        goto ('/Cart/CartMenu')
+        goto ('/Cart')
     }
 </script>
 
@@ -47,7 +49,7 @@
             <button class="md:hidden mx-5" on:click={toggleMobileMenu}>
                 <SearchIc></SearchIc>
             </button>
-            <button class="md:hidden" on:click={toggleMobileMenu}>
+            <button class="md:hidden" on:click={menucart}>
                 <CartIc></CartIc>
 
             </button>

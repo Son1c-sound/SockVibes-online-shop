@@ -3,7 +3,7 @@
      import * as Card from "$lib/components/ui/card/";
      import * as Carousel from "$lib/components/ui/carousel/";
      import Autoplay from "embla-carousel-autoplay";
-     import { Socks } from "../../../../routes/CheckOut/products/Socks/products";
+     import { Socks } from "../../../../routes/CheckOut/products/Socks/store";
      import { goto } from "$app/navigation";
  
      function navigateToSocks(socksId: any) {

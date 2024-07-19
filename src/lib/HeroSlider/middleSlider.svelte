@@ -5,10 +5,11 @@
 
     
     import Autoplay from "embla-carousel-autoplay";
-    import { Socks } from "../../routes/CheckOut/products/Socks/products";
+  
     import { goto } from "$app/navigation";
     import { type CarouselAPI } from "$lib/components/ui/carousel/context.js";
     import { Progress } from "$lib/components/ui/progress/index.js";
+  import { Socks } from "../../routes/CheckOut/products/Socks/product";
 
 
 

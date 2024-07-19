@@ -1,79 +1,162 @@
 <!-- ProductDetail.svelte -->
 
-<script lang='ts'>
-    import { page } from '$app/stores';
-    import { Socks } from '../products';
-    import Button from "$lib/components/ui/button/button.svelte";
-    import * as Select from "$lib/components/ui/select/index.js";
-  // Get the productId from the URL params
-  let socksId: number = parseInt($page.params.socksId);
+<script lang="ts">
+  import { page } from "$app/stores";
+   // Importing products from external file
+  import Button from "$lib/components/ui/button/button.svelte";
+  import * as Select from "$lib/components/ui/select/index.js";
+  import * as Card from "$lib/components/ui/card/index.js";
+  import * as Carousel from "$lib/components/ui/carousel/index.js";
+  import { Progress } from "$lib/components/ui/progress/index.js";
+  import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
+    import DropIcon from '../../../../../lib/Icons/dropdwon.svelte'
+    import type { CarouselAPI } from "$lib/components/ui/carousel/context.js";
+    
+    import { onMount } from 'svelte';
+    import toast, { Toaster } from 'svelte-french-toast';
 
-    // Ensure productId is within valid range
  
-    const quanitity = [
-    { value: "one", label: "1" },
-    { value: "two", label: "2" },
-    { value: "three", label: "3" },
-    { value: "four", label: "4" },
-    { value: "five", label: "5" },
-  ];
-
-    const selectedProduct = Socks[socksId - 1];  
+  import { quantity, Socks } from "../product";
+  import { increment } from "../../fresh/store";
 
 
+  // Get the productId from the URL params
+  const socksId: any = $page.params.socksId;
+
+  // Ensure productId is within valid range
+
+  const selectedProduct = Socks[socksId - 1];
+  const qty = quantity[socksId - 1]
+
+ 
+
+  let api: CarouselAPI;
+  let count = 0;
+  let current = 0;
+
+  $: if (api) {
+    count = api.scrollSnapList().length;
+    current = api.selectedScrollSnap() + 1;
+    api.on("select", () => {
+      current = api.selectedScrollSnap() + 1;
+    });
+  }
+
+
+
+
+  let showStatusBar:boolean = true;
+  let showActivityBar:boolean = false;
+  let showPanel:boolean = false;
+
+  // localstorage test 
+  let selectedQuantity = quantity[0].value;
+  function addToCart() {
+    if (!selectedProduct && !qty ) return; // Check if selectedProduct is defined
+
+    const cartItem = {
+      name: selectedProduct.name,
+      image: selectedProduct.urls[0], 
+      price: selectedProduct.price, 
+      quantity: selectedQuantity
+    };
+
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+    // Add new item to cart
+    cart.push(cartItem);
+    toast.success("Added to Cart")
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    console.log('Cart updated:', cart);
+  }
 </script>
+<Toaster />
 
-
-<div class="flex flex-col mx-10 md:flex-row md:space-x-8 my-24">
-  <!-- Product Images -->
-  <div class="w-full md:w-1/2">
-    <div class="grid grid-cols-2 gap-4">
-      {#each selectedProduct.urls as item}
-        <div class="relative overflow-hidden rounded-lg aspect-w-1 aspect-h-1">
-          <img
-            src={item}
-            alt={selectedProduct.name}
-            class="object-cover w-full h-full rounded-lg"
-          />
-        </div>
-      {/each}
+<!-- Checkout.svelte -->
+<br />
+<br />
+<br />
+<div class="flex flex-col mx-4 md:mx-20 md:flex-row md:space-x-8">
+    <!-- Product Images -->
+    <div class="w-full">
+      <div class="">
+        <Carousel.Root bind:api class="w-full md:w-3/4 mx-auto my-10 md:my-28">
+          <Carousel.Content class="md:-ml-1">
+            <Carousel.Item class="flex-shrink-0 w-full">
+              <Card.Root class="border-none bg-transparent shadow-none">
+                <img src={selectedProduct.urls[0]} alt={selectedProduct.name} class="w-full h-64 object-cover lg:h-1/2">
+              </Card.Root>
+            </Carousel.Item>
+            <Carousel.Item class="flex-shrink-0 w-full">
+              <Card.Root class="border-none bg-transparent shadow-none">
+                <img src={selectedProduct.urls[1]} alt={selectedProduct.name} class="w-full h-64  lg:h-1/2 object-cover">
+              </Card.Root>
+            </Carousel.Item>
+            <Carousel.Item class="flex-shrink-0 w-full">
+              <Card.Root class="border-none bg-transparent shadow-none">
+                <img src={selectedProduct.urls[2]} alt={selectedProduct.name} class="w-full h-64 lg:h-1/2 object-cover">
+              </Card.Root>
+            </Carousel.Item>
+            <Carousel.Item class="flex-shrink-0 w-full">
+              <Card.Root class="border-none bg-transparent shadow-none">
+                <img src={selectedProduct.urls[3]} alt={selectedProduct.name} class="w-full h-64 lg:h-1/2 object-cover">
+              </Card.Root>
+            </Carousel.Item>
+          </Carousel.Content>
+          <div class="my-5  rounded-md ">
+                <h1 class="text-center my-2">{current}</h1>       
+            <Progress value={current} max={4} class='h-1'/>
+          </div>
+        </Carousel.Root>
+      </div>
     </div>
-  </div>
 
+  
   <!-- Selected Items -->
   <div class="w-full md:w-1/2 mt-4 md:mt-0">
-    <div class="p-6 rounded-lg border border-gradient-purple-blue">
-      <h2 class="text-3xl mb-2">{selectedProduct.name}</h2>
+    
+    <div class="p-6 border border-gradient-purple-blue">
+       
+      <h2 class="text-3xl mb-2 font-bold">{selectedProduct.name}</h2>
       <div class="mb-2">
-        <p class="text-2xl">{selectedProduct.price}</p>
+        <p class="text-2xl ">{selectedProduct.price}</p>
+        <DropdownMenu.Root>
+            <DropdownMenu.Trigger asChild let:builder>
+              <Button class='bg-white hover:bg-white mx-8 w-10 text-blue-600' builders={[builder]}>Free returns     <DropIcon></DropIcon>
+              </Button>
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Content class="w-56">   
+              <DropdownMenu.Label>Return this item for free: <br> <span class="font-light">We offer easy, convenient returns for any item. <br> <span class="text-blue-500 font-bold"> Read more about our return policy </span>
+               </span>
+                
+            </DropdownMenu.Label>
+
+
+            </DropdownMenu.Content>
+          </DropdownMenu.Root>
       </div>
 
       <hr class="mb-2" />
 
       <p class="text-gray-500">{selectedProduct.description}</p>
       <br />
-      <Select.Root>
-        <Select.Trigger class="w-[80px] border-gray-400">
-          <Select.Value placeholder="Qty 1" />
-        </Select.Trigger>
-        <Select.Content>
-          <Select.Group>
-            {#each quanitity as number}
-              <Select.Item value={number.value} label={number.label}
-                >{number.label}</Select.Item
-              >
-            {/each}
-          </Select.Group>
-        </Select.Content>
-        <Select.Input name="quantity" />
-      </Select.Root>
+      <h1 class="text-gray-900 my-3 text-md">Qty<select bind:value={selectedQuantity}>
+        {#each quantity as { value, label }}
+          <option value={value}>{label}</option>
+        {/each}
+      </select>
     </div>
     <div>
-      <Button class="lg:w-1/4 md:w-1/2 text-xl my-10">Add to Cart</Button>
-      <Button class="lg:w-1/4 md:w-1/2 text-xl my-10">Buy now</Button>
+      <Button class="w-full bg-blue-600 text-white  my-5 text-md" on:click={addToCart} on:click={increment} >Add to Cart</Button>
+
+      <Button class=" w-full text-md   text-gray-900 bg-yellow-400 hover:text-gray-900 hover:bg-gray-200">Buy now</Button>
+      <br>
       <br />
       <hr />
       <br />
+
       <h1><span class="font-bold">Sold By:</span> Sock Vibes</h1>
       <h1><span class="font-bold">Ships From:</span> Sock Vibes</h1>
       <h1>
@@ -85,21 +168,17 @@
         <span class="text-blue-700"> Read more </span>
       </h1>
       <br />
-      <Button class="bg-gray-100 text-black hover:text-white"
-        >Contact Support</Button
-      >
+
+
     </div>
+
+    <br>
   </div>
 </div>
 
 
 <style>
-  .border-gradient-purple-blue {
-    border: 2px solid transparent;
-    border-image: linear-gradient(to right, #ed1b68, #3b82f6) 1;
-  }
-
   * {
-    font-family: "Jura", sans-serif;
+    font-family: "Inter", sans-serif;
   }
 </style>
