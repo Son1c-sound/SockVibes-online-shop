@@ -71,7 +71,9 @@
     </Carousel.Content>
     <Carousel.Previous />
     <Carousel.Next />
-    <Progress value={current} max={6} class='h-1 my-10' />
+    <div class="border-gray-300 my-9 w-10 mx-auto ">
+    <p class="text-center border-2 rounded-md">{current}</p>
+    </div>
 
   </Carousel.Root>
   

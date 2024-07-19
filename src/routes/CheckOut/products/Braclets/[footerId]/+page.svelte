@@ -9,6 +9,8 @@
   import * as Card from "$lib/components/ui/card/index.js";
   import * as Carousel from "$lib/components/ui/carousel/index.js";
   import type { CarouselAPI } from "$lib/components/ui/carousel/context.js";
+  import { onMount } from "svelte";
+  import { Progress } from "$lib/components/ui/progress/index.js";
 
   // Get the productId from the URL params
   const footerId: any = $page.params.footerId;
@@ -48,7 +50,7 @@
     <!-- Product Images -->
     <div class="w-full">
       <div class="">
-        <Carousel.Root class="w-full md:w-3/4 mx-auto my-10 md:my-28">
+        <Carousel.Root bind:api class="w-full md:w-3/4 mx-auto my-10 md:my-28">
           <Carousel.Content class="md:-ml-1">
             <Carousel.Item class="flex-shrink-0 w-full">
               <Card.Root class="border-none bg-transparent shadow-none">
@@ -71,6 +73,10 @@
               </Card.Root>
             </Carousel.Item>
           </Carousel.Content>
+          <div class="my-5  rounded-md ">
+                <h1 class="text-center my-2">{current}</h1>       
+            <Progress value={current} max={4} class='h-1'/>
+          </div>
         </Carousel.Root>
       </div>
     </div>
@@ -79,7 +85,7 @@
 
   <!-- Selected Items -->
   <div class="w-full md:w-1/2 mt-4 md:mt-0">
-    <div class="p-6 rounded-lg border border-gradient-purple-blue">
+    <div class="p-6 border border-gradient-purple-blue">
       <h2 class="text-3xl mb-2 font-bold">{selectedProduct.name}</h2>
       <div class="mb-2">
         <p class="text-2xl ">{selectedProduct.price}</p>
@@ -89,9 +95,9 @@
 
       <p class="text-gray-500">{selectedProduct.description}</p>
       <br />
-
+      <h1 class="text-green-600 my-3 text-lg">{selectedProduct.status}</h1>
       <Select.Root>
-        <Select.Trigger class="w-[80px] border-gray-400">
+        <Select.Trigger class="w-[80px] border-gray-400">            
           <Select.Value placeholder="Qty 1" />
         </Select.Trigger>
         <Select.Content>
@@ -102,13 +108,18 @@
               >
             {/each}
           </Select.Group>
+     
+
         </Select.Content>
         <Select.Input name="quantity" />
+       
+
       </Select.Root>
     </div>
     <div>
-      <Button class="lg:w-1/3   my-5 text-md">Add to Cart</Button>
-      <Button class=" lg:w-1/3 md:w-1/2 text-md my-5">Buy now</Button>
+      <Button class="w-full bg-blue-600 text-white  my-5 text-md ">Add to Cart</Button>
+      <Button class=" w-full text-md   text-gray-900 bg-yellow-400 hover:text-gray-900 hover:bg-gray-200">Buy now</Button>
+      <br>
       <br />
       <hr />
       <br />

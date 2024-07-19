@@ -13,7 +13,8 @@ export const braclets = [
         ],
         price: '11.33$',
         link: 'https://example.com/link1',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin faucibus magna sed ex ultrices, vitae lacinia lectus consectetur.'
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin faucibus magna sed ex ultrices, vitae lacinia lectus consectetur.',
+        status: 'In Stock'
     },
     {
         id: 2,
@@ -27,7 +28,8 @@ export const braclets = [
         ],
         price: '22.50$',
         link: 'https://example.com/link2',
-        description: 'Nulla vel sem nec eros eleifend elementum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.'
+        description: 'Nulla vel sem nec eros eleifend elementum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.',
+        status: 'In Stock'
     },
     {
         id: 3,
@@ -41,7 +43,8 @@ export const braclets = [
         ],
         price: '15.99$',
         link: 'https://example.com/link3',
-        description: 'Fusce vel risus sit amet erat tincidunt tincidunt eget nec ante. Donec nec tortor sed elit eleifend vehicula.'
+        description: 'Fusce vel risus sit amet erat tincidunt tincidunt eget nec ante. Donec nec tortor sed elit eleifend vehicula.',
+        status: 'In Stock'
     },
     {
         id: 4,
@@ -55,7 +58,8 @@ export const braclets = [
         ],
         price: '19.95$',
         link: 'https://example.com/link4',
-        description: 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur vel arcu id justo feugiat sagittis.'
+        description: 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur vel arcu id justo feugiat sagittis.',
+        status: 'In Stock'
     },
     {
         id: 5,
@@ -69,7 +73,8 @@ export const braclets = [
         ],
         price: '24.99$',
         link: 'https://example.com/link5',
-        description: 'Nam fermentum nisi nec est molestie, eget egestas nunc auctor. Integer euismod felis non sem rutrum, sit amet hendrerit nunc consectetur.'
+        description: 'Nam fermentum nisi nec est molestie, eget egestas nunc auctor. Integer euismod felis non sem rutrum, sit amet hendrerit nunc consectetur.',
+        status: 'In Stock'
     },
     {
         id: 6,
@@ -83,6 +88,7 @@ export const braclets = [
         ],
         price: '18.50$',
         link: 'https://example.com/link6',
-        description: 'Vivamus tincidunt sapien in lectus tempor, a dapibus risus sagittis. Nunc pulvinar turpis in magna ultricies, eget ultricies nulla placerat.'
+        description: 'Vivamus tincidunt sapien in lectus tempor, a dapibus risus sagittis. Nunc pulvinar turpis in magna ultricies, eget ultricies nulla placerat.',
+        status: 'In Stock'
     }
 ];

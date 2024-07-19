@@ -47,8 +47,8 @@
 
    on:mousenter={plugin.stop}
    on:mouseleave={plugin.reset} 
-   class="w-3/4 mx-auto  my-24">
-   <h1 class="text-5xl font-bold text-center mb-10 bg-gradient-to-r from-gray-700 to-blue-500 text-transparent bg-clip-text italic">Popular</h1>
+   class="w-3/4 mx-auto my-5">
+   <h1 class="text-5xl  text-center mb-10 bg-gradient-to-r from-gray-700 to-blue-500 text-transparent bg-clip-text  italic">Popular </h1>
 
   
     <Carousel.Content class="-ml-1">
@@ -84,7 +84,7 @@
     <Carousel.Previous />
     
     <Carousel.Next />
-    <Progress value={current} max={6} class='h-1 my-10' />
+    <Progress value={current} max={4} class='h-1 my-10' />
   </Carousel.Root>
 
 
