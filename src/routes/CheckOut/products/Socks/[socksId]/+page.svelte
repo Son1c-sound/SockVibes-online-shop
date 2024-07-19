@@ -58,7 +58,9 @@
       name: selectedProduct.name,
       image: selectedProduct.urls[0], 
       price: selectedProduct.price, 
-      quantity: selectedQuantity
+      quantity: selectedQuantity,
+      status: selectedProduct.status,
+      description: selectedProduct.description
     };
 
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');

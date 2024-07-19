@@ -8,6 +8,9 @@
         id: number;
         name: string;
         image: string;
+        description: string;
+        status: string;
+        price: string;
     }
 
     let cartItems: CartItem[] = [];
@@ -48,13 +51,32 @@
 <br>
 <br>
 <br>
-{#if cartItems.length > 0}
-    {#each cartItems as item}
-        <p>{item.name}</p>
-        <button on:click={decrement} on:click={() => removeItem(item.id)}>remove</button>
-        <p>Quantity: {item.quantity}</p>
-        <img src="{item.image}" alt="" >
-    {/each}
-{:else}
-    <p>Your cart is empty.</p>
-{/if}
+<div class="p-6 max-w-2xl mx-auto">
+  {#if cartItems.length > 0}
+    <div class="space-y-6">
+      {#each cartItems as item}
+        <div class="flex items-center justify-between p-4 bg-white rounded-lg shadow-lg border border-gray-200">
+          <img src="{item.image}" alt="{item.name}" class="w-24 h-24 object-cover rounded-md border border-gray-300">
+          <div class="flex-1 ml-4">
+            <h3 class="text-lg font-semibold text-gray-800">{item.name}</h3>
+            <p class="text-gray-600">Quantity: {item.quantity}</p>
+            <p class="text-gray-600">Quantity: {item.price}</p>
+            <p class="text-gray-600">Status: <span class="text-green-500">{item.status}</span></p>
+            <p class="text-gray-500 text-sm mt-1">{item.description}</p>
+          </div>
+          <button  on:click={decrement}
+            on:click={() => removeItem(item.id)}
+            class="text-red-600 hover:text-red-800 font-medium focus:outline-none"
+          >
+            Remove
+          </button>
+        </div>
+      {/each}
+    </div>
+  {:else}
+    <p class="text-center text-gray-500">Your cart is empty.</p>
+  {/if}
+</div>
+
+
+
