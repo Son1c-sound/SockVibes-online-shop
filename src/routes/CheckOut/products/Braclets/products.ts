@@ -7,9 +7,9 @@ export const braclets = [
         type: 'image',
         urls: [
             'https://i.ibb.co/8jwXbMQ/New-Project-3-5.png',
-            'https://i.ibb.co/8jwXbMQ/New-Project-3-5.png',
-            'https://i.ibb.co/8jwXbMQ/New-Project-3-5.png',
-            'https://i.ibb.co/8jwXbMQ/New-Project-3-5.png'
+            'https://i.ibb.co/0hDXTPC/New-Project-3-6.png',
+            'https://i.ibb.co/x6jXrw1/New-Project-3-1.png',
+            'https://i.ibb.co/xYmCL6t/New-Project-3-3.png'
         ],
         price: '11.33$',
         link: 'https://example.com/link1',
