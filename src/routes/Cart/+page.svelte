@@ -65,9 +65,9 @@
 
 <br>
 <br>
-<h1 class="text-2xl font-arial text-center font-bold">Review Shopping Cart</h1>
+<h1 class="text-2xl font-arial text-center font-bold ">Review Shopping Cart</h1>
 {#if cartItems.length > 0}
-  <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+  <div style="display: flex; justify-content: center; align-items: center; gap: 10px;" >
     <DoneMark />
     <h2 class="font-arial my-3">Your order qualifies for FREE returns</h2>
   </div>
