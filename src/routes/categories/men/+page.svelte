@@ -21,10 +21,10 @@
 
 <h1 class="text-center my-11 text-2xl font-bold font-mono">Men Categories</h1>
 
-<div class="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 mx-auto max-w-screen-xl">
+<div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 mx-auto max-w-screen-xl">
     {#each men as item}
     <div class="relative flex flex-col text-gray-700 bg-white  shadow-gray-200 bg-clip-border rounded-xl">
-        <div class="relative mx-2 mt-4 overflow-hidden text-gray-700 bg-white bg-clip-border rounded-xl">
+        <div class="relative mx-1 mt-4 overflow-hidden text-gray-700 bg-white bg-clip-border rounded-xl">
             <Carousel.Root class="w-full max-w-full" bind:api>
                 <Carousel.Content>
                     <Carousel.Item>
