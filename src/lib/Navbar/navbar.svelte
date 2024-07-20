@@ -78,7 +78,7 @@
         {#each categories as category}
         <li>
             
-            <a href={category.link} class="block  border border-black text-black font-semibold rounded-lg py-3 px-6 md:py-4 md:px-8 transition-colors duration-300">{category.name}</a>
+            <a href={category.link} on:click={toggleMobileMenu} class="block  border border-black text-black font-semibold rounded-lg py-3 px-6 md:py-4 md:px-8 transition-colors duration-300">{category.name}</a>
         </li>
         {/each}
     </ul>

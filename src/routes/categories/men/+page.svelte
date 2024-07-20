@@ -37,13 +37,14 @@
 <div
   class=" my-5 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 mx-auto max-w-screen-xl "
 >
-  {#each men as item}
+  {#each men as item} 
     <div
       class="relative flex flex-col bg-clip-border m-1 text-gray-900  rounded-md"
     >
       <div
         class="relative mx-1 mt-4 overflow-hidden text-gray-700  bg-clip-border "
       >
+     
         <Carousel.Root class=" my-4 w-full mx-auto max-w-full" bind:api>
           <Carousel.Content>
             <Carousel.Item>
@@ -90,6 +91,7 @@
             </Carousel.Item>
           </Carousel.Content>
         </Carousel.Root>
+ 
       </div>
       <div class="p-4 sm:p-6">
         <div class="flex items-center justify-between mb-2">
