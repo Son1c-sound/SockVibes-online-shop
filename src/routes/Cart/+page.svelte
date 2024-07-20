@@ -2,7 +2,13 @@
     import { addnumber, increment, decrement } from "../../routes/CheckOut/products/fresh/store";
     import { onMount } from 'svelte';
     import toast, { Toaster } from 'svelte-french-toast';
+    import Button from "$lib/components/ui/button/button.svelte";
+    
+    import RightArrow from '$lib/Icons/rightarrow.svelte'
+    import MightLike from '../../lib/HeroSlider/braclet/MightLike/mightlike.svelte'
 
+    import DoneMark from '$lib/Icons/donemark.svelte'
+  import Cartfooter from "$lib/Footer/cartFoot/cartfooter.svelte";
     interface CartItem {
         quantity: number;
         id: number;
@@ -46,37 +52,70 @@
     onMount(() => {
         clearLocalStorageAfterDelay(21600000);
     });
+
+    function calculateSubtotal(): number {
+        return cartItems.reduce((total, item) => {
+
+            const price = parseFloat(item.price);
+            return total + (price * item.quantity);
+        }, 0);
+    }
 </script>
+
 
 <br>
 <br>
-<br>
-<div class="p-6 max-w-2xl mx-auto">
-  {#if cartItems.length > 0}
+<h1 class="text-2xl font-mono text-center font-bold">Review Shopping Cart</h1>
+{#if cartItems.length > 0}
+  <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+    <DoneMark />
+    <h2 class="font-mono my-3">Your order qualifies for FREE returns</h2>
+  </div>
+
+  <div class="p-6 max-w-2xl mx-auto">
+    <h1 class="text-xl font-bold">Subtotal: ${calculateSubtotal().toFixed(2)}</h1>
+
+    <Button>Check Out ({cartItems.length} Items)</Button>
+
     <div class="space-y-6">
       {#each cartItems as item}
-        <div class="flex items-center justify-between p-4 bg-white rounded-lg shadow-lg border border-gray-200">
-          <img src="{item.image}" alt="{item.name}" class="w-24 h-24 object-cover rounded-md border border-gray-300">
+        <hr class="bg-gray-900" />
+        <div class="flex items-center justify-between p-4 bg-white rounded-lg w-full">
+          <img src="{item.image}" alt="{item.name}" class="w-24 h-24 object-cover rounded-md" />
+          
           <div class="flex-1 ml-4">
             <h3 class="text-lg font-semibold text-gray-800">{item.name}</h3>
             <p class="text-gray-600">Quantity: {item.quantity}</p>
-            <p class="text-gray-600">Quantity: {item.price}</p>
-            <p class="text-gray-600">Status: <span class="text-green-500">{item.status}</span></p>
-            <p class="text-gray-500 text-sm mt-1">{item.description}</p>
+            <br />
+            <button on:click={(decrement)}
+              on:click={() => removeItem(item.id)}
+              class="text-blue-600 hover:text-blue-800 font-medium focus:outline-none"
+            >
+              Remove
+            </button>
           </div>
-          <button  on:click={decrement}
-            on:click={() => removeItem(item.id)}
-            class="text-red-600 hover:text-red-800 font-medium focus:outline-none"
-          >
-            Remove
-          </button>
+          
+          <h1 class="text-xl font-bold">{item.price}</h1>
         </div>
       {/each}
+
     </div>
-  {:else}
-    <p class="text-center text-gray-500">Your cart is empty.</p>
-  {/if}
-</div>
+  </div>
+  <br>
+  <br>
+  <br>
+{:else}
+
+<h1 class="text-md my-5 text-center text-gray-500">
+  Your cart is empty. 
+  <a href='/' class='text-blue-600 my-3 inline-flex items-center'>
+    Start Shopping
+    <RightArrow  />
+    
+  </a>
+</h1>
 
 
+{/if}
 
+<MightLike></MightLike>

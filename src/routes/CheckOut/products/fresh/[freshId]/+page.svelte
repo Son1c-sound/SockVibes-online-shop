@@ -56,7 +56,9 @@
       name: selectedProduct.name,
       image: selectedProduct.urls[0], 
       price: selectedProduct.price, 
-      quantity: selectedQuantity
+      quantity: selectedQuantity,
+      status: selectedProduct.status,
+      description: selectedProduct.description
     };
 
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -147,9 +149,9 @@
       </select>
     </div>
     <div>
-      <Button class="w-full bg-blue-600 text-white  my-5 text-md" on:click={addToCart} on:click={increment} >Add to Cart</Button>
+      <Button class="w-full bg-yellow-300 hover:bg-yellow-400 text-black my-5 text-md" on:click={addToCart} on:click={increment} >Add to Cart</Button>
 
-      <Button class=" w-full text-md   text-gray-900 bg-yellow-400 hover:text-gray-900 hover:bg-gray-200">Buy now</Button>
+      <Button class=" w-full text-md  bg-white text-black hover:text-gray-900 hover:bg-yellow-400 border border-yellow-400">Buy now</Button>
       <br>
       <br />
       <hr />

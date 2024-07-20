@@ -29,7 +29,7 @@
    on:mousenter={plugin.stop}
    on:mouseleave={plugin.reset} 
    class="w-3/4 mx-auto  my-28">
-   <h1 class=' font-style: italic text-5xl font-bold'>Similar Items</h1>
+   <h1 class=' font-style: italic text-5xl font-bold'>You might Like</h1>
    <br>
     <Carousel.Content class="-ml-1 bg-transparent border-none outline-none shadow-none">
       {#each braclets as product}
