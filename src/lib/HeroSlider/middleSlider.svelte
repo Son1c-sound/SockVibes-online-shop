@@ -85,7 +85,7 @@
     <Carousel.Previous />
     
     <Carousel.Next />
-    <Progress value={current} max={4} class='h-1 my-10' />
+    <Progress value={current} max={6} class='h-1 my-10' />
   </Carousel.Root>
 
 

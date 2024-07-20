@@ -19,10 +19,10 @@
     import { increment } from "../../fresh/store";
 
 
-  // Get the productId from the URL params
+  
   const otherId: any = $page.params.otherId;
 
-  // Ensure productId is within valid range
+  
 
   const selectedProduct = other[otherId - 1];
   const qty = quantity[otherId - 1]

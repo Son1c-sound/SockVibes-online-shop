@@ -1,11 +1,12 @@
 <script lang="ts">
-  import { men } from "./data";
+  import { men } from "./products";
   import { Button } from "$lib/components/ui/button";
   import * as Card from "$lib/components/ui/card/index.ts";
   import * as Carousel from "$lib/components/ui/carousel/index.ts";
   import { Progress } from "$lib/components/ui/progress/";
   import { type CarouselAPI } from "$lib/components/ui/carousel/context.ts";
   import Swipe from "$lib/Icons/swipe.svelte";
+    import { goto } from '$app/navigation'
 
   let api: CarouselAPI;
   let count = 0;
@@ -18,8 +19,10 @@
       current = api.selectedScrollSnap() + 1;
     });
   }
-  
-  // localstorage
+     
+  function navigateToProductDetail(menId: any) {
+        goto(`/categories/men/${menId}`);
+    }
 
 </script>
 
@@ -101,16 +104,12 @@
             {item.price}
           </p>
         </div>
-        <p
-          class="block font-sans text-xs sm:text-sm antialiased font-normal leading-normal  opacity-75 text-gray-900"
-        >
-          {item.description}
-        </p>
+
         <p class="text-green-500">{item.status}</p>
       </div>
 
       <div class="p-2 sm:p-1 pt-0">
-        <Button class="w-full bg-yellow-400 text-black">Purchase</Button>
+        <Button class="w-full bg-yellow-300 text-black hover:bg-yellow-400" on:click={() => navigateToProductDetail(item.id)}>Purchase</Button>
       </div>
     </div>
   {/each}

@@ -72,7 +72,7 @@
     <h2 class="font-arial my-3">Your order qualifies for FREE returns</h2>
   </div>
 
-  <div class="p-6 max-w-2xl mx-auto">
+  <div class="p-6 max-w-2xl mx-auto border-2 border-gray-900 rounded-md">
 
     <div class="my-4 flex justify-between items-center">
       <Button>Check Out ({cartItems.length} Items)</Button>
@@ -101,7 +101,7 @@
         </div>
         
       {/each}
-      <Button class='w-full'>Check Out ({cartItems.length} Items)</Button>
+      <Button class='w-full rounded-none'>Check Out ({cartItems.length} Items)</Button>
 
     </div>
   </div>
