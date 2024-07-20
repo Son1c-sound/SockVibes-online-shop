@@ -74,7 +74,7 @@
 <br />
 
 
-<a href="/categories/men" class="text-blue-600 underline" ><i class="mx-6 fa-solid fa-chevron-left "></i>Go back to woman category</a>
+<a href="/categories/woman" class="text-blue-600 underline" ><i class="mx-6 fa-solid fa-chevron-left "></i>Go back to woman category</a>
 <div class="flex flex-col mx-4 md:mx-20 md:flex-row md:space-x-8">
   <!-- Product Images -->
   <div class="w-full">
