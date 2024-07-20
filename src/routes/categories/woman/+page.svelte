@@ -32,7 +32,7 @@
 
 
 <div class="mx-4 sm:mx-auto  sm:w-2/6">
-  <h1 class="text-center my-8 sm:my-16 text-lg sm:text-xl p-2 rounded-md font-bold font-mono text-white bg-gradient-to-r from-pink-500 to-blue-500">
+  <h1 class="text-center my-8 sm:my-16 text-lg sm:text-xl p-2 rounded-md font-bold font-mono text-gray-900 ">
     Woman Categories
   </h1>
 </div>
