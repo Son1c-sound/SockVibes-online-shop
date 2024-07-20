@@ -18,9 +18,9 @@
 
   function getFirstImageUrl(product:any) {
     if (product.type === 'image' && product.urls && product.urls.length > 0) {
-      return product.urls[0]; // Return the first URL from urls array
+      return product.urls[0]; 
     } else {
-      return product.url; // Return the single URL if there's no urls array
+      return product.url; 
     }
   }
 

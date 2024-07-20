@@ -9,7 +9,7 @@
    
 
     let categories = [
-      { name: 'men', link: '/category1' },
+      { name: 'men', link: '/categories/men' },
       { name: 'Woman', link: '/category2' },
       { name: 'kids', link: '/category3' },
       { name: 'collections', link: '/category4' },
