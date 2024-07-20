@@ -65,18 +65,20 @@
 
 <br>
 <br>
-<h1 class="text-2xl font-mono text-center font-bold">Review Shopping Cart</h1>
+<h1 class="text-2xl font-arial text-center font-bold">Review Shopping Cart</h1>
 {#if cartItems.length > 0}
   <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
     <DoneMark />
-    <h2 class="font-mono my-3">Your order qualifies for FREE returns</h2>
+    <h2 class="font-arial my-3">Your order qualifies for FREE returns</h2>
   </div>
 
   <div class="p-6 max-w-2xl mx-auto">
-    <h1 class="text-xl font-bold">Subtotal: ${calculateSubtotal().toFixed(2)}</h1>
 
-    <Button>Check Out ({cartItems.length} Items)</Button>
-
+    <div class="my-4 flex justify-between items-center">
+      <Button>Check Out ({cartItems.length} Items)</Button>
+      <h1 class="text-xl "><span class="font-arial ">Subtotal:</span> ${calculateSubtotal().toFixed(2)}</h1>
+  </div>
+  
     <div class="space-y-6">
       {#each cartItems as item}
         <hr class="bg-gray-900" />
@@ -97,7 +99,9 @@
           
           <h1 class="text-xl font-bold">{item.price}</h1>
         </div>
+        
       {/each}
+      <Button class='w-full'>Check Out ({cartItems.length} Items)</Button>
 
     </div>
   </div>
