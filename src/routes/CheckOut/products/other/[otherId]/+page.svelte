@@ -2,32 +2,32 @@
 
 <script lang="ts">
   import { page } from "$app/stores";
-  import { Item } from "$lib/components/ui/carousel";
-  import { braclets } from "../products"; // Importing products from external file
+  import { other } from "../products"; // Importing products from external file
   import Button from "$lib/components/ui/button/button.svelte";
   import * as Select from "$lib/components/ui/select/index.js";
   import * as Card from "$lib/components/ui/card/index.js";
   import * as Carousel from "$lib/components/ui/carousel/index.js";
-  import type { CarouselAPI } from "$lib/components/ui/carousel/context.js";
-  import { onMount } from "svelte";
   import { Progress } from "$lib/components/ui/progress/index.js";
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
     import DropIcon from '../../../../../lib/Icons/dropdwon.svelte'
+    import type { CarouselAPI } from "$lib/components/ui/carousel/context.js";
+    import { quantity } from "../products";
+    import { onMount } from 'svelte';
+    import toast, { Toaster } from 'svelte-french-toast';
+    import LoaderCircle from "lucide-svelte/icons/loader-circle";
+
+    import { increment } from "../../fresh/store";
+
 
   // Get the productId from the URL params
-  const footerId: any = $page.params.footerId;
+  const otherId: any = $page.params.otherId;
 
   // Ensure productId is within valid range
 
-  const selectedProduct: any = braclets[footerId - 1];
+  const selectedProduct = other[otherId - 1];
+  const qty = quantity[otherId - 1]
 
-  const quanitity = [
-    { value: "one", label: "1" },
-    { value: "two", label: "2" },
-    { value: "three", label: "3" },
-    { value: "four", label: "4" },
-    { value: "five", label: "5" },
-  ];
+ 
 
   let api: CarouselAPI;
   let count = 0;
@@ -41,17 +41,45 @@
     });
   }
 
-  let showStatusBar = true;
-  let showActivityBar = false;
-  let showPanel = false;
+
+
+
+  let showStatusBar:boolean = true;
+  let showActivityBar:boolean = false;
+  let showPanel:boolean = false;
+
+  // localstorage test 
+  let selectedQuantity = quantity[0].value;
+  function addToCart() {
+    if (!selectedProduct && !qty ) return; // Check if selectedProduct is defined
+
+    const cartItem = {
+      name: selectedProduct.name,
+      image: selectedProduct.urls[0], 
+      price: selectedProduct.price, 
+      quantity: selectedQuantity,
+      status: selectedProduct.status,
+      description: selectedProduct.description
+    };
+
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+    // Add new item to cart
+    cart.push(cartItem);
+    toast.success("Added to Cart")
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    console.log('Cart updated:', cart);
+  }
 </script>
+<Toaster />
 
 <!-- Checkout.svelte -->
+<br />
+<br />
+<br />
 
-<!-- Checkout.svelte -->
-<br />
-<br />
-<br />
 <div class="flex flex-col mx-4 md:mx-20 md:flex-row md:space-x-8">
     <!-- Product Images -->
     <div class="w-full">
@@ -90,7 +118,7 @@
   
   <!-- Selected Items -->
   <div class="w-full md:w-1/2 mt-4 md:mt-0">
-   
+    
     <div class="p-6 border border-gradient-purple-blue">
        
       <h2 class="text-3xl mb-2 font-bold">{selectedProduct.name}</h2>
@@ -116,30 +144,18 @@
 
       <p class="text-gray-500">{selectedProduct.description}</p>
       <br />
-      <h1 class="text-green-600 my-3 text-lg">{selectedProduct.status}</h1>
-      <Select.Root>
-        <Select.Trigger class="w-[80px] border-gray-400">            
-          <Select.Value placeholder="Qty 1" />
-        </Select.Trigger>
-        <Select.Content>
-          <Select.Group>
-            {#each quanitity as number}
-              <Select.Item value={number.value} label={number.label}
-                >{number.label}</Select.Item
-              >
-            {/each}
-          </Select.Group>
-     
-
-        </Select.Content>
-        <Select.Input name="quantity" />
-       
-
-      </Select.Root>
+      <h1 class="text-gray-900 my-3 text-md">Qty<select bind:value={selectedQuantity}>
+        {#each quantity as { value, label }}
+          <option value={value}>{label}</option>
+        {/each}
+      </select>
     </div>
     <div>
-      <Button class="w-full bg-blue-600 text-white  my-5 text-md ">Add to Cart</Button>
-      <Button class=" w-full text-md   text-gray-900 bg-yellow-400 hover:text-gray-900 hover:bg-gray-200">Buy now</Button>
+      <Button class="w-full bg-yellow-300 hover:bg-yellow-400 text-black my-5 text-md" on:click={addToCart} on:click={increment} >Add to Cart</Button>
+
+      
+
+      <Button class=" w-full text-md  bg-white text-black hover:text-gray-900 hover:bg-yellow-400 border border-yellow-400">Buy now</Button>
       <br>
       <br />
       <hr />

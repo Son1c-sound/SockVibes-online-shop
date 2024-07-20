@@ -14,6 +14,7 @@
     import { quantity } from "../products";
     import { onMount } from 'svelte';
     import toast, { Toaster } from 'svelte-french-toast';
+    import LoaderCircle from "lucide-svelte/icons/loader-circle";
 
     import { addnumber, increment } from '../store';
 
@@ -78,6 +79,7 @@
 <br />
 <br />
 <br />
+
 <div class="flex flex-col mx-4 md:mx-20 md:flex-row md:space-x-8">
     <!-- Product Images -->
     <div class="w-full">
@@ -150,6 +152,8 @@
     </div>
     <div>
       <Button class="w-full bg-yellow-300 hover:bg-yellow-400 text-black my-5 text-md" on:click={addToCart} on:click={increment} >Add to Cart</Button>
+
+      
 
       <Button class=" w-full text-md  bg-white text-black hover:text-gray-900 hover:bg-yellow-400 border border-yellow-400">Buy now</Button>
       <br>

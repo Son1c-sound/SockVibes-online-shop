@@ -3,13 +3,13 @@
     import * as Card from "$lib/components/ui/card/";
     import * as Carousel from "$lib/components/ui/carousel/";
     import Autoplay from "embla-carousel-autoplay";
-    import { braclets } from "../../routes/CheckOut/products/Braclets/products";
+    import { other } from "../../routes/CheckOut/products/other/products";
     import { Progress } from "$lib/components/ui/progress/index.js";
     import { type CarouselAPI } from "$lib/components/ui/carousel/context.js";
 
     
-    function navigateToProductDetail(footerId: any) {
-        goto(`CheckOut/products/Braclets/${footerId}`);
+    function navigateToProductDetail(otherId: any) {
+        goto(`CheckOut/products/other/${otherId}`);
     }
 
 
@@ -48,7 +48,7 @@
 
    <br>
     <Carousel.Content class="-ml-1 bg-transparent border-none outline-none shadow-none">
-      {#each braclets as product}
+      {#each other as product}
         <Carousel.Item class="pl-4 md:basis-1/2 lg:basis-1/4 bg-transparent border-none shadow-none ">
           <button on:click={() => navigateToProductDetail(product.id)}>
                 

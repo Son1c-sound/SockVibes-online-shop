@@ -3,11 +3,11 @@
     import * as Card from "$lib/components/ui/card/";
     import * as Carousel from "$lib/components/ui/carousel/";
     import Autoplay from "embla-carousel-autoplay";
-    import { braclets } from "../../../../routes/CheckOut/products/Braclets/products";
+    import { fresh } from "../../../../routes/CheckOut/products/fresh/products";
 
     
     function navigateToProductDetail(footerId: any) {
-      goto(`/CheckOut/products/Braclets/${footerId}`, {  });
+      goto(`/CheckOut/products/fresh/${footerId}`, {  });
     }
 
 
@@ -32,9 +32,9 @@
    <h1 class=' font-style: italic text-5xl font-bold'>You might Like</h1>
    <br>
     <Carousel.Content class="-ml-1 bg-transparent border-none outline-none shadow-none">
-      {#each braclets as product}
+      {#each fresh as product}
         <Carousel.Item class="pl-4 md:basis-1/2 lg:basis-1/4 bg-transparent border-none shadow-none ">
-          <a href={`/CheckOut/products/Braclets/${product.id}`} target="_blank">
+          <a href={`/CheckOut/products/fresh/${product.id}`} target="_blank">
                 
             <Card.Root class='border-none bg-transparent outline-none shadow-none'>
               <Card.Content class='border-none bg-transparent shadow-none outline-none'>
