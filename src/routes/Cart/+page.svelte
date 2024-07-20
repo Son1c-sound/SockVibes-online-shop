@@ -17,6 +17,7 @@
         description: string;
         status: string;
         price: string;
+        category: string;
     }
 
     let cartItems: CartItem[] = [];
@@ -88,6 +89,7 @@
           <div class="flex-1 ml-4">
             <h3 class="text-lg font-semibold text-gray-800">{item.name}</h3>
             <p class="text-gray-600">Quantity: {item.quantity}</p>
+            <p class="text-gray-600">Category: {item.category}</p>
             <br />
             <button on:click={(decrement)}
               on:click={() => removeItem(item.id)}

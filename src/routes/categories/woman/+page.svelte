@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { men } from "./products";
+  import { woman } from "./products";
   import { Button } from "$lib/components/ui/button";
   import * as Card from "$lib/components/ui/card/index.ts";
   import * as Carousel from "$lib/components/ui/carousel/index.ts";
@@ -22,39 +22,34 @@
     });
   }
      
-     function navigateToProductDetail(menId: any) {
-        goto(`/categories/men/${menId}`);
+     function navigateToProductDetail(womanId: any) {
+        goto(`/categories/woman/${womanId}`);
     }   
 
  
 
 </script>
 
-<body >
-    
 
-    <div class="mx-4 sm:mx-auto  sm:w-2/6">
-        <h1 class="text-center my-8 sm:my-16 text-lg sm:text-xl p-2  font-bold font-mono text-white bg-gradient-to-r from-gray-500 to-blue-500">
-          Men Categories
-        </h1>
-      </div>
-      
-      
-      
-      <div class="flex flex-col items-center ">
-        <h1 class="text-center mb-3 ">Swipe Pictures to preview items</h1>
-        <div class="flex">
-          <Swipe />
-        </div>
-      </div>
-      
+<div class="mx-4 sm:mx-auto  sm:w-2/6">
+  <h1 class="text-center my-8 sm:my-16 text-lg sm:text-xl p-2 rounded-md font-bold font-mono text-white bg-gradient-to-r from-pink-500 to-blue-500">
+    Woman Categories
+  </h1>
+</div>
+
+<div class="flex flex-col items-center ">
+  <h1 class="text-center mb-3 ">Swipe Pictures to preview items</h1>
+  <div class="flex">
+    <Swipe />
+  </div>
+</div>
 
 <div
   class=" my-5 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 mx-auto max-w-screen-xl "
 >
-  {#each men as item} 
+  {#each woman as item} 
     <div
-      class="relative flex flex-col bg-clip-border m-1 text-gray-900  rounded-md "
+      class="relative flex flex-col bg-clip-border m-1 text-gray-900  rounded-md"
     >
       <div
         class="relative mx-1 mt-4 overflow-hidden text-gray-700  bg-clip-border "
@@ -87,6 +82,7 @@
                       class="w-full h-full object-cover text-4xl font-semibold"
                     />
                   </Card.Content>
+                  
                 </Card.Root>
               </div>
             </Carousel.Item>
@@ -104,7 +100,9 @@
                 </Card.Root>
               </div>
             </Carousel.Item>
+            
           </Carousel.Content>
+
         </Carousel.Root>
       </div>
       <div class="p-4 sm:p-6">
@@ -112,20 +110,15 @@
           <p
             class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
           > {item.name}
-          
            
           </p>
-          
           <p
             class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
           ><Badge class='bg-yellow-300 text-black rounded-md'>{item.price}</Badge>
             
           </p>
-     
         </div>
         <p class="text-gray-600 my-2">Category: {item.category}</p>
-        
-
         <p class="text-green-500">{item.status}</p>
       </div>
 
@@ -135,12 +128,11 @@
     </div>
   {/each}
 </div>
-</body>
+
 <style>
   h1 {
     font-family: "Jura", sans-serif;
     font-weight: bold;
     
   }
-
 </style>

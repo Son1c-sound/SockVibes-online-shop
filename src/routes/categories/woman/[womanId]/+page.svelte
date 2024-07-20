@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { men } from "../products"; // Importing products from external file
+  import { woman } from "../products"; // Importing products from external file
   import Button from "$lib/components/ui/button/button.svelte";
   import * as Select from "$lib/components/ui/select/index.js";
   import * as Card from "$lib/components/ui/card/index.js";
@@ -16,11 +16,11 @@
 
   import { addnumber, increment } from '../../../CheckOut/products/fresh/store';
 
-  const menId: any = $page.params.menId;
+  const womanId: any = $page.params.womanId;
 
   // Adjust data retrieval based on men array
-  const selectedProduct:any = men.find(m => m.id === parseInt(menId));
-  const qty = quantity[menId - 1];
+  const selectedProduct:any = woman.find(m => m.id === parseInt(womanId));
+  const qty = quantity[womanId - 1];
 
   let api: CarouselAPI;
   let count = 0;
@@ -51,7 +51,7 @@
       quantity: selectedQuantity,
       status: selectedProduct.status,
       description: selectedProduct.description,
-      category: selectedProduct.category
+      category: selectedProduct.category,
     };
 
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -74,7 +74,7 @@
 <br />
 
 
-<a href="/categories/men" class="text-blue-600 underline" ><i class="mx-6 fa-solid fa-chevron-left "></i>Go back to Men category</a>
+<a href="/categories/men" class="text-blue-600 underline" ><i class="mx-6 fa-solid fa-chevron-left "></i>Go back to woman category</a>
 <div class="flex flex-col mx-4 md:mx-20 md:flex-row md:space-x-8">
   <!-- Product Images -->
   <div class="w-full">
