@@ -5,6 +5,8 @@
   import * as Carousel from "$lib/components/ui/carousel/index.ts";
   import { Progress } from "$lib/components/ui/progress/";
   import { type CarouselAPI } from "$lib/components/ui/carousel/context.ts";
+  import { Badge } from "$lib/components/ui/badge/index.js";
+
   import Swipe from "$lib/Icons/swipe.svelte";
     import { goto } from '$app/navigation'
 
@@ -20,9 +22,11 @@
     });
   }
      
-  function navigateToProductDetail(menId: any) {
+     function navigateToProductDetail(menId: any) {
         goto(`/categories/men/${menId}`);
-    }
+    }   
+
+ 
 
 </script>
 
@@ -44,7 +48,7 @@
       <div
         class="relative mx-1 mt-4 overflow-hidden text-gray-700  bg-clip-border "
       >
-     
+    
         <Carousel.Root class=" my-4 w-full mx-auto max-w-full" bind:api>
           <Carousel.Content>
             <Carousel.Item>
@@ -91,19 +95,18 @@
             </Carousel.Item>
           </Carousel.Content>
         </Carousel.Root>
- 
       </div>
       <div class="p-4 sm:p-6">
         <div class="flex items-center justify-between mb-2">
           <p
             class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
-          >
-            {item.name}
+          > {item.name}
+           
           </p>
           <p
             class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
-          >
-            {item.price}
+          ><Badge class='bg-yellow-300 text-black rounded-md'>{item.price}</Badge>
+            
           </p>
         </div>
 
