@@ -28,7 +28,7 @@
     }
 </script>
 
-<header class="bg-white  text-black shadow shadow-md fixed       md:block   z-50 top-0 left-0 w-full">
+<header class="bg-white  text-black  shadow-md fixed       md:block   z-50 top-0 left-0 w-full">
     <Anouncment></Anouncment>
     <div class="container mx-auto flex items-center h-24">
         <a href="/" class="flex items-center justify-center">

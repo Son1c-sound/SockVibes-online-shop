@@ -1,10 +1,10 @@
 <script lang="ts">
   import { men } from "./products";
   import { Button } from "$lib/components/ui/button";
-  import * as Card from "$lib/components/ui/card/index.ts";
-  import * as Carousel from "$lib/components/ui/carousel/index.ts";
+  import * as Card from "$lib/components/ui/card/index.js";
+  import * as Carousel from "$lib/components/ui/carousel/index.js";
   import { Progress } from "$lib/components/ui/progress/";
-  import { type CarouselAPI } from "$lib/components/ui/carousel/context.ts";
+  import { type CarouselAPI } from "$lib/components/ui/carousel/context.js";
   import { Badge } from "$lib/components/ui/badge/index.js";
 
   import Swipe from "$lib/Icons/swipe.svelte";
@@ -71,7 +71,7 @@
                     <img
                       src={item.urls[0]}
                       class="w-full h-full object-cover text-2xl font-semibold"
-                    />
+                    alt='item' />
                   </Card.Content>
                 </Card.Root>
               </div>
@@ -85,7 +85,7 @@
                     <img
                       src={item.urls[1]}
                       class="w-full h-full object-cover text-4xl font-semibold"
-                    />
+                     alt='item'/>
                   </Card.Content>
                 </Card.Root>
               </div>
@@ -99,7 +99,7 @@
                     <img
                       src={item.urls[2]}
                       class="w-full h-full object-cover text-4xl font-semibold"
-                    />
+                    alt='item'/>
                   </Card.Content>
                 </Card.Root>
               </div>
