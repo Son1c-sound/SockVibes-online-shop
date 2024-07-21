@@ -12,7 +12,7 @@
       { name: 'men', link: '/categories/men' },
       { name: 'Woman', link: '/categories/woman' },
       { name: 'kids', link: '/categories/kids' },
-      { name: 'collections', link: '/category4' },
+      { name: 'collections', link: '/categories/collections' },
       { name: 'New items', link: '/categories/newitems' }
     ];
   

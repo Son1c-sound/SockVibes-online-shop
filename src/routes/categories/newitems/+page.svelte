@@ -29,13 +29,21 @@
 </script>
 
 <body class="text-white">
-  <br />
-  <br />
 
-  <div class="flex flex-col items-center">
-    <h1 class="text-center mb-3">Newly available items</h1>
+  <h1 class="text-gray-900 text-center my-9">Sock Vibes </h1>
+  <div class="mx-3 sm:mx-auto ">
+    <h1 class="text-center  text-5xl  p-2 rounded-md font-bold font-mono text-gray-900 ">
+      Kids Categories
+    </h1>
+  </div>
+    
+  <div class="flex flex-col items-center ">
+    <h1 class="text-center mb-3 text-gray-900">Swipe Pictures to preview items</h1>
     <div class="flex">
-  
+      <Swipe />
+    </div>
+  </div>
+  <br>
 
   <div
     class="text-white my-5 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 mx-auto max-w-screen-xl"
@@ -45,7 +53,7 @@
         class="text-white relative flex flex-col bg-clip-border m-1 rounded-md"
       >
         <div
-          class="relative mx-1 mt-4 overflow-hidden text-gray-700 bg-clip-border"
+          class="relative mx-1 mt-4 overflow-hidden text-gray-900 bg-clip-border"
         >
           <Carousel.Root class=" w-full mx-auto max-w-full" bind:api>
             <Carousel.Content>
@@ -114,22 +122,22 @@
         <div class="p-4 sm:p-6">
           <div class="flex items-center justify-between mb-2">
             <p
-              class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
+              class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-gray-900"
             >
               {item.name}
             </p>
             <p
-              class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
+              class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-green-gray-900"
             >
               <Badge class="bg-green-400 text-gray-800 rounded-md">New</Badge>
             </p>
           </div>
-          <p class="text-gray-200 my-2">Category: {item.category}</p>
+          <p class="text-gray-800 my-2">Category: {item.category}</p>
         </div>
 
         <div class="p-2 sm:p-1 pt-0">
           <Button
-            class="w-full bg-blue-800 border border-blue-400 text-white hover:bg-blue-800"
+            class="w-full bg-green-500 border border-green-400 text-white hover:bg-green-500"
             on:click={() => navigateToProductDetail(item.id)}>Check Item</Button
           >
         </div>
@@ -140,11 +148,9 @@
 
 <style>
   h1 {
-    font-family: "Jura", sans-serif;
+    font-family: sans-serif;
     font-weight: bold;
   }
 
-  body {
-  background:conic-gradient(from 90deg at 50% 125%, #20b2aa, #135da5, #0d0895, #4b0082, #4b0082, #0d0895, #135da5, #20b2aa)
-  }
+
 </style>

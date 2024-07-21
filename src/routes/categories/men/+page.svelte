@@ -32,9 +32,9 @@
 
 <body >
     
-
-  <div class="mx-3 sm:mx-auto  sm:w-2/6">
-    <h1 class="text-center my-8 sm:my-8 text-lg sm:text-xl p-2 rounded-md font-bold font-mono text-gray-900 ">
+  <h1 class="text-gray-900 text-center my-9">Sock Vibes </h1>
+  <div class="mx-3 sm:mx-auto ">
+    <h1 class="text-center  text-5xl  p-2 rounded-md font-bold font-mono text-gray-900 ">
       Men Categories
     </h1>
   </div>
@@ -118,7 +118,7 @@
           
           <p
             class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
-          ><Badge class='bg-gray-900 text-white rounded-md'>{item.price}</Badge>
+          ><Badge class='  rounded-md bg-yellow-300 text-black'>{item.price}</Badge>
             
           </p>
      
@@ -130,7 +130,7 @@
       </div>
 
       <div class="p-2 sm:p-1 pt-0">
-        <Button class="w-full  border-2  " on:click={() => navigateToProductDetail(item.id)}>Purchase</Button>
+        <Button class="w-full hover:bg-yellow-400  bg-yellow-300 text-black " on:click={() => navigateToProductDetail(item.id)}>Purchase</Button>
       </div>
     </div>
 
@@ -139,7 +139,7 @@
 </body>
 <style>
   h1 {
-    font-family: "Jura", sans-serif;
+    font-family: "Sans", sans-serif;
     font-weight: bold;
     
   }
