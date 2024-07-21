@@ -144,18 +144,12 @@
      
     <ul class="text-center space-y-6">
         <h1 class="text-4xl font-bold mb-6 text-black">Categories</h1>
-        <DropdownMenu.Root>
-            <DropdownMenu.Trigger asChild let:builder>
-              <Button variant="outline" builders={[builder]} class='font-sans ' >Men</Button>
-            </DropdownMenu.Trigger>
-            <DropdownMenu.Content class='p-2'>
-
-              <Button class='my-1  ' variant='outline' on:click={menSockNavigate} on:click={toggleMobileMenu}>Men Socks</Button>
-
-              <Button class='my-1' variant='outline'>Men UnderWear</Button>
-
-            </DropdownMenu.Content>
-          </DropdownMenu.Root>
+        {#each categories as category}
+        <li>
+            
+            <a href={category.link} on:click={toggleMobileMenu} class="block  border border-black text-black font-semibold rounded-lg py-3 px-6 md:py-4 md:px-8 transition-colors duration-300">{category.name}</a>
+        </li>
+        {/each}
     </ul>
     <button on:click={toggleMobileMenu} class="mt-8   rounded-full text-red-500 font-semibold px-6 py-3 md:px-8 md:py-4 transition-colors duration-300 focus:outline-none">
         Close
