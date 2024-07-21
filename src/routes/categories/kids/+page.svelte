@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { men } from "./products";
+  import { kids } from "./products";
   import { Button } from "$lib/components/ui/button";
   import * as Card from "$lib/components/ui/card/index.js";
   import * as Carousel from "$lib/components/ui/carousel/index.js";
@@ -9,7 +9,7 @@
 
   import Swipe from "$lib/Icons/swipe.svelte";
     import { goto } from '$app/navigation'
-  
+
   let api: CarouselAPI;
   let count = 0;
   let current = 0;
@@ -22,8 +22,8 @@
     });
   }
      
-     function navigateToProductDetail(menId: any) {
-        goto(`/categories/men/${menId}`);
+     function navigateToProductDetail(kidsId: any) {
+        goto(`/categories/kids/${kidsId}`);
     }   
 
  
@@ -33,25 +33,18 @@
 <body >
     
 
-  <div class="mx-3 sm:mx-auto  sm:w-2/6">
-    <h1 class="text-center my-8 sm:my-8 text-lg sm:text-xl p-2 rounded-md font-bold font-mono text-gray-900 ">
-      Men Categories
-    </h1>
-  </div>
-    
-  <div class="flex flex-col items-center ">
-    <h1 class="text-center mb-3 ">Swipe Pictures to preview items</h1>
-    <div class="flex">
-      <Swipe />
-    </div>
-  </div>
-      
+    <div class="mx-4 sm:mx-auto  sm:w-2/6">
+        <h1 class="text-center my-8 sm:my-8 text-lg sm:text-xl p-2  font-bold font-mono text-gray-900">
+         Kids categories
+        </h1>
+      </div>
+ 
 
 <div
   class=" my-5 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 mx-auto max-w-screen-xl "
 >
-  {#each men as item} 
-
+  {#each kids as item} 
+   
     <div
       class="relative flex flex-col bg-clip-border m-1 text-gray-900  rounded-md "
     >
@@ -105,7 +98,7 @@
             </Carousel.Item>
           </Carousel.Content>
         </Carousel.Root>
-      </button>
+        </button>
       </div>
       <div class="p-4 sm:p-6">
         <div class="flex items-center justify-between mb-2">
@@ -118,7 +111,7 @@
           
           <p
             class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
-          ><Badge class='bg-gray-900 text-white rounded-md'>{item.price}</Badge>
+          ><Badge class='bg-blue-500 text-white rounded-md'>{item.price}</Badge>
             
           </p>
      
@@ -130,10 +123,9 @@
       </div>
 
       <div class="p-2 sm:p-1 pt-0">
-        <Button class="w-full  border-2  " on:click={() => navigateToProductDetail(item.id)}>Purchase</Button>
+        <Button class="w-full bg-blue-500 text-white hover:bg-blue-500" on:click={() => navigateToProductDetail(item.id)}>Purchase</Button>
       </div>
     </div>
-
   {/each}
 </div>
 </body>
@@ -143,6 +135,5 @@
     font-weight: bold;
     
   }
-
 
 </style>

@@ -31,12 +31,12 @@
 </script>
 
 
-<div class="mx-4 sm:mx-auto  sm:w-2/6">
-  <h1 class="text-center my-8 sm:my-16 text-lg sm:text-xl p-2 rounded-md font-bold font-mono text-gray-900 ">
+<div class="mx-3 sm:mx-auto  sm:w-2/6">
+  <h1 class="text-center my-8 sm:my-8 text-lg sm:text-xl p-2 rounded-md font-bold font-mono text-gray-900 ">
     Woman Categories
   </h1>
 </div>
-
+  
 <div class="flex flex-col items-center ">
   <h1 class="text-center mb-3 ">Swipe Pictures to preview items</h1>
   <div class="flex">
@@ -45,7 +45,7 @@
 </div>
 
 <div
-  class=" my-5 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 mx-auto max-w-screen-xl "
+  class=" my-1 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 mx-auto max-w-screen-xl "
 >
   {#each woman as item} 
     <div
@@ -54,7 +54,7 @@
       <div
         class="relative mx-1 mt-4 overflow-hidden text-gray-700  bg-clip-border "
       >
-    
+      <button class="w-full  p-1 rounded-md text-black " on:click={() => navigateToProductDetail(item.id)}>
         <Carousel.Root class=" my-4 w-full mx-auto max-w-full" bind:api>
           <Carousel.Content>
             <Carousel.Item>
@@ -104,6 +104,7 @@
           </Carousel.Content>
 
         </Carousel.Root>
+        </button>
       </div>
       <div class="p-4 sm:p-6">
         <div class="flex items-center justify-between mb-2">

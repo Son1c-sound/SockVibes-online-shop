@@ -11,9 +11,9 @@
     let categories = [
       { name: 'men', link: '/categories/men' },
       { name: 'Woman', link: '/categories/woman' },
-      { name: 'kids', link: '/category3' },
+      { name: 'kids', link: '/categories/kids' },
       { name: 'collections', link: '/category4' },
-      { name: 'New items', link: '/category5' }
+      { name: 'New items', link: '/categories/newitems' }
     ];
   
     let isMobileMenuOpen = false;
