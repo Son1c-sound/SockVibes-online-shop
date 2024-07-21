@@ -5,15 +5,8 @@
     import CartIc from "./cartIc.svelte";
     import SearchIc from "./searchIc.svelte";
     import { goto } from '$app/navigation'
-    import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
-
-  import { Button } from "$lib/components/ui/button/";
- 
 
    
-    let showStatusBar = true;
-    let showActivityBar = false;
-    let showPanel = false;
 
     let categories = [
       { name: 'men', link: '/categories/men' },
@@ -29,14 +22,11 @@
       isMobileMenuOpen = !isMobileMenuOpen;
     }
 
-    function menSockNavigate() {
-        goto ('/categories/men')
-    }
+
     function menucart() {
         goto ('/Cart')
     }
 </script>
- 
 
 <header class="bg-white  text-black  shadow-md fixed       md:block   z-50 top-0 left-0 w-full">
     <Anouncment></Anouncment>
@@ -46,71 +36,12 @@
         </a>
         <nav class="hidden md:flex ml-4 flex-grow">
             <ul class="flex items-center justify-center mx-auto">
-                <DropdownMenu.Root>
-                <DropdownMenu.Trigger asChild let:builder>
-                  <Button variant="outline" builders={[builder]} class='font-sans'>Men</Button>
-                </DropdownMenu.Trigger>
-                <DropdownMenu.Content class='p-2'>
-
-                  <Button class='my-1  ' variant='outline' on:click={menSockNavigate}>Men Socks</Button>
-   
-                  <Button class='my-1' variant='outline'>Men UnderWear</Button>
-
-                </DropdownMenu.Content>
-              </DropdownMenu.Root>
-              <div class='mx-2'></div>
-                <DropdownMenu.Root>
-                <DropdownMenu.Trigger asChild let:builder>
-                  <Button variant="outline" builders={[builder]} class='font-sans'>Woman</Button>
-                </DropdownMenu.Trigger>
-                <DropdownMenu.Content class='p-2'>
-
-                  <Button class='my-1  ' variant='outline'>Men Socks</Button>
-   
-                  <Button class='my-1' variant='outline'>Men UnderWear</Button>
-
-                </DropdownMenu.Content>
-              </DropdownMenu.Root>
-              <div class='mx-2'></div>
-                <DropdownMenu.Root>
-                <DropdownMenu.Trigger asChild let:builder>
-                  <Button variant="outline" builders={[builder]} class='font-sans'>Kids</Button>
-                </DropdownMenu.Trigger>
-                <DropdownMenu.Content class='p-2'>
-
-                  <Button class='my-1  ' variant='outline' on:click={menNavigate}>Men Socks</Button>
-   
-                  <Button class='my-1' variant='outline'>Men UnderWear</Button>
-
-                </DropdownMenu.Content>
-              </DropdownMenu.Root>
-              <div class='mx-2'></div>
-                <DropdownMenu.Root>
-                <DropdownMenu.Trigger asChild let:builder>
-                  <Button variant="outline" builders={[builder]} class='font-sans'>Collections</Button>
-                </DropdownMenu.Trigger>
-                <DropdownMenu.Content class='p-2'>
-
-                  <Button class='my-1  ' variant='outline'>Men Socks</Button>
-   
-                  <Button class='my-1' variant='outline'>Men UnderWear</Button>
-
-                </DropdownMenu.Content>
-              </DropdownMenu.Root>
-              <div class='mx-2'></div>
-                <DropdownMenu.Root>
-                <DropdownMenu.Trigger asChild let:builder>
-                  <Button variant="outline" builders={[builder]} class='font-sans'>New Items</Button>
-                </DropdownMenu.Trigger>
-                <DropdownMenu.Content class='p-2'>
-
-                  <Button class='my-1  ' variant='outline'>Men Socks</Button>
-   
-                  <Button class='my-1' variant='outline'>Men UnderWear</Button>
-
-                </DropdownMenu.Content>
-              </DropdownMenu.Root>
-
+                <!-- Centering the items -->
+                {#each categories as category}
+                <li class="text-transform: uppercase p-5 xl:p-8 active font-bold">
+                    <a href={category.link}>{category.name}</a>
+                </li>
+                {/each}
             </ul>
         </nav>
         
@@ -169,9 +100,9 @@
 <br>
 
 
+<!-- Add your additional styles here -->
 <style>
     * {
-        font-family: 'Jura', sans-serif;
-
+        font-family: 'Jura', sans-serif; /* Ensure Noto Sans is applied universally */
     }
 </style>
