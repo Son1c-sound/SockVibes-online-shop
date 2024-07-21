@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { men, underwears } from "./products";
+  import { men, underwears, socks } from "./products";
   import { Button } from "$lib/components/ui/button";
   import * as Card from "$lib/components/ui/card/index.js";
   import * as Carousel from "$lib/components/ui/carousel/index.js";
@@ -28,6 +28,10 @@
 
     function slipernav(menUnderId: any) {
         goto(`/categories/men/menUnderWear/${menUnderId}`);
+    }   
+
+    function sockNav(menSockId: any) {
+        goto(`/categories/men/menSocks/${menSockId}`);
     }   
 
     function menUnder() {
@@ -70,8 +74,7 @@
       <button   on:click={menUnder} class='text-blue-600 text-center mx-6 my-1' >Men Slippers</button>
       <hr>
       <button class='text-center mx-6 my-1 text-blue-600 ' on:click={menSock}  >Men Socks</button>
-      <hr>
-      <button class='text-center mx-6 my-1 text-blue-600 '  >All items</button>
+
       
     </Select.Group>
   </Select.Content>
@@ -253,6 +256,91 @@
     </div>
 
   {/each}
+  {#each socks as item} 
+
+  <div
+    class="relative flex flex-col bg-clip-border m-1 text-gray-900  rounded-md "
+  >
+    <div
+      class="relative mx-1 mt-4 overflow-hidden text-gray-700  bg-clip-border "
+    >
+    <button class="w-full  p-1 rounded-md text-black " on:click={() => slipernav(item.id)}>
+      <Carousel.Root class=" my-4 w-full mx-auto max-w-full" bind:api>
+        <Carousel.Content>
+          <Carousel.Item>
+            <div class="p-1">
+              <Card.Root>
+                <Card.Content
+                  class="flex aspect-square items-center justify-center p-4 sm:p-6"
+                >
+                  <img
+                    src={item.urls[0]}
+                    class="w-full h-full object-cover text-2xl font-semibold"
+                  alt='item' />
+                </Card.Content>
+              </Card.Root>
+            </div>
+          </Carousel.Item>
+          <Carousel.Item>
+            <div class="p-1">
+              <Card.Root>
+                <Card.Content
+                  class="flex aspect-square items-center justify-center p-4 sm:p-6"
+                >
+                  <img
+                    src={item.urls[1]}
+                    class="w-full h-full object-cover text-4xl font-semibold"
+                   alt='item'/>
+                </Card.Content>
+              </Card.Root>
+            </div>
+          </Carousel.Item>
+          <Carousel.Item>
+            <div class="p-1">
+              <Card.Root>
+                <Card.Content
+                  class="flex aspect-square items-center justify-center p-4 sm:p-6"
+                >
+                  <img
+                    src={item.urls[2]}
+                    class="w-full h-full object-cover text-4xl font-semibold"
+                  alt='item'/>
+                </Card.Content>
+              </Card.Root>
+            </div>
+          </Carousel.Item>
+        </Carousel.Content>
+      </Carousel.Root>
+    </button>
+    </div>
+    <div class="p-4 sm:p-6">
+      <div class="flex items-center justify-between mb-2">
+        <p
+          class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
+        > {item.name}
+        
+         
+        </p>
+        
+        <p
+          class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
+        ><Badge class='  rounded-md bg-yellow-300 text-black'>{item.price}</Badge>
+          
+        </p>
+   
+      </div>
+      <p class="text-gray-600 my-2">Category: {item.category}</p>
+      
+
+      <p class="text-green-500">{item.status}</p>
+    </div>
+
+    <div class="p-2 sm:p-1 pt-0">
+      <Button class="w-full hover:bg-yellow-400  bg-yellow-300 text-black " on:click={() => sockNav(item.id)}>Purchase</Button>
+    </div>
+  </div>
+
+{/each}
 </div>
 </body>
 <style>

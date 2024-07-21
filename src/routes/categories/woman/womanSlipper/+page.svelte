@@ -1,15 +1,15 @@
 <script lang="ts">
-    import { underwears } from "../../men/products";
+    import { slippers } from "../../woman/products";
     import { Button } from "$lib/components/ui/button";
     import * as Card from "$lib/components/ui/card/index.js";
     import * as Carousel from "$lib/components/ui/carousel/index.js";
     import { Progress } from "$lib/components/ui/progress/";
     import { type CarouselAPI } from "$lib/components/ui/carousel/context.js";
     import { Badge } from "$lib/components/ui/badge/index.js";
-  
+    import * as Select from "$lib/components/ui/select/index.js";
     import Swipe from "$lib/Icons/swipe.svelte";
       import { goto } from '$app/navigation'
-      import * as Select from "$lib/components/ui/select/index.js";
+    
     let api: CarouselAPI;
     let count = 0;
     let current = 0;
@@ -22,19 +22,17 @@
       });
     }
        
-       function navigateToProductDetail(menUnderWearId: any) {
-          goto(`/categories/men/menUnderWear/${menUnderWearId}`);
+       function navigateToProductDetail(womanSlipperId: any) {
+          goto(`/categories/woman/womanSlipper/${womanSlipperId}`);
       }   
   
-      function menUnder() {
-        goto('/categories/men')
+      function womansock() {
+        goto('/categories/woman/womanSocks')
       }
-
-      function menSocks() {
-        goto('/categories/men/menSocks')
+      
+      function womanSock() {
+        goto('/categories/woman')
       }
-
-   
   </script>
   
   <body >
@@ -44,7 +42,7 @@
     <h1 class="text-gray-900 text-center my-9">Sock Vibes </h1>
     <div class="mx-3 sm:mx-auto ">
       <h1 class="text-center  text-5xl  p-2 rounded-md font-bold font-mono text-gray-900 ">
-        Men Slippers
+        Woman Slippers
       </h1>
     </div>
     
@@ -54,31 +52,28 @@
         <Swipe />
       </div>
     </div>
-    
-    <div class="my-3 flex justify-center space-x-4 mx-auto">
-        <Select.Root portal={null}>
-            <Select.Trigger class="w-[180px] border-black">
-              <Select.Value placeholder="Filter by Item: " />
-            </Select.Trigger>
-            <Select.Content>
-              <Select.Group>
 
-                <hr>
-                <button class=' text-blue-600 text-center mx-9 my-1' on:click={menSocks}  >Men Socks</button>
-                <hr>
-                <button on:click={menUnder}  class='text-blue-600 text-center mx-9 my-1'  >All items</button>
-                
-              </Select.Group>
-            </Select.Content>
-            <Select.Input name="favoriteFruit" />
-          </Select.Root>
-    </div>
-    
+   
+    <div class="my-3 flex justify-center space-x-4 mx-auto">      
+      <Select.Root portal={null}>
+        <Select.Trigger class=" w-[200px] border-black">
+          <Select.Value placeholder="Filter by Item: " />
+        </Select.Trigger>
+        <Select.Content>
+          <Select.Group>
+            <button on:click={womanSock}>All Category</button>
+            <hr>      
+            <button on:click={womansock}>Woman socks</button>  
+          </Select.Group>
+        </Select.Content>
+        <Select.Input name="test" />
+      </Select.Root>
+        </div>
   
   <div
     class=" my-5 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 mx-auto max-w-screen-xl "
   >
-    {#each underwears as item} 
+    {#each slippers as item} 
   
       <div
         class="relative flex flex-col bg-clip-border m-1 text-gray-900  rounded-md "

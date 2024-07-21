@@ -61,7 +61,7 @@
         <Select.Content>
           <Select.Group>
             <button   on:click={menSocks}   class='text-blue-600 text-center mx-6 my-1' >Men Slippers</button>
-            <button class='text-blue-600 text-center mx-6 my-1' on:click={menUnder}>Men Socks</button>
+
             <button on:click={menUnder} class='text-blue-600 text-center mx-6 my-1'  >All items</button>
             
           </Select.Group>
