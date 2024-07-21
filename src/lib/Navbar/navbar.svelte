@@ -5,8 +5,15 @@
     import CartIc from "./cartIc.svelte";
     import SearchIc from "./searchIc.svelte";
     import { goto } from '$app/navigation'
+    import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
+
+  import { Button } from "$lib/components/ui/button/";
+ 
 
    
+    let showStatusBar = true;
+    let showActivityBar = false;
+    let showPanel = false;
 
     let categories = [
       { name: 'men', link: '/categories/men' },
@@ -22,11 +29,14 @@
       isMobileMenuOpen = !isMobileMenuOpen;
     }
 
-
+    function menSockNavigate() {
+        goto ('/categories/men')
+    }
     function menucart() {
         goto ('/Cart')
     }
 </script>
+ 
 
 <header class="bg-white  text-black  shadow-md fixed       md:block   z-50 top-0 left-0 w-full">
     <Anouncment></Anouncment>
@@ -36,12 +46,71 @@
         </a>
         <nav class="hidden md:flex ml-4 flex-grow">
             <ul class="flex items-center justify-center mx-auto">
-                <!-- Centering the items -->
-                {#each categories as category}
-                <li class="text-transform: uppercase p-5 xl:p-8 active font-bold">
-                    <a href={category.link}>{category.name}</a>
-                </li>
-                {/each}
+                <DropdownMenu.Root>
+                <DropdownMenu.Trigger asChild let:builder>
+                  <Button variant="outline" builders={[builder]} class='font-sans'>Men</Button>
+                </DropdownMenu.Trigger>
+                <DropdownMenu.Content class='p-2'>
+
+                  <Button class='my-1  ' variant='outline' on:click={menSockNavigate}>Men Socks</Button>
+   
+                  <Button class='my-1' variant='outline'>Men UnderWear</Button>
+
+                </DropdownMenu.Content>
+              </DropdownMenu.Root>
+              <div class='mx-2'></div>
+                <DropdownMenu.Root>
+                <DropdownMenu.Trigger asChild let:builder>
+                  <Button variant="outline" builders={[builder]} class='font-sans'>Woman</Button>
+                </DropdownMenu.Trigger>
+                <DropdownMenu.Content class='p-2'>
+
+                  <Button class='my-1  ' variant='outline'>Men Socks</Button>
+   
+                  <Button class='my-1' variant='outline'>Men UnderWear</Button>
+
+                </DropdownMenu.Content>
+              </DropdownMenu.Root>
+              <div class='mx-2'></div>
+                <DropdownMenu.Root>
+                <DropdownMenu.Trigger asChild let:builder>
+                  <Button variant="outline" builders={[builder]} class='font-sans'>Kids</Button>
+                </DropdownMenu.Trigger>
+                <DropdownMenu.Content class='p-2'>
+
+                  <Button class='my-1  ' variant='outline' on:click={menNavigate}>Men Socks</Button>
+   
+                  <Button class='my-1' variant='outline'>Men UnderWear</Button>
+
+                </DropdownMenu.Content>
+              </DropdownMenu.Root>
+              <div class='mx-2'></div>
+                <DropdownMenu.Root>
+                <DropdownMenu.Trigger asChild let:builder>
+                  <Button variant="outline" builders={[builder]} class='font-sans'>Collections</Button>
+                </DropdownMenu.Trigger>
+                <DropdownMenu.Content class='p-2'>
+
+                  <Button class='my-1  ' variant='outline'>Men Socks</Button>
+   
+                  <Button class='my-1' variant='outline'>Men UnderWear</Button>
+
+                </DropdownMenu.Content>
+              </DropdownMenu.Root>
+              <div class='mx-2'></div>
+                <DropdownMenu.Root>
+                <DropdownMenu.Trigger asChild let:builder>
+                  <Button variant="outline" builders={[builder]} class='font-sans'>New Items</Button>
+                </DropdownMenu.Trigger>
+                <DropdownMenu.Content class='p-2'>
+
+                  <Button class='my-1  ' variant='outline'>Men Socks</Button>
+   
+                  <Button class='my-1' variant='outline'>Men UnderWear</Button>
+
+                </DropdownMenu.Content>
+              </DropdownMenu.Root>
+
             </ul>
         </nav>
         
@@ -75,12 +144,18 @@
      
     <ul class="text-center space-y-6">
         <h1 class="text-4xl font-bold mb-6 text-black">Categories</h1>
-        {#each categories as category}
-        <li>
-            
-            <a href={category.link} on:click={toggleMobileMenu} class="block  border border-black text-black font-semibold rounded-lg py-3 px-6 md:py-4 md:px-8 transition-colors duration-300">{category.name}</a>
-        </li>
-        {/each}
+        <DropdownMenu.Root>
+            <DropdownMenu.Trigger asChild let:builder>
+              <Button variant="outline" builders={[builder]} class='font-sans ' >Men</Button>
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Content class='p-2'>
+
+              <Button class='my-1  ' variant='outline' on:click={menSockNavigate} on:click={toggleMobileMenu}>Men Socks</Button>
+
+              <Button class='my-1' variant='outline'>Men UnderWear</Button>
+
+            </DropdownMenu.Content>
+          </DropdownMenu.Root>
     </ul>
     <button on:click={toggleMobileMenu} class="mt-8   rounded-full text-red-500 font-semibold px-6 py-3 md:px-8 md:py-4 transition-colors duration-300 focus:outline-none">
         Close
@@ -100,9 +175,9 @@
 <br>
 
 
-<!-- Add your additional styles here -->
 <style>
     * {
-        font-family: 'Jura', sans-serif; /* Ensure Noto Sans is applied universally */
+        font-family: 'Jura', sans-serif;
+
     }
 </style>
