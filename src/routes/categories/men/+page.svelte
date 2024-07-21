@@ -6,7 +6,7 @@
   import { Progress } from "$lib/components/ui/progress/";
   import { type CarouselAPI } from "$lib/components/ui/carousel/context.js";
   import { Badge } from "$lib/components/ui/badge/index.js";
-
+  import * as Select from "$lib/components/ui/select/index.js";
   import Swipe from "$lib/Icons/swipe.svelte";
     import { goto } from '$app/navigation'
   
@@ -38,7 +38,6 @@
       goto('/categories/men/menSocks')
     }
 
-    
 
 </script>
 
@@ -49,7 +48,7 @@
   <h1 class="text-gray-900 text-center my-9">Sock Vibes </h1>
   <div class="mx-3 sm:mx-auto ">
     <h1 class="text-center  text-5xl  p-2 rounded-md font-bold font-mono text-gray-900 ">
-      Men Categories
+      All items in men category
     </h1>
   </div>
   
@@ -59,11 +58,23 @@
       <Swipe />
     </div>
   </div>
+ 
   
-  <div class="my-3 flex justify-center space-x-4 mx-auto">
-    <Button on:click={menUnder} class='text-center' variant='outline'>Men Slippers</Button>
-    <Button class='text-center' on:click={menSock}  variant='outline'>Men Socks</Button>
-    <Button class='text-center'  variant='outline'>Men Categories</Button>
+  <div class="my-3 flex justify-center space-x-4 mx-auto">      
+<Select.Root portal={null}>
+  <Select.Trigger class="w-[180px] border-black">
+    <Select.Value placeholder="Filter by Item: " />
+  </Select.Trigger>
+  <Select.Content>
+    <Select.Group>
+      <Button   on:click={menUnder} class='text-center mx-6 my-1' >Men Slippers</Button>
+      <Button class='text-center mx-6 my-1' on:click={menSock}  >Men Socks</Button>
+      <Button class='text-center mx-6 my-1'  >All items</Button>
+      
+    </Select.Group>
+  </Select.Content>
+  <Select.Input name="favoriteFruit" />
+</Select.Root>
   </div>
   
 

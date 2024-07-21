@@ -6,7 +6,7 @@
     import { Progress } from "$lib/components/ui/progress/";
     import { type CarouselAPI } from "$lib/components/ui/carousel/context.js";
     import { Badge } from "$lib/components/ui/badge/index.js";
-  
+    import * as Select from "$lib/components/ui/select/index.js";
     import Swipe from "$lib/Icons/swipe.svelte";
       import { goto } from '$app/navigation'
     
@@ -52,11 +52,22 @@
         <Swipe />
       </div>
     </div>
-    
+
     <div class="my-3 flex justify-center space-x-4 mx-auto">
-      <Button on:click={menSocks} class='text-center' variant='outline'>Men slippers</Button>
-      <Button class='text-center'  variant='outline'>Men Socks</Button>
-      <Button on:click={menUnder} class='text-center'  variant='outline'>Men Categories</Button>
+      <Select.Root portal={null}>
+        <Select.Trigger class="w-[180px] border-black">
+          <Select.Value placeholder="Filter by Item: " />
+        </Select.Trigger>
+        <Select.Content>
+          <Select.Group>
+            <Button   on:click={menSocks}   class='text-center mx-6 my-1' >Men Slippers</Button>
+            <Button class='text-center mx-6 my-1' on:click={menUnder}>Men Socks</Button>
+            <Button on:click={menUnder} class='text-center mx-6 my-1'  >All items</Button>
+            
+          </Select.Group>
+        </Select.Content>
+        <Select.Input name="favoriteFruit" />
+      </Select.Root>
     </div>
     
   
