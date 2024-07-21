@@ -62,9 +62,11 @@
             </Select.Trigger>
             <Select.Content>
               <Select.Group>
-                <Button   class='text-center mx-6 my-1' >Men Slippers</Button>
-                <Button class='text-center mx-6 my-1' on:click={menSocks}  >Men Socks</Button>
-                <Button on:click={menUnder}  class='text-center mx-6 my-1'  >All items</Button>
+                <button   class='text-blue-600  text-center mx-9 my-1' >Men Slippers</button>
+                <hr>
+                <button class=' text-blue-600 text-center mx-9 my-1' on:click={menSocks}  >Men Socks</button>
+                <hr>
+                <button on:click={menUnder}  class='text-blue-600 text-center mx-9 my-1'  >All items</button>
                 
               </Select.Group>
             </Select.Content>

@@ -62,18 +62,20 @@
   
   <div class="my-3 flex justify-center space-x-4 mx-auto">      
 <Select.Root portal={null}>
-  <Select.Trigger class="w-[180px] border-black">
+  <Select.Trigger class=" w-[200px] border-black">
     <Select.Value placeholder="Filter by Item: " />
   </Select.Trigger>
   <Select.Content>
     <Select.Group>
-      <Button   on:click={menUnder} class='text-center mx-6 my-1' >Men Slippers</Button>
-      <Button class='text-center mx-6 my-1' on:click={menSock}  >Men Socks</Button>
-      <Button class='text-center mx-6 my-1'  >All items</Button>
+      <button   on:click={menUnder} class='text-blue-600 text-center mx-6 my-1' >Men Slippers</button>
+      <hr>
+      <button class='text-center mx-6 my-1 text-blue-600 ' on:click={menSock}  >Men Socks</button>
+      <hr>
+      <button class='text-center mx-6 my-1 text-blue-600 '  >All items</button>
       
     </Select.Group>
   </Select.Content>
-  <Select.Input name="favoriteFruit" />
+  <Select.Input name="test" />
 </Select.Root>
   </div>
   
