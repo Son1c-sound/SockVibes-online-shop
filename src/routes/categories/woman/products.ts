@@ -116,7 +116,7 @@ export const slippers = [
     },
     {
         id: 3002,
-        name: 'Cotton Boxer Briefs',
+        name: 'Cotton Boxer ',
         type: 'image',
         urls: [
             'https://i.ibb.co/0hDXTPC/New-Project-3-6.png',
@@ -164,7 +164,7 @@ export const slippers = [
     },
     {
         id: 3005,
-        name: 'Sports Underwear',
+        name: 'Sports',
         type: 'image',
         urls: [
             'https://i.ibb.co/8jwXbMQ/New-Project-3-5.png',
@@ -310,7 +310,7 @@ export const socks = [
         link: 'https://example.com/sock1',
         description: 'Soft and cozy crew socks perfect for everyday comfort.',
         status: 'In Stock',
-        category: 'womman slippers socks'
+        category: 'woman socks'
     },
     {
         id: 4002,
@@ -362,7 +362,7 @@ export const socks = [
     },
     {
         id: 4005,
-        name: 'Sports Performance woman socks',
+        name: 'Performance woman socks',
         type: 'image',
         urls: [
             'https://i.ibb.co/8jwXbMQ/New-Project-3-5.png',

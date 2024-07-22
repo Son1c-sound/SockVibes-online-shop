@@ -55,6 +55,9 @@
         <div
           class="relative mx-1 mt-4 overflow-hidden text-gray-900 bg-clip-border"
         >
+        <button
+        class="w-full  border rounded-lg border-yellow-300 text-white hover:bg-yellow-500"
+        on:click={() => navigateToProductDetail(item.id)}>
           <Carousel.Root class=" w-full mx-auto max-w-full" bind:api>
             <Carousel.Content>
               <Carousel.Item>
@@ -118,6 +121,7 @@
               </Carousel.Item>
             </Carousel.Content>
           </Carousel.Root>
+          </button>
         </div>
         <div class="p-4 sm:p-6">
           <div class="flex items-center justify-between mb-2">
@@ -127,9 +131,9 @@
               {item.name}
             </p>
             <p
-              class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-green-gray-900"
+              class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-yellow-gray-900"
             >
-              <Badge class="bg-green-400 text-gray-800 rounded-md">New</Badge>
+              <Badge class="bg-green-500 text-gray-100 rounded-md">New</Badge>
             </p>
           </div>
           <p class="text-gray-800 my-2">Category: {item.category}</p>
@@ -137,7 +141,7 @@
 
         <div class="p-2 sm:p-1 pt-0">
           <Button
-            class="w-full bg-green-500 border border-green-400 text-white hover:bg-green-500"
+            class="w-full bg-yellow-300 border border-yellow-300 hover:bg-yellow-500 text-black"
             on:click={() => navigateToProductDetail(item.id)}>Check Item</Button
           >
         </div>

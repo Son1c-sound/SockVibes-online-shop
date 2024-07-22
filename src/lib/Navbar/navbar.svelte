@@ -1,4 +1,4 @@
-<script>
+<script lang='ts'>
     import Accic from "./accic.svelte";
     import Anouncment from "./Anouncment.svelte";
     import Burger from "./burger.svelte";
@@ -8,13 +8,6 @@
 
    
 
-    let categories = [
-      { name: 'men', link: '/categories/men' },
-      { name: 'Woman', link: '/categories/woman' },
-      { name: 'kids', link: '/categories/kids' },
-      { name: 'collections', link: '/categories/collections' },
-      { name: 'New items', link: '/categories/newitems' }
-    ];
   
     let isMobileMenuOpen = false;
   
@@ -34,16 +27,55 @@
         <a href="/" class="flex items-center justify-center">
             <img class="h-14" src="https://i.ibb.co/9497j0z/450211942-845890467465486-8095787243396923148-n.jpg" alt="Logo" />
         </a>
-        <nav class="hidden md:flex ml-4 flex-grow">
+        <nav class="relative hidden md:flex ml-4 flex-grow">
             <ul class="flex items-center justify-center mx-auto">
-                <!-- Centering the items -->
-                {#each categories as category}
-                <li class="text-transform: uppercase p-5 xl:p-8 active font-bold">
-                    <a href={category.link}>{category.name}</a>
+                <!-- Dropdown item 1 -->
+                <li class="relative text-uppercase p-5 xl:p-8 font-bold group">
+                    <a href='/categories/men' class="block mx-5">Men</a>
+                    <!-- Dropdown menu -->
+                    <div class="absolute left-1/2 mt-2 w-64 bg-white text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform -translate-x-1/2">
+                        <ul class="flex flex-col items-start p-2">
+                            <li class="p-2 w-full text-center hover:bg-gray-200"><a href='/categories/men'>All Items</a></li>
+                            <li class="p-2 w-full text-center hover:bg-gray-200"><a href='/categories/men/menSlippers'>Men Slippers</a></li>
+                            <li class="p-2 w-full text-center hover:bg-gray-200"><a href='/categories/men/menSocks'>Men Socks</a></li>
+                            <!-- Add more categories here -->
+                        </ul>
+                    </div>
                 </li>
-                {/each}
+                
+                <!-- Dropdown item 2 -->
+                <li class="relative text-uppercase p-5 xl:p-8 font-bold group mx-4">
+                    <a href='/categories/woman' class="block mx-5">Women</a>
+                    <!-- Dropdown menu -->
+                    <div class="absolute left-1/2 mt-2 w-64 bg-white text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform -translate-x-1/2">
+                        <ul class="flex flex-col items-start p-2">
+                            <li class="p-2 w-full text-center hover:bg-gray-200"><a href='/categories/woman'>All Items</a></li>
+                            <li class="p-2 w-full text-center hover:bg-gray-200"><a href='/categories/woman/womanSocks'>Women Socks</a></li>
+                            <li class="p-2 w-full text-center hover:bg-gray-200"><a href='/categories/woman/womanSlipper'>Women Slippers</a></li>
+                            <!-- Add more categories here -->
+                        </ul>
+                    </div>
+                </li>
+                
+                <li class="relative text-uppercase p-5 xl:p-8 font-bold group mx-4">
+                    <a href='/categories/newitems' class="block mx-5">New Items</a>
+                    <!-- Dropdown menu -->
+                    <div class="absolute left-1/2 mt-2 w-64 bg-white text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform -translate-x-1/2">
+
+                    </div>
+                </li>
+                
+                <!-- Dropdown item 4 -->
+                <li class="relative text-uppercase p-5 xl:p-8 font-bold group mx-4">
+                    <a href='/categories/sale' class="block mx-5">Sales</a>
+                    <!-- Dropdown menu -->
+                  
+                </li>
             </ul>
         </nav>
+        
+        
+        
         
         <div class="ml-auto md:hidden">
             <button class="md:hidden mx-5" on:click={toggleMobileMenu}>
@@ -72,20 +104,51 @@
 
     <div class="md:hidden fixed top-0 left-0 w-full h-full bg-white flex flex-col items-center justify-center"
      style="display: {isMobileMenuOpen ? 'flex' : 'none'}; z-index: 20;">
-     
-    <ul class="text-center space-y-6">
-        <h1 class="text-4xl font-bold mb-6 text-black">Categories</h1>
-        {#each categories as category}
-        <li>
-            
-            <a href={category.link} on:click={toggleMobileMenu} class="block  border border-black text-black font-semibold rounded-lg py-3 px-6 md:py-4 md:px-8 transition-colors duration-300">{category.name}</a>
+     <div class="md:hidden fixed top-0 left-0 w-full h-full bg-white flex flex-col items-center justify-start p-6"
+     style="display: {isMobileMenuOpen ? 'flex' : 'none'}; z-index: 20;">
+
+    <ul class="w-full text-center space-y-2">
+        <h1 class="text-4xl font-bold mb-4 text-black my-24">Categories</h1>
+        
+        <!-- Men Dropdown -->
+        <li class="relative text-uppercase p-4 xl:p-8 font-bold group">
+            <a href='/categories/men' class="block mx-5 text-xl">Men</a>
+            <div class="w-full bg-white text-black mt-2 rounded shadow-lg">
+                <ul class="flex flex-col items-center p-2 space-y-2 border-2 border-gray-900 ">
+                    <li class="p-2 w-full text-center hover:bg-gray-200"><a on:click={toggleMobileMenu} href='/categories/men'>All Items</a></li>
+                    <li class="p-2 w-full text-center hover:bg-gray-200"><a on:click={toggleMobileMenu} href='/categories/men/menSlippers'>Men Slippers</a></li>
+                    <li class="p-2 w-full text-center hover:bg-gray-200"><a on:click={toggleMobileMenu} href='/categories/men/menSocks'>Men Socks</a></li>
+                </ul>
+            </div>
         </li>
-        {/each}
+
+        <!-- Women Dropdown -->
+        <li class="relative text-uppercase p-5 xl:p-8 font-bold group ">
+            <a href='/categories/woman' class="block mx-5 text-xl">Women</a>
+            <div class="w-full bg-white text-black mt-2 rounded shadow-lg">
+                <ul class="flex flex-col items-center p-2 space-y-2 border-2 border-gray-900 ">
+                    <li class="p-2 w-full text-center hover:bg-gray-200"><a on:click={toggleMobileMenu} href='/categories/woman'>All Items</a></li>
+                    <li class="p-2 w-full text-center hover:bg-gray-200"><a on:click={toggleMobileMenu} href='/categories/woman/womanSocks'>Women Socks</a></li>
+                    <li class="p-2 w-full text-center hover:bg-gray-200"><a on:click={toggleMobileMenu} href='/categories/woman/womanSlipper'>Women Slippers</a></li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <div class="w-2/3 mx-auto p-3 bg-yellow-300 text-black  shadow-md">
+            <a href="/categories/newitems" on:click={toggleMobileMenu} class=" ">New Items</a>
+        </div>
+            <div class="my-3 w-2/3 mx-auto p-3 bg-green-400 text-black  shadow-md">
+            <a href="/categories/newitems" on:click={toggleMobileMenu} class=" ">Sales</a>
+        </div>
+        </li>
     </ul>
-    <button on:click={toggleMobileMenu} class="mt-8   rounded-full text-red-500 font-semibold px-6 py-3 md:px-8 md:py-4 transition-colors duration-300 focus:outline-none">
+
+    <button on:click={toggleMobileMenu} class="mt-8 rounded-full text-red-500 font-semibold px-6 py-3 md:px-8 md:py-4 transition-colors duration-300 focus:outline-none">
         Close
     </button>
 </div>
+
+
 
 
 

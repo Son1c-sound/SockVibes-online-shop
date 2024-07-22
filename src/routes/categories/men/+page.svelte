@@ -35,7 +35,7 @@
     }   
 
     function menUnder() {
-      goto('/categories/men/menUnderWear')
+      goto('/categories/men/menSlippers')
     }
 
     function menSock() {

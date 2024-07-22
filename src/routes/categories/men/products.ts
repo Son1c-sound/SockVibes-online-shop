@@ -164,7 +164,7 @@ export const underwears = [
     },
     {
         id: 3005,
-        name: 'Sports men slippers',
+        name: ' men slippers',
         type: 'image',
         urls: [
             'https://i.ibb.co/8jwXbMQ/New-Project-3-5.png',
@@ -264,7 +264,7 @@ export const socks = [
     },
     {
         id: 4005,
-        name: 'Sports Performance men socks',
+        name: 'Sports  men socks',
         type: 'image',
         urls: [
             'https://i.ibb.co/8jwXbMQ/New-Project-3-5.png',

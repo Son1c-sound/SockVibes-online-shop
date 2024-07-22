@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { underwears } from "../../men/products";
+    import { underwears } from "../products";
     import { Button } from "$lib/components/ui/button";
     import * as Card from "$lib/components/ui/card/index.js";
     import * as Carousel from "$lib/components/ui/carousel/index.js";
