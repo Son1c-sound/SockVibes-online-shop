@@ -3,22 +3,13 @@
     import { onMount } from 'svelte';
     import toast, { Toaster } from 'svelte-french-toast';
     import Button from "$lib/components/ui/button/button.svelte";
-    
+ 
     import RightArrow from '$lib/Icons/rightarrow.svelte'
     import MightLike from '../../lib/HeroSlider/braclet/MightLike/mightlike.svelte'
 
     import DoneMark from '$lib/Icons/donemark.svelte'
   import Cartfooter from "$lib/Footer/cartFoot/cartfooter.svelte";
-    interface CartItem {
-        quantity: number;
-        id: number;
-        name: string;
-        image: string;
-        description: string;
-        status: string;
-        price: string;
-        category: string;
-    }
+      import type { CartItem } from '../../app';
 
     let cartItems: CartItem[] = [];
 
@@ -61,6 +52,30 @@
             return total + (price * item.quantity);
         }, 0);
     }
+
+    async function checkout() {
+        try {
+            const response = await fetch("../Cart/checkout", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    items: cartItems
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Checkout failed');
+            }
+
+            const data = await response.json();
+            window.location.replace(data.url);
+        } catch (error) {
+            console.error('Error during checkout:', error);
+            toast.error('Failed to proceed with checkout.');
+        }
+    }
 </script>
 
 
@@ -76,7 +91,7 @@
   <div class="p-6 max-w-2xl mx-auto lg:border-2 lg:border-gray-900 rounded-md">
 
     <div class="my-4 flex justify-between items-center">
-      <Button>Check Out ({cartItems.length} Items)</Button>
+      <Button  on:click={checkout}>Check Out ({cartItems.length} Items)</Button>
       <h1 class="text-xl "><span class="font-arial ">Subtotal:</span> ${calculateSubtotal().toFixed(2)}</h1>
   </div>
   
@@ -105,7 +120,7 @@
         </div>
         
       {/each}
-      <Button class='w-full rounded-none'>Check Out ({cartItems.length} Items)</Button>
+      <Button  class='w-full rounded-none'>Check Out ({cartItems.length} Items)</Button>
 
     </div>
   </div>

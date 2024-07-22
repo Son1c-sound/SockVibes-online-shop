@@ -11,3 +11,14 @@ declare global {
 }
 
 export {};
+
+export interface CartItem {
+    quantity: number;
+    id: number;
+    name: string;
+    image: string;
+    description: string;
+    status: string;
+    price: string;
+    category: string;
+}
