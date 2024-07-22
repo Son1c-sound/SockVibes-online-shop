@@ -8,7 +8,7 @@ Welcome to **SockVibes**, a dynamic online shopping platform designed for a majo
 - **Backend:** [Node.js](https://nodejs.org/)
 - **Database:** [PostgreSQL](https://www.postgresql.org/) (hosted on Supabase)
 - **Payments:** [Stripe](https://stripe.com/)
-- **Host** [Supabase][Vercel]
+- **Host** [Supabase](https://supabase.com/) [Vercel](https://vercel.com/)
 - **Libraries:** [Shadcn](https://shadcn.dev/), [Tailwind CSS](https://tailwindcss.com/)
 
 ## 🛒 How the Shop Works
