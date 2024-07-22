@@ -108,7 +108,7 @@
      style="display: {isMobileMenuOpen ? 'flex' : 'none'}; z-index: 20;">
 
     <ul class="w-full text-center space-y-2">
-        <h1 class="text-4xl font-bold mb-4 text-black my-24">Categories</h1>
+        <h1 class="text-4xl font-bold mb-4 text-black ">Categories</h1>
         
         <!-- Men Dropdown -->
         <li class="relative text-uppercase p-4 xl:p-8 font-bold group">
