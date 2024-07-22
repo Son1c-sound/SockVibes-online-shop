@@ -333,6 +333,7 @@
       
 
       <p class="text-green-500">{item.status}</p>
+  
     </div>
 
     <div class="p-2 sm:p-1 pt-0">

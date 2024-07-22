@@ -30,6 +30,7 @@ export const men = [
         link: 'https://example.com/link3',
         description: 'Fusce vel risus sit amet erat tincidunt tincidunt eget nec ante. Donec nec tortor sed elit eleifend vehicula.',
         status: 'In Stock',
+        order: 'Out of order',
         category: 'men general'
     },
 
@@ -50,6 +51,8 @@ export const underwears = [
         link: 'https://example.com/link1',
         description: 'Soft and comfortable briefs with a perfect fit. Ideal for everyday wear.',
         status: 'In Stock',
+        order: 'Out of order',
+
         category: ' general slippers'
     },
 
