@@ -31,7 +31,7 @@
     </a>
     <nav class="relative hidden md:flex ml-4 flex-grow">
       <ul class="flex items-center justify-center mx-auto">
-        <li class="p-2 w-full text-center hover:bg-gray-200 font-bold">
+        <li class="p-2 w-full text-center mx-5 font-bold">
           <a href="/categories/allItems">All Items</a>
         </li>
         <!-- Dropdown item 1 -->
@@ -131,9 +131,7 @@
     >
       <ul class="w-full text-center space-y-2">
         <br />
-        <br />
-        <br />
-        <br />
+      
         <br />
         <h2 class='text-center text-3xl'>Sock Vibes Shop Menu</h2>
         <br />
