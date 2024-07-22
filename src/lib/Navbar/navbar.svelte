@@ -28,7 +28,9 @@
             <img class="h-14" src="https://i.ibb.co/9497j0z/450211942-845890467465486-8095787243396923148-n.jpg" alt="Logo" />
         </a>
         <nav class="relative hidden md:flex ml-4 flex-grow">
+            
             <ul class="flex items-center justify-center mx-auto">
+                <li class="p-2 w-full text-center hover:bg-gray-200"><a href='/categories/allItems'>All Items</a></li>
                 <!-- Dropdown item 1 -->
                 <li class="relative text-uppercase p-5 xl:p-8 font-bold group">
                     <a href='/categories/men' class="block mx-5">Men</a>

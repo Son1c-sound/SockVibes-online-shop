@@ -195,7 +195,7 @@ export const slippers = [
         category: 'womman slippers'
     }
 ];
-export const underwears = [
+export const underwear = [
     {
         id: 3001,
         name: 'Comfort Briefs',

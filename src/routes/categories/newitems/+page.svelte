@@ -137,8 +137,11 @@
             </p>
           </div>
           <p class="text-gray-800 my-2">Category: {item.category}</p>
+          <p class="text-green-500 my-5 "> {item.status}</p>
         </div>
+       
 
+  
         <div class="p-2 sm:p-1 pt-0">
           <Button
             class="w-full bg-yellow-300 border border-yellow-300 hover:bg-yellow-500 text-black"
