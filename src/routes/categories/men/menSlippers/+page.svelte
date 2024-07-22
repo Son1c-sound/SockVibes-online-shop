@@ -23,7 +23,7 @@
     }
        
        function navigateToProductDetail(menUnderWearId: any) {
-          goto(`/categories/men/menUnderWear/${menUnderWearId}`);
+          goto(`/categories/men/menSlippers/${menUnderWearId}`);
       }   
   
       function menUnder() {
