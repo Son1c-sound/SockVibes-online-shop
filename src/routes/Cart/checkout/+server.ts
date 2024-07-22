@@ -4,7 +4,7 @@ import type { CartItem } from '../../../app';
 import { env } from "$env/dynamic/private";
 
 const stripeSecretKey = env.STRIPE_API;
-// Initialize Stripe with your secret key
+
 const stripe = new Stripe(stripeSecretKey, {
     apiVersion: '2024-06-20' 
 });
@@ -24,7 +24,7 @@ export const POST: RequestHandler = async ({ request }) => {
                     name: item.name,
                     images: [item.image]
                 },
-                unit_amount: Math.round(parseFloat(item.price) * 100) // Ensure unit_amount is an integer
+                unit_amount: Math.round(parseFloat(item.price) * 100)
             },
             quantity: item.quantity
         }));
