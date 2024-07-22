@@ -1,9 +1,11 @@
 import Stripe from "stripe";
 import type { RequestHandler } from "@sveltejs/kit";
 import type { CartItem } from '../../../app'; 
+import { env } from "$env/dynamic/private";
 
+const stripeSecretKey = env.STRIPE_API;
 // Initialize Stripe with your secret key
-const stripe = new Stripe('sk_test_51PfDj3HE0HInGjDU7SSQHixOrJRbLqkqpCfRonjhHa5V5YSQitGYHgmkVkeis3m2ioRlds8q0fzwsLRkRDVLwWAb00ECbDB5G5', {
+const stripe = new Stripe(stripeSecretKey, {
     apiVersion: '2024-06-20' 
 });
 

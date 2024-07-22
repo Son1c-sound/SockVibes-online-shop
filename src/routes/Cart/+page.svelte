@@ -71,6 +71,9 @@
 
             const data = await response.json();
             window.location.replace(data.url);
+
+   
+            window.location.replace(data.url);
         } catch (error) {
             console.error('Error during checkout:', error);
             toast.error('Failed to proceed with checkout.');
