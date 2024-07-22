@@ -1,38 +1,49 @@
-# create-svelte
+# SockVibes - Online Shop
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+Welcome to **SockVibes**, a dynamic online shopping platform designed for a major U.S. brand with multiple stores across the country. Our platform is built to provide a seamless shopping experience, enabling users to easily browse, customize, and purchase products from various locations.
 
-## Creating a project
+## 🚀 Tech Stack
 
-If you're seeing this, you've probably already done this step. Congrats!
+- **Frontend:** [SvelteKit](https://kit.svelte.dev/)
+- **Backend:** [Node.js](https://nodejs.org/)
+- **Database:** [PostgreSQL](https://www.postgresql.org/) (hosted on Supabase)
+- **Payments:** [Stripe](https://stripe.com/)
+- **Host** [Supabase][Vercel]
+- **Libraries:** [Shadcn](https://shadcn.dev/), [Tailwind CSS](https://tailwindcss.com/)
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## 🛒 How the Shop Works
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+**SockVibes** operates dynamically, meaning all shop data is loaded from the database. This flexibility allows clients to:
 
-## Developing
+- **Adjust**: Easily modify product details, including prices, descriptions, and statuses through a custom-built admin interface.
+- **Add/Remove Products**: Manage the inventory without technical constraints.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+**Shopping Experience:**
 
-```bash
-npm run dev
+- **No Login Required:** Users can add items to their cart without needing to log in. Cart items are stored locally in the browser’s localStorage.
+- **Dynamic Checkout:** The cart details, including item images, quantities, and prices, are passed to Stripe for a streamlined checkout process.
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+## 💳 Stripe Integration
 
-## Building
+Stripe handles the checkout process by:
 
-To create a production version of your app:
+- Collecting user shipping addresses, email, and phone numbers.
+- Notifying the client with details of the order, including what items were purchased and where they are to be shipped.
 
-```bash
-npm run build
-```
+## 🗃️ Database
 
-You can preview the production build with `npm run preview`.
+- **PostgreSQL**: Managed via [Supabase](https://supabase.com/), it stores all data related to products, inventory, and transactions.
+- **Node.js API**: Facilitates communication between the frontend and the PostgreSQL database, handling CRUD operations seamlessly.
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+## 🎨 UI/UX
+
+- **Shadcn Components:** Utilized for creating reusable and customizable UI components.
+- **Tailwind CSS:** Provides a responsive and modern design framework, ensuring a beautiful and consistent look across the site.
+
+## 📈 Key Features
+
+- **Dynamic Product Management**: Update products in real-time without code changes.
+- **Seamless Checkout**: Quick and easy checkout with Stripe integration.
+- **Local Storage Cart**: Persistent cart functionality without user login.
+
+
