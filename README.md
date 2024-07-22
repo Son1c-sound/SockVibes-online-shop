@@ -6,7 +6,7 @@
 
 - **Frontend:** [SvelteKit](https://kit.svelte.dev/)
 - **Backend:** [Node.js](https://nodejs.org/)
-- **Database:** [PostgreSQL](https://www.postgresql.org/) (hosted on Supabase)
+- **Database:** [PostgreSQL](https://www.postgresql.org/) 
 - **Payments:** [Stripe](https://stripe.com/)
 - **Host** [Supabase](https://supabase.com/) [Vercel](https://vercel.com/)
 - **Libraries:** [Shadcn](https://shadcn.dev/), [Tailwind CSS](https://tailwindcss.com/)
