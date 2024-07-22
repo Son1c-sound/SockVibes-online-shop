@@ -123,7 +123,7 @@
         </div>
         
       {/each}
-      <Button  class='w-full rounded-none'>Check Out ({cartItems.length} Items)</Button>
+      <Button  on:click={checkout} class='w-full rounded-none'>Check Out ({cartItems.length} Items)</Button>
 
     </div>
   </div>

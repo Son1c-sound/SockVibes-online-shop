@@ -10,7 +10,7 @@ const stripe = new Stripe(stripeSecretKey, {
 });
 
 const successUrl = 'http://localhost:5173/Success';
-const cancelUrl = 'http://localhost:5173/Cancel';
+const cancelUrl = 'http://localhost:5173/Canceled';
 
 export const POST: RequestHandler = async ({ request }) => {
     try {
