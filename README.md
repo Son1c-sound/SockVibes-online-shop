@@ -1,6 +1,6 @@
 # SockVibes - Online Shop
 
-Welcome to **SockVibes**, a dynamic online shopping platform designed for a major U.S. brand with multiple stores across the country. Our platform is built to provide a seamless shopping experience, enabling users to easily browse, customize, and purchase products from various locations.
+**SockVibes**, a dynamic online shopping platform designed for a major U.S. brand with multiple stores across the country. ( Freelance project )
 
 ## 🚀 Tech Stack
 
