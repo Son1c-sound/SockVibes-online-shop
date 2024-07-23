@@ -2,15 +2,13 @@
    import Button from "$lib/components/ui/button/button.svelte";
     import * as Card from "$lib/components/ui/card/";
     import * as Carousel from "$lib/components/ui/carousel/";
-
+    import supabase from "$lib/db";
     
     import Autoplay from "embla-carousel-autoplay";
   
     import { goto } from "$app/navigation";
     import { type CarouselAPI } from "$lib/components/ui/carousel/context.js";
     import { Progress } from "$lib/components/ui/progress/index.js";
-  import { Socks } from "../../routes/CheckOut/products/Socks/product";
-
 
 
     function navigateToSocks(socksId: any) {
@@ -18,18 +16,12 @@
     }
 
 
-    function getFirstImageUrl(slide: any) {
-        if (slide.type === 'image' && slide.urls && slide.urls.length > 0) {
-            return slide.urls[0]; 
-        } else {
-            return slide.url; 
-        }
-    }
+ 
    
   const plugin = Autoplay({ delay: 4000, stopOnInteraction: true });
 
 
-  let api: CarouselAPI;
+    let api: CarouselAPI;
     let count = 0;
     let current = 0;
   
@@ -40,6 +32,23 @@
         current = api.selectedScrollSnap() + 1;
       });
     }
+
+    // loading data from supabase
+    let errorMessage:any = ''
+    let items:any[] = []
+
+    async function loadItems() {
+    const { data, error } = await supabase.from("popularItems").select("*");
+
+    if (error) {
+      errorMessage = `Error loading items: ${error.message}`;
+      console.error(error);
+    } else {
+      items = data;
+    }
+  }
+  
+  loadItems();
 
   </script>
    
@@ -53,25 +62,21 @@
 
   
     <Carousel.Content class="-ml-1">
-      {#each Socks as slide}
+      {#each items as slide}
         <Carousel.Item class="pl-4 md:basis-1/2 lg:basis-1/4">
           <button on:click={() => navigateToSocks(slide.id)}>
                 
             <Card.Root class='border-none shadow-none bg-transparent'>
               <Card.Content>
               </Card.Content>
-              {#if slide.type === 'image'}
+
                 <div class=" h-96 flex flex-col justify-center items-center">
-                  <img src={getFirstImageUrl(slide)} alt="" class="h-full  object-cover">
+                  <img src={slide.img} alt="" class="h-full  object-cover">
                   <p class="text-center  mt-2 text-xl text-gray-900">{slide.name}</p>
                   <p class="text-center  mt-2 text-xl text-gray-900">{slide.price}</p>
                 </div>
-              {:else if slide.type === 'text'}
-                <div class="rounded-2xl h-96 flex justify-center items-center">
-              
-                </div>
-               
-              {/if}
+  
+
             </Card.Root>
           </button>
         </Carousel.Item>

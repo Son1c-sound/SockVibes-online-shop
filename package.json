@@ -24,6 +24,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@supabase/supabase-js": "^2.44.4",
 		"bits-ui": "^0.21.12",
 		"clsx": "^2.1.1",
 		"embla-carousel-autoplay": "^8.1.6",
