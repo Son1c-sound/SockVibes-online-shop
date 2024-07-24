@@ -129,7 +129,7 @@ async function loadItems() {
     <!-- Selected Items -->
     <div class="w-full md:w-1/2 mt-4 md:mt-0">
       <Button class="w-full bg-yellow-300 hover:bg-yellow-400 text-black my-5 text-md" on:click={addToCart} on:click={increment}>Add to Cart</Button>
-      <Button class="w-full text-md bg-white text-black hover:text-gray-900 hover:bg-yellow-400 border border-yellow-400">Buy now</Button>
+
 
       <div class="p-6 my-4 border border-gradient-purple-blue">
         <h2 class="text-3xl mb-2 font-bold">{selectedProduct.name}</h2>
