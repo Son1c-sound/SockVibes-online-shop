@@ -145,7 +145,7 @@ loadItems()
       
       <p
         class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
-      ><Badge class='  rounded-md bg-green-400 text-black'>New</Badge>
+      ><Badge class='  rounded-md bg-green-400 text-white'>New</Badge>
         
       </p>
  
