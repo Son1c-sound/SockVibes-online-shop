@@ -1,6 +1,7 @@
 # SockVibes - Online Shop
 
-**SockVibes**, a dynamic online shopping platform for a major U.S. brand with multiple stores across the country. ( Freelance project )
+**SockVibes**, a dynamic online shopping platform for a major U.S. brand with multiple stores across the country. 
+( Freelance project )
 
 ## 🚀 Tech Stack
 
@@ -32,8 +33,8 @@ Stripe handles the checkout process by:
 
 ## 🗃️ Database
 
-- **PostgreSQL**: Managed via [Supabase](https://supabase.com/), it stores all data related to products, inventory, and transactions.
-- **Node.js API**: Facilitates communication between the frontend and the PostgreSQL database, handling CRUD operations seamlessly.
+- **PostgreSQL**:  stores all data related to products, inventory, and transactions.
+- **Node.js API**: Facilitates communication between the frontend and the PostgreSQL database.
 
 ## 🎨 UI/UX
 
