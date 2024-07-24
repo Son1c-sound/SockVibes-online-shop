@@ -10,7 +10,31 @@
   import Swipe from "$lib/Icons/swipe.svelte";
   import { goto } from "$app/navigation";
   import { Item } from "$lib/components/ui/dropdown-menu";
+  import supabase from "$lib/db";
 
+  interface Item {
+  id: number;
+  name: string;
+  price: number;
+  img: string;
+  description?: string;
+  img2?: string;
+  img3?: string;
+  img4?: string;
+  category: string;
+}
+
+  let items: Item[] = [];
+  let errorMessage:any = ''
+  async function loadItems() {
+    const { data, error} = await supabase.from("allitems").select("*");
+
+    if(error) {
+      errorMessage = `Error loading items: ${error.message}`;
+    } else {
+      items = data;
+    }
+  }
   let api: CarouselAPI;
   let count = 0;
   let current = 0;
@@ -26,6 +50,8 @@
   function navigateToProductDetail(newItemsId: any) {
     goto(`/categories/newitems/${newItemsId}`);
   }
+
+  loadItems()
 </script>
 
 <body class="text-white">
@@ -48,7 +74,7 @@
   <div
     class="text-white my-5 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 mx-auto max-w-screen-xl"
   >
-    {#each newItems as item}
+    {#each items as item}
       <div
         class="text-white relative flex flex-col bg-clip-border m-1 rounded-md"
       >
@@ -72,7 +98,7 @@
                       class="flex aspect-square items-center justify-center p-2 sm:p-6 "
                     >
                       <img
-                        src={item.urls[0]}
+                        src={item.img}
                         class="w-full h-full object-cover text-2xl font-semibold "
                         alt="item"
                       />
@@ -91,7 +117,7 @@
                       class="flex aspect-square items-center justify-center p-4 sm:p-6"
                     >
                       <img
-                        src={item.urls[1]}
+                        src={item.img2}
                         class="w-full h-full object-cover text-4xl font-semibold"
                         alt="item"
                       />
@@ -111,7 +137,7 @@
                       class="flex aspect-square items-center justify-center p-4 sm:p-6"
                     >
                       <img
-                        src={item.urls[2]}
+                        src={item.img3}
                         class="w-full h-full object-cover text-4xl font-semibold"
                         alt="item"
                       />
@@ -137,7 +163,7 @@
             </p>
           </div>
           <p class="text-gray-800 my-2">Category: {item.category}</p>
-          <p class="text-green-500 my-5 "> {item.status}</p>
+
         </div>
        
 

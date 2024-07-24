@@ -73,7 +73,7 @@
                 <div class=" h-96 flex flex-col justify-center items-center">
                   <img src={slide.img} alt="" class="h-full  object-cover">
                   <p class="text-center  mt-2 text-xl text-gray-900">{slide.name}</p>
-                  <p class="text-center  mt-2 text-xl text-gray-900">{slide.price}</p>
+                  <p class="text-center  mt-2 text-xl text-gray-900">{slide.price}$</p>
                 </div>
   
 

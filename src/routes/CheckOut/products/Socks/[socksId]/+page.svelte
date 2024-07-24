@@ -121,7 +121,7 @@
     <div class="my-5 p-6 border border-gradient-purple-blue">
       <h2 class="text-3xl mb-2 font-bold">{selectedProduct?.name}</h2>
       <div class="mb-2">
-        <p class="text-2xl">{selectedProduct?.price}</p>
+        <p class="text-2xl">{selectedProduct?.price}$</p>
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild let:builder>
             <Button class="bg-white hover:bg-white mx-8 w-10 text-blue-600" builders={[builder]}>

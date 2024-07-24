@@ -3,9 +3,23 @@
     import Swiper from 'swiper';
     import 'swiper/swiper-bundle.css';
     import { Button } from "$lib/components/ui/button/";
+    import  supabase  from '$lib/db'
 
     let swiperInstance:any;
-    let interval:number;
+    let interval:any;
+
+    let errorMessage = "";
+    let items:any[] = [];
+    async function loadItems() {
+    const { data, error } = await supabase.from("banners").select("*");
+
+    if (error) {
+      errorMessage = `Error loading items: ${error.message}`;
+      console.error(error);
+    } else {
+      items = data;
+    }
+  }
     
     let slides = [
       { type: 'image', url: 'https://i.ibb.co/nwstfbf/Adobe-Stock-559145847.jpg' },
@@ -38,14 +52,16 @@
   onDestroy(() => {
     clearInterval(interval);
   });
+
+  loadItems()
   </script>
 <div class="w-full  relative">
     <div class="swiper default-carousel swiper-container ">
       <div class="swiper-wrapper">
-        {#each slides as slide}
+        {#each items as slide}
           <div class="swiper-slide relative">
             <div class="h-96 lg:h-[650px] relative">
-              <img src={slide.url} alt="" class="h-full w-full object-cover">
+              <img src={slide.img} alt="" class="h-full w-full object-cover">
               <div class='absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center w-full'>
                 <Button class='h-12 w-32 bg-white text-black text-md hover:text-gray-900 hover:bg-gray-200'>Shop Now</Button>
               </div>
