@@ -28,6 +28,7 @@
 
   let items: Item[] = [];
   let errorMessage:any = ''
+  let filterNew: Item[] = [];
   async function loadItems() {
     const { data, error} = await supabase.from("allitems").select("*");
 
@@ -35,6 +36,7 @@
       errorMessage = `Error loading items: ${error.message}`;
     } else {
       items = data;
+      filterNew = items.filter(item => item.category === 'New Item')
     }
   }
 
@@ -74,7 +76,7 @@ loadItems()
   <div
     class="text-white my-5 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 mx-auto max-w-screen-xl"
   >
-    {#each items as item}
+    {#each filterNew as item}
       <div
         class="text-white relative flex flex-col bg-clip-border m-1 rounded-md"
       >
