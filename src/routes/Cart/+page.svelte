@@ -79,6 +79,11 @@
             toast.error('Failed to proceed with checkout.');
         }
     }
+
+    let loading = false
+    function loadCheck() {
+      loading = true
+    }
 </script>
 
 
@@ -97,12 +102,19 @@
 
 
   <div class="p-6 max-w-2xl mx-auto lg:border-2 lg:border-gray-900 rounded-md">
-
+    {#if loading}
+   
+      <Button class='my-4' disabled>Redirecting to Checkout...</Button>
+      <br>
+    {:else}
+   
     <div class="my-4 flex justify-between items-center">
-      <Button  on:click={checkout}>Check Out ({cartItems.length} Items)</Button>
+      <Button  on:click={checkout} on:click={loadCheck}>Check Out ({cartItems.length} Items)</Button>
       <h1 class="text-xl "><span class="font-arial ">Subtotal:</span> ${calculateSubtotal().toFixed(2)}</h1>
-  </div>
   
+     
+  </div>
+  {/if}
     <div class="space-y-6">
       {#each cartItems as item}
         <hr class="bg-gray-900" />
@@ -128,7 +140,12 @@
         </div>
         
       {/each}
-      <Button  on:click={checkout} class='w-full rounded-none'>Check Out ({cartItems.length} Items)</Button>
+      {#if loading}
+      <Button class='w-full ' disabled>Redirecting to Checkout...</Button>
+      {:else}
+      <Button on:click={loadCheck}  on:click={checkout} class='w-full '>Check Out ({cartItems.length} Items)</Button>
+      {/if}
+  
 
     </div>
   </div>

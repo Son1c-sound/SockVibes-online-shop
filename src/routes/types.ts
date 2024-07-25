@@ -22,4 +22,5 @@ export interface Item {
   img3?: string;
   img4?: string;
   category: string;
+  status: string;
 }

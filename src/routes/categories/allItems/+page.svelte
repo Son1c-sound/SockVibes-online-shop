@@ -11,20 +11,8 @@
   import PriceTag from "$lib/Icons/pricetag.svelte";
   import Swipe from "$lib/Icons/swipe.svelte";
   import { goto } from "$app/navigation";
-  import { Item } from "$lib/components/ui/dropdown-menu";
-
-  interface Item {
-  id: number;
-  name: string;
-  price: number;
-  img: string;
-  description?: string;
-  img2?: string;
-  img3?: string;
-  img4?: string;
-  category: string;
-  status: string;
-}
+ 
+  import type {Item} from '../../types'
 
   let items: Item[] = [];
   let errorMessage:any = ''
