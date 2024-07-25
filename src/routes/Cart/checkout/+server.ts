@@ -2,8 +2,13 @@ import Stripe from "stripe";
 import type { RequestHandler } from "@sveltejs/kit";
 import type { CartItem } from '../../../app'; 
 import { env } from "$env/dynamic/private";
+import supabase from "$lib/db";
+import type { Item } from '../../types'
 
-const stripeSecretKey = env.STRIPE_API;
+
+
+
+const stripeSecretKey:any = env.STRIPE_API;
 
 const stripe = new Stripe(stripeSecretKey, {
     apiVersion: '2024-06-20' 
@@ -32,7 +37,7 @@ export const POST: RequestHandler = async ({ request }) => {
         const session = await stripe.checkout.sessions.create({
             line_items: lineItems,
             shipping_address_collection: {
-                allowed_countries: ["US"] 
+                allowed_countries: ["US"]
             },
             mode: "payment",
             success_url: successUrl,
@@ -40,6 +45,9 @@ export const POST: RequestHandler = async ({ request }) => {
             phone_number_collection: {
                 enabled: true,
             },
+            metadata: {
+                cartItems: JSON.stringify(cartItems.map(item => item.id)) // Include item IDs in metadata
+            }
         });
 
         return new Response(JSON.stringify({ url: session.url }), {
@@ -56,5 +64,21 @@ export const POST: RequestHandler = async ({ request }) => {
                 "Content-Type": "application/json"
             }
         });
+    }
+}
+
+
+let items: Item[] = []
+let errorMessage: string = ''
+async function updateStorage(cartItems: string[]) {
+    for (const itemId of cartItems) {
+        const { error } = await supabase
+            .from('allitems')
+            .update({ storage: supabase.raw('storage - 1') })
+            .match({ id: itemId });
+
+        if (error) {
+            console.error(`Error updating item ${itemId}: ${error.message}`);
+        }
     }
 }
