@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { men } from "./products";
   import { Button } from "$lib/components/ui/button";
   import * as Card from "$lib/components/ui/card/index.js";
   import * as Carousel from "$lib/components/ui/carousel/index.js";
@@ -165,7 +164,7 @@
         <p class="text-red-500 text-sm">{item.status}</p>
         {:else}
 
-        <p class="text-green-500 text-sm">{item.status}</p>
+        <p class="text-green-500 ">{item.status}</p>
 
         {/if}
       </div>

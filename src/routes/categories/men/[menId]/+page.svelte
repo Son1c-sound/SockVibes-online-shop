@@ -8,28 +8,17 @@
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
   import DropIcon from "../../../../lib/Icons/dropdwon.svelte";
   import type { CarouselAPI } from "$lib/components/ui/carousel/context.js";
-  import { quantity } from "../products";
+  import { quantity } from '../../../types'
   import { onMount } from "svelte";
   import toast, { Toaster } from "svelte-french-toast";
   import LoaderCircle from "lucide-svelte/icons/loader-circle";
   import supabase from "$lib/db";
   import Badge from "$lib/components/ui/badge/badge.svelte";
   import { addnumber, increment } from "../../../CheckOut/products/fresh/store";
-
+  import type { Item } from "../../../types";
   let selectedProduct: any = null;
   let errorMessage = "";
 
-  interface Item {
-    id: number;
-    name: string;
-    price: number;
-    img: string;
-    description?: string;
-    img2?: string;
-    img3?: string;
-    img4?: string;
-    category: string;
-  }
 
   let items: Item[] = [];
 

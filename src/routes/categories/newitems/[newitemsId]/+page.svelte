@@ -7,7 +7,7 @@
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
   import DropIcon from '../../../../lib/Icons/dropdwon.svelte';
   import type { CarouselAPI } from "$lib/components/ui/carousel/context.js";
-  import { quantity } from "../products";
+  import { quantity } from '../../../types'
   import { onMount } from 'svelte';
   import toast, { Toaster } from 'svelte-french-toast';
   import supabase from "$lib/db";

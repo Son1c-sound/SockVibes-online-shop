@@ -9,13 +9,13 @@
     import { goto } from "$app/navigation";
     import { type CarouselAPI } from "$lib/components/ui/carousel/context.js";
     import { Progress } from "$lib/components/ui/progress/index.js";
-
+    import Contentload from "$lib/loading/contentload.svelte";
 
     function navigateToSocks(socksId: any) {
         goto(`CheckOut/products/Socks/${socksId}`);
     }
 
-
+  
  
    
   const plugin = Autoplay({ delay: 4000, stopOnInteraction: true });
@@ -46,13 +46,14 @@
     } else {
       items = data;
     }
+  
   }
   
   loadItems();
 
   </script>
-   
 
+     
    <Carousel.Root bind:api  plugins={[plugin]}
 
    on:mousenter={plugin.stop}
@@ -93,7 +94,7 @@
     <Progress value={current} max={6} class='h-1 my-10' />
   </Carousel.Root>
 
-
+ 
   <style>
    * {
         font-family: "Jura", sans-serif;

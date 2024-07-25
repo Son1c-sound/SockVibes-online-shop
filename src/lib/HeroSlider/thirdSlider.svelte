@@ -8,6 +8,7 @@
     import { goto } from "$app/navigation";
     import { type CarouselAPI } from "$lib/components/ui/carousel/context.js";
 
+    let loading = true
     const plugin = Autoplay({ delay: 2000, stopOnInteraction: true });
 
     function navigateToSocks(freshid: any) {
@@ -21,6 +22,8 @@
         } else {
             return slide.url; 
         }
+        loading = false
+
     }
 
 
@@ -38,7 +41,7 @@
     }
   </script>
    
-
+  
 
    <Carousel.Root bind:api plugins={[plugin]}
 

@@ -22,3 +22,6 @@ export interface CartItem {
     price: string;
     category: string;
 }
+
+
+

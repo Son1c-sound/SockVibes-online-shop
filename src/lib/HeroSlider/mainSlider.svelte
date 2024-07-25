@@ -4,31 +4,27 @@
     import 'swiper/swiper-bundle.css';
     import { Button } from "$lib/components/ui/button/";
     import  supabase  from '$lib/db'
-
+    import Loading from '$lib/loading/loading.svelte';
     let swiperInstance:any;
     let interval:any;
-
+    let loading = false;
     let errorMessage = "";
     let items:any[] = [];
     async function loadItems() {
-    const { data, error } = await supabase.from("banners").select("*");
-
-    if (error) {
-      errorMessage = `Error loading items: ${error.message}`;
-      console.error(error);
-    } else {
-      items = data;
+    try {
+      const { data, error } = await supabase.from("banners").select("*");
+      if (error) {
+        errorMessage = `Error loading items: ${error.message}`;
+      } else {
+        items = data;
+      }
+    } catch (error) {
+      errorMessage = `Unexpected error:`;
+      
     }
+   
   }
-    
-    let slides = [
-      { type: 'image', url: 'https://i.ibb.co/nwstfbf/Adobe-Stock-559145847.jpg' },
-      { type: 'image', url: 'https://i.ibb.co/M5RQvM7/5fQUPDl.jpg' },
-      { type: 'image', url: 'https://i.ibb.co/yPkqnCk/1350069.jpg' },
-      { type: 'image', url: 'https://i.ibb.co/WyShy4h/3840x2160-uhd-4k-desktop-uc88j9mya6pyagua.jpg' },
-      { type: 'image', url: 'https://i.ibb.co/8z2cCWv/blue-purple-beautiful-scenery-ultra-hd-wallpaper-4k-sr10012421-1706505497434-cover.webp' },
-      { type: 'image', url: 'https://i.ibb.co/M5RQvM7/5fQUPDl.jpg' }
-    ];
+
     
     onMount(() => {
       swiperInstance = new Swiper(".default-carousel", {
@@ -55,6 +51,8 @@
 
   loadItems()
   </script>
+
+ 
 <div class="w-full  relative">
     <div class="swiper default-carousel swiper-container ">
       <div class="swiper-wrapper">
@@ -70,16 +68,10 @@
         {/each}
       </div>
     </div>
-    <div class="flex justify-center items-center text-black">
-        <p class="flex items-center">Swipe to see more 
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000">
-            <path d="M473-80q-24 0-46-9t-39-26L184-320l30-31q16-16 37.5-21.5t42.5.5l66 19v-327q0-17 11.5-28.5T400-720q17 0 28.5 11.5T440-680v433l-97-27 102 102q5 5 12.5 8.5T473-160h167q33 0 56.5-23.5T720-240v-160q0-17 11.5-28.5T760-440q17 0 28.5 11.5T800-400v160q0 66-47 113T640-80H473Zm7-280v-160q0-17 11.5-28.5T520-560q17 0 28.5 11.5T560-520v160h-80Zm120 0v-120q0-17 11.5-28.5T640-520q17 0 28.5 11.5T680-480v120h-80ZM80-680q30-106 142-173t258-67q94 0 181 31t159 90v-81h60v200H680v-60h116q-66-58-147-89t-169-31q-118 0-208.5 48T143-680H80Zm500 400Z"/>
-          </svg>
-        </p>
-      </div>
+
   </div>
   
-  
+ 
   <style>
     .swiper-wrapper {
       width: 100%;
