@@ -88,11 +88,11 @@
 {#if cartItems.length > 0}
 <div style="display: flex; justify-content: center; align-items: center; gap: 10px;" >
   <DoneMark />
-  <h2 class="font-arial my-3">No Sing Up required</h2>
+  <h2 class="font-arial my-2">No Sing Up required</h2>
 </div>
   <div style="display: flex; justify-content: center; align-items: center; gap: 10px;" >
     <DoneMark />
-    <h2 class="font-arial my-3">Your order qualifies for FREE returns</h2>
+    <h2 class="font-arial my-2">Your order qualifies for FREE returns</h2>
   </div>
 
 
