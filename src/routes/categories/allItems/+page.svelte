@@ -11,7 +11,18 @@
   import PriceTag from "$lib/Icons/pricetag.svelte";
   import Swipe from "$lib/Icons/swipe.svelte";
   import { goto } from "$app/navigation";
- 
+  import { onMount } from 'svelte';
+
+  onMount(() => {
+    // Check if the current URL matches the success URL
+    const successUrl = 'http://localhost:5173/Success';
+
+    if (window.location.href === successUrl) {
+      // Handle the success scenario
+      console.log('User has been redirected to the success page');
+      // Add any other logic you want to execute on success
+    }
+  });
   import type {Item} from '../../types'
 
   let items: Item[] = [];
