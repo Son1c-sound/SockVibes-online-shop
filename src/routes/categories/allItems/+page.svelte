@@ -163,10 +163,10 @@ loadWomenItems()
     </div>
     <p class="text-gray-600 my-2">Category: {item.category}</p>
     
-    {#if item.status !== 'Out Of Stock'}
-    <p class=' text-green-500 text-sm'>{item.status}</p>
+    {#if item.status === 'Sold out'}
+    <p class=' text-red-500 text-sm'>{item.status}</p>
       {:else}
-      <p class='  text-red-500 text-sm'>{item.status}</p>
+      <p class='  text-green-500 text-sm'>{item.status}</p>
     {/if}
   </div>
 
@@ -250,7 +250,7 @@ loadWomenItems()
     </div>
     <p class="text-gray-600 my-2">Category: {item.category}</p>
     
-    {#if item.status !== 'Out Of Stock'}
+    {#if item.status !== 'Sold out'}
     
     <p class=' text-green-500 text-sm'>{item.status}</p>
       {:else}
@@ -338,7 +338,7 @@ loadWomenItems()
     </div>
     <p class="text-gray-600 my-2">Category: {item.category}</p>
     
-    {#if item.status !== 'Out Of Stock'}
+    {#if item.status !== 'Sold out'}
     <p class=' text-green-500 text-sm'>{item.status}</p>
       {:else}
       <p class='  text-red-500 text-sm'>{item.status}</p>

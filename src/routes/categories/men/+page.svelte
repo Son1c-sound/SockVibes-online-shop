@@ -145,7 +145,7 @@
         </div>
         <p class="text-gray-600 my-2">Category: {item.category}</p>
         
-        {#if item.status !== 'In Stock'}
+        {#if item.status !== 'Sold out'}
         <p class="text-red-500 text-sm">{item.status}</p>
         {:else}
 
