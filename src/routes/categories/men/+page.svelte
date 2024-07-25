@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { men, underwears, socks } from "./products";
+  import { men } from "./products";
   import { Button } from "$lib/components/ui/button";
   import * as Card from "$lib/components/ui/card/index.js";
   import * as Carousel from "$lib/components/ui/carousel/index.js";
@@ -8,11 +8,39 @@
   import { Badge } from "$lib/components/ui/badge/index.js";
   import * as Select from "$lib/components/ui/select/index.js";
   import Swipe from "$lib/Icons/swipe.svelte";
-    import { goto } from '$app/navigation'
-  
+  import { goto } from '$app/navigation'
+  import supabase from "$lib/db";
   let api: CarouselAPI;
   let count = 0;
   let current = 0;
+
+  interface Item {
+  id: number;
+  name: string;
+  price: number;
+  img: string;
+  description?: string;
+  img2?: string;
+  img3?: string;
+  img4?: string;
+  category: string;
+  status: string;
+}
+
+  let items: Item[] = []
+  let errorMessage: string = ''
+  let filterMen: Item[] = []
+
+  async function loadItems() {
+    const { data, error } = await supabase.from('allitems').select("*")
+
+    if(error) {
+      errorMessage = `Error loading items: ${error.message}`;
+    } else {
+      items = data;
+      filterMen = items.filter(men => men.category === 'Men')
+    }
+  }
 
   $: if (api) {
     count = api.scrollSnapList().length;
@@ -24,24 +52,10 @@
      
      function navigateToProductDetail(menId: any) {
         goto(`/categories/men/${menId}`);
-    }   
-
-    function slipernav(menUnderId: any) {
-        goto(`/categories/men/menUnderWear/${menUnderId}`);
-    }   
-
-    function sockNav(menSockId: any) {
-        goto(`/categories/men/menSocks/${menSockId}`);
-    }   
-
-    function menUnder() {
-      goto('/categories/men/menSlippers')
-    }
-
-    function menSock() {
-      goto('/categories/men/menSocks')
-    }
-
+    }  
+    
+    
+    loadItems()
 
 </script>
 
@@ -65,28 +79,14 @@
  
   
   <div class="my-3 flex justify-center space-x-4 mx-auto">      
-<Select.Root portal={null}>
-  <Select.Trigger class=" w-[200px] border-black">
-    <Select.Value placeholder="Filter by Item: " />
-  </Select.Trigger>
-  <Select.Content>
-    <Select.Group>
-      <button   on:click={menUnder} class='text-blue-600 text-center mx-6 my-1' >Men Slippers</button>
-      <hr>
-      <button class='text-center mx-6 my-1 text-blue-600 ' on:click={menSock}  >Men Socks</button>
 
-      
-    </Select.Group>
-  </Select.Content>
-  <Select.Input name="test" />
-</Select.Root>
   </div>
   
 
 <div
   class=" my-5 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 mx-auto max-w-screen-xl "
 >
-  {#each men as item} 
+  {#each filterMen as item} 
 
     <div
       class="relative flex flex-col bg-clip-border m-1 text-gray-900  rounded-md "
@@ -104,7 +104,7 @@
                     class="flex aspect-square items-center justify-center p-4 sm:p-6"
                   >
                     <img
-                      src={item.urls[0]}
+                      src={item.img}
                       class="w-full h-full object-cover text-2xl font-semibold"
                     alt='item' />
                   </Card.Content>
@@ -118,7 +118,7 @@
                     class="flex aspect-square items-center justify-center p-4 sm:p-6"
                   >
                     <img
-                      src={item.urls[1]}
+                      src={item.img2}
                       class="w-full h-full object-cover text-4xl font-semibold"
                      alt='item'/>
                   </Card.Content>
@@ -132,7 +132,7 @@
                     class="flex aspect-square items-center justify-center p-4 sm:p-6"
                   >
                     <img
-                      src={item.urls[2]}
+                      src={item.img3}
                       class="w-full h-full object-cover text-4xl font-semibold"
                     alt='item'/>
                   </Card.Content>
@@ -161,8 +161,13 @@
         </div>
         <p class="text-gray-600 my-2">Category: {item.category}</p>
         
+        {#if item.status !== 'In Stock'}
+        <p class="text-red-500 text-sm">{item.status}</p>
+        {:else}
 
-        <p class="text-green-500">{item.status}</p>
+        <p class="text-green-500 text-sm">{item.status}</p>
+
+        {/if}
       </div>
 
       <div class="p-2 sm:p-1 pt-0">
@@ -171,177 +176,9 @@
     </div>
 
   {/each}
-  {#each underwears as item} 
 
-    <div
-      class="relative flex flex-col bg-clip-border m-1 text-gray-900  rounded-md "
-    >
-      <div
-        class="relative mx-1 mt-4 overflow-hidden text-gray-700  bg-clip-border "
-      >
-      <button class="w-full  p-1 rounded-md text-black " on:click={() => slipernav(item.id)}>
-        <Carousel.Root class=" my-4 w-full mx-auto max-w-full" bind:api>
-          <Carousel.Content>
-            <Carousel.Item>
-              <div class="p-1">
-                <Card.Root>
-                  <Card.Content
-                    class="flex aspect-square items-center justify-center p-4 sm:p-6"
-                  >
-                    <img
-                      src={item.urls[0]}
-                      class="w-full h-full object-cover text-2xl font-semibold"
-                    alt='item' />
-                  </Card.Content>
-                </Card.Root>
-              </div>
-            </Carousel.Item>
-            <Carousel.Item>
-              <div class="p-1">
-                <Card.Root>
-                  <Card.Content
-                    class="flex aspect-square items-center justify-center p-4 sm:p-6"
-                  >
-                    <img
-                      src={item.urls[1]}
-                      class="w-full h-full object-cover text-4xl font-semibold"
-                     alt='item'/>
-                  </Card.Content>
-                </Card.Root>
-              </div>
-            </Carousel.Item>
-            <Carousel.Item>
-              <div class="p-1">
-                <Card.Root>
-                  <Card.Content
-                    class="flex aspect-square items-center justify-center p-4 sm:p-6"
-                  >
-                    <img
-                      src={item.urls[2]}
-                      class="w-full h-full object-cover text-4xl font-semibold"
-                    alt='item'/>
-                  </Card.Content>
-                </Card.Root>
-              </div>
-            </Carousel.Item>
-          </Carousel.Content>
-        </Carousel.Root>
-      </button>
-      </div>
-      <div class="p-4 sm:p-6">
-        <div class="flex items-center justify-between mb-2">
-          <p
-            class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
-          > {item.name}
-          
-           
-          </p>
-          
-          <p
-            class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
-          ><Badge class='  rounded-md bg-yellow-300 text-black'>{item.price}</Badge>
-            
-          </p>
-     
-        </div>
-        <p class="text-gray-600 my-2">Category: {item.category}</p>
-        
+ 
 
-        <p class="text-green-500">{item.status}</p>
-      </div>
-
-      <div class="p-2 sm:p-1 pt-0">
-        <Button class="w-full hover:bg-yellow-400  bg-yellow-300 text-black " on:click={() => slipernav(item.id)}>Purchase</Button>
-      </div>
-    </div>
-
-  {/each}
-  {#each socks as item} 
-
-  <div
-    class="relative flex flex-col bg-clip-border m-1 text-gray-900  rounded-md "
-  >
-    <div
-      class="relative mx-1 mt-4 overflow-hidden text-gray-700  bg-clip-border "
-    >
-    <button class="w-full  p-1 rounded-md text-black " on:click={() => slipernav(item.id)}>
-      <Carousel.Root class=" my-4 w-full mx-auto max-w-full" bind:api>
-        <Carousel.Content>
-          <Carousel.Item>
-            <div class="p-1">
-              <Card.Root>
-                <Card.Content
-                  class="flex aspect-square items-center justify-center p-4 sm:p-6"
-                >
-                  <img
-                    src={item.urls[0]}
-                    class="w-full h-full object-cover text-2xl font-semibold"
-                  alt='item' />
-                </Card.Content>
-              </Card.Root>
-            </div>
-          </Carousel.Item>
-          <Carousel.Item>
-            <div class="p-1">
-              <Card.Root>
-                <Card.Content
-                  class="flex aspect-square items-center justify-center p-4 sm:p-6"
-                >
-                  <img
-                    src={item.urls[1]}
-                    class="w-full h-full object-cover text-4xl font-semibold"
-                   alt='item'/>
-                </Card.Content>
-              </Card.Root>
-            </div>
-          </Carousel.Item>
-          <Carousel.Item>
-            <div class="p-1">
-              <Card.Root>
-                <Card.Content
-                  class="flex aspect-square items-center justify-center p-4 sm:p-6"
-                >
-                  <img
-                    src={item.urls[2]}
-                    class="w-full h-full object-cover text-4xl font-semibold"
-                  alt='item'/>
-                </Card.Content>
-              </Card.Root>
-            </div>
-          </Carousel.Item>
-        </Carousel.Content>
-      </Carousel.Root>
-    </button>
-    </div>
-    <div class="p-4 sm:p-6">
-      <div class="flex items-center justify-between mb-2">
-        <p
-          class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
-        > {item.name}
-        
-         
-        </p>
-        
-        <p
-          class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
-        ><Badge class='  rounded-md bg-yellow-300 text-black'>{item.price}</Badge>
-          
-        </p>
-   
-      </div>
-      <p class="text-gray-600 my-2">Category: {item.category}</p>
-      
-
-      <p class="text-green-500">{item.status}</p>
-  
-    </div>
-
-    <div class="p-2 sm:p-1 pt-0">
-      <Button class="w-full hover:bg-yellow-400  bg-yellow-300 text-black " on:click={() => sockNav(item.id)}>Purchase</Button>
-    </div>
-  </div>
-
-{/each}
 </div>
 </body>
 <style>
