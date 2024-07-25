@@ -62,7 +62,7 @@
           class="relative mx-1 mt-4 overflow-hidden text-gray-700  bg-clip-border "
         >
         <button class="w-full  p-1 rounded-md text-black " on:click={() => navigateToProductDetail(item.id)}>
-            <Badge class='  rounded-md bg-green-300 text-black'>Sale: {item.offby}</Badge>
+            <Badge class='  rounded-md bg-blue-500 text-gray-100'>Sale: {item.offby}</Badge>
           <Carousel.Root class=" my-4 w-full mx-auto max-w-full" bind:api>
             <Carousel.Content>
               <Carousel.Item>

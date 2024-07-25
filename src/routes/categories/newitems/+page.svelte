@@ -22,6 +22,7 @@
   img3?: string;
   img4?: string;
   category: string;
+  status: string;
 }
 
   let items: Item[] = [];
@@ -34,7 +35,7 @@
       errorMessage = `Error loading items: ${error.message}`;
     } else { 
         items = data;
-        filterNew = items.filter(item => item.category === 'New Item')
+        filterNew = items.filter(item => item.category === 'Unisex')
       
     }
   }
@@ -62,7 +63,7 @@
   <h1 class="text-gray-900 text-center my-9">Sock Vibes </h1>
   <div class="mx-3 sm:mx-auto ">
     <h1 class="text-center  text-5xl  p-2 rounded-md font-bold font-mono text-gray-900 ">
-      Newest Items
+      Items for Everyone
     </h1>
   </div>
     
@@ -85,7 +86,7 @@
           class="relative mx-1 mt-4 overflow-hidden text-gray-900 bg-clip-border"
         >
         <button
-        class="w-full  border rounded-lg border-yellow-300 text-white hover:bg-yellow-500"
+        class="w-full  border rounded-lg text-white "
         on:click={() => navigateToProductDetail(item.id)}>
           <Carousel.Root class=" w-full mx-auto max-w-full" bind:api>
             <Carousel.Content>
@@ -166,6 +167,11 @@
             </p>
           </div>
           <p class="text-gray-800 my-2">Category: {item.category}</p>
+          {#if item.status !== 'In Stock'}
+          <p class="text-red-500 text-sm">{item.status}</p>
+          {:else}
+           <p class='text-green-500 text-sm'>{item.status}</p>
+          {/if}
 
         </div>
        

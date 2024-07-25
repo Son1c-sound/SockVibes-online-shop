@@ -37,7 +37,7 @@
       errorMessage = `Error loading items: ${error.message}`;
     } else {
       items = data;
-      filterNew = items.filter(item => item.category === 'New Item')
+      filterNew = items.filter(item => item.category === 'Unisex')
     }
   }
 
@@ -145,7 +145,7 @@ loadItems()
       
       <p
         class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
-      ><Badge class='  rounded-md bg-green-400 text-white'>New</Badge>
+      ><Badge class=' bg-yellow-300 rounded-md text-gray-900 '>{item.price}$</Badge>
         
       </p>
  
@@ -153,9 +153,9 @@ loadItems()
     <p class="text-gray-600 my-2">Category: {item.category}</p>
     
     {#if item.status !== 'Out Of Stock'}
-      <p class="text-green-500">{item.status}</p>
+    <p class=' text-green-500 text-sm'>{item.status}</p>
       {:else}
-      <p class=" rounded-lg  text-red-500">{item.status}</p>
+      <p class='  text-red-500 text-sm'>{item.status}</p>
     {/if}
   </div>
 

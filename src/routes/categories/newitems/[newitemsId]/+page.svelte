@@ -12,6 +12,7 @@
   import toast, { Toaster } from 'svelte-french-toast';
   import supabase from "$lib/db";
   import { increment } from '../../../CheckOut/products/fresh/store';
+  import Badge from "$lib/components/ui/badge/badge.svelte";
 
   let selectedProduct: any = null;
   let errorMessage = '';
@@ -125,10 +126,16 @@ async function loadItems() {
         </div>
       </Carousel.Root>
     </div>
-
+  
     <!-- Selected Items -->
     <div class="w-full md:w-1/2 mt-4 md:mt-0">
+     
+      
+      {#if selectedProduct.status !== 'In Stock'}
+      <Button class="w-full bg-transparent text-black my-5 text-md hover:bg-transparent">Item Will be added soon</Button>
+      {:else}
       <Button class="w-full bg-yellow-300 hover:bg-yellow-400 text-black my-5 text-md" on:click={addToCart} on:click={increment}>Add to Cart</Button>
+      {/if}
 
 
       <div class="p-6 my-4 border border-gradient-purple-blue">
@@ -150,6 +157,7 @@ async function loadItems() {
         <hr class="mb-2" />
 
         <p class="text-gray-500">{selectedProduct.description}</p>
+        
         <br />
         <h1 class="text-gray-900 my-3 text-md">Qty
           <select bind:value={selectedQuantity}>
@@ -159,6 +167,13 @@ async function loadItems() {
           </select>
         </h1>
       </div>
+      {#if selectedProduct.status === 'In Stock' }
+      <Badge class='bg-green-500 text-white'>{selectedProduct.status}</Badge>
+      {:else}
+      <Badge class='bg-red-500 text-white'>{selectedProduct.status}</Badge>
+      {/if}
+    
+
       <div>
         <br />
         <br />
@@ -173,7 +188,9 @@ async function loadItems() {
       <br />
     </div>
   </div>
+  
 {:else}
+
   <p class="text-gray-500">Loading product details...</p>
 {/if}
 

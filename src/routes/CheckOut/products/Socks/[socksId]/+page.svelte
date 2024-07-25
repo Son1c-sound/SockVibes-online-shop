@@ -13,7 +13,7 @@
   import { onMount } from "svelte";
   import toast, { Toaster } from "svelte-french-toast";
 
-  import { quantity } from "../product";
+  import { quantity } from "../../fresh/products";
   import { increment } from "../../fresh/store";
 
   let errorMessage: string = '';
@@ -109,7 +109,9 @@
 
   <!-- Selected Items -->
   <div class="w-full md:w-1/2 mt-4 md:mt-0">
-
+    <br>
+    <br>
+    
     <Button
       class="w-full  bg-yellow-300 hover:bg-yellow-400 text-black my-5 text-md"
       on:click={addToCart}
