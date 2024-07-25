@@ -37,7 +37,7 @@ export const POST: RequestHandler = async ({ request }) => {
         const session = await stripe.checkout.sessions.create({
             line_items: lineItems,
             shipping_address_collection: {
-                allowed_countries: ["US"]
+                allowed_countries: ["US"] 
             },
             mode: "payment",
             success_url: successUrl,
@@ -45,11 +45,8 @@ export const POST: RequestHandler = async ({ request }) => {
             phone_number_collection: {
                 enabled: true,
             },
-            metadata: {
-                cartItems: JSON.stringify(cartItems.map(item => item.id)) // Include item IDs in metadata
-            }
         });
-
+        await updateInventoryAfterSuccess(cartItems);
         return new Response(JSON.stringify({ url: session.url }), {
             status: 200,
             headers: {
@@ -67,18 +64,37 @@ export const POST: RequestHandler = async ({ request }) => {
     }
 }
 
-
 let items: Item[] = []
 let errorMessage: string = ''
-async function updateStorage(cartItems: string[]) {
-    for (const itemId of cartItems) {
-        const { error } = await supabase
-            .from('allitems')
-            .update({ storage: supabase.raw('storage - 1') })
-            .match({ id: itemId });
-
-        if (error) {
-            console.error(`Error updating item ${itemId}: ${error.message}`);
-        }
+async function updateInventoryAfterSuccess(cartItems: CartItem[]) {
+    // Fetch item details to ensure accurate decrement
+    const itemDetails = await getItemsByIds(cartItems.map((item) => item.id));
+  
+    const updatePromises = cartItems.map(async (cartItem) => {
+      const matchingItem = itemDetails.find((item) => item.id === cartItem.id);
+  
+      if (matchingItem && matchingItem.stock >= cartItem.quantity) {
+        // Decrement stock only if available quantity allows
+        const newStock = matchingItem.stock - cartItem.quantity;
+        await supabase
+          .from("allitems")
+          .update({ stock: newStock })
+          .eq("id", cartItem.id);
+      } else {
+        console.error(`Insufficient stock for item ${cartItem.id}`);
+      }
+    });
+  
+    await Promise.all(updatePromises); // Execute all stock updates concurrently
+  }
+  
+  async function getItemsByIds(itemIds: string[]): Promise<Item[]> {
+    const { data, error } = await supabase.from("allitems").select("*").in("id", itemIds);
+  
+    if (error) {
+      console.error("Error fetching item details:", error);
+      return [];
     }
-}
+  
+    return data || [];
+  }

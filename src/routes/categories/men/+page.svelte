@@ -146,10 +146,10 @@
         <p class="text-gray-600 my-2">Category: {item.category}</p>
         
         {#if item.status !== 'Sold out'}
-        <p class="text-red-500 text-sm">{item.status}</p>
+        <p class="text-green-500 text-sm">{item.status}</p>
         {:else}
 
-        <p class="text-green-500 text-sm">{item.status}</p>
+        <p class="text-red-500 text-sm">{item.status}</p>
 
         {/if}
       </div>
