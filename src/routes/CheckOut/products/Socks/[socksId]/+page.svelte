@@ -156,6 +156,11 @@
       </h1>
     </div>
     <div>
+ {#if selectedProduct.status === 'In Stock' }
+      <Badge class='bg-green-500 text-white'>{selectedProduct.status}</Badge>
+      {:else}
+      <Badge class='bg-red-500 text-white'>{selectedProduct.status}</Badge>
+      {/if}
       <br />
       <br />
       <hr />
