@@ -79,7 +79,7 @@
         </li>
 
         <li class="relative text-uppercase p-5 xl:p-8 font-bold group mx-4">
-          <a href="/categories/newitems" class="block mx-5">New</a>
+          <a href="/categories/newitems" class="block mx-5">Unisex</a>
           <!-- Dropdown menu -->
           <div
             class="absolute left-1/2 mt-2 w-64 bg-white text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform -translate-x-1/2"
@@ -122,72 +122,74 @@
   </div>
 
   <div
-    class="md:hidden fixed top-0 left-0 w-full h-full bg-white flex flex-col items-center justify-center"
-    style="display: {isMobileMenuOpen ? 'flex' : 'none'}; z-index: 20;"
-  >
-    <div
-      class="md:hidden fixed top-0 left-0 w-full h-full bg-white flex flex-col items-center justify-start p-6"
-      style="display: {isMobileMenuOpen ? 'flex' : 'none'}; z-index: 20;"
-    >
-      <ul class="w-full text-center space-y-2">
-        <br />
-      
-        <br />
-        <h2 class='text-center text-3xl'>Sock Vibes Shop Menu</h2>
-        <br />
-        <br />
-        <div
-          class=" w-2/3 mx-auto p-3 border-2 border-blue-400 text-black shadow-md rounded-lg"
-        >
-          <a href="/categories/allItems" on:click={toggleMobileMenu} class=" "
-            >All items in shop</a
-          >
-        </div>
-        <br>
-        
-        <hr class="text-gray-500" />
-        <br>
-        <div
-          class="w-2/3 mx-auto p-3 border-2 border-blue-400 text-black shadow-md rounded-lg"
-        >
-          <a href="/categories/men" on:click={toggleMobileMenu} class=" "
-            >Men Items</a
-          >
-        </div>
+  class="md:hidden fixed inset-0 bg-gradient-to-br from-gray-100 to-gray-200 flex flex-col items-center justify-center p-6"
+  style="display: {isMobileMenuOpen ? 'flex' : 'none'}; z-index: 50;"
+>
+  <h2 class="text-4xl font-extrabold text-black mb-10 text-shadow-lg text-center">Sock Vibes  Menu</h2>
 
-        <div
-          class="w-2/3 mx-auto p-3 border-2 border-blue-400 text-black shadow-md rounded-lg"
-        >
-          <a href="/categories/woman" on:click={toggleMobileMenu} class=" "
-            >Woman Items</a
-          >
-        </div>
-
-        <!-- Men Dropdown -->
-        <br>
-        <hr class="text-gray-500" />
-        <br>
-          <div class="w-2/3 mx-auto p-3 bg-yellow-300 rounded-md text-black shadow-md">
-            <a href="/categories/newitems" on:click={toggleMobileMenu} class=" "
-              >New Items</a
-            >
-          </div>
-          <div class="my-3 w-2/3 mx-auto p-3 rounded-md bg-green-400 text-black shadow-md">
-            <a href="/categories/Sales" on:click={toggleMobileMenu} class=" "
-              >Sales</a
-            >
-          </div>
+  <ul class="w-full max-w-md flex flex-col items-center space-y-6">
     
-      </ul>
-
-      <button
+    <li class="w-full">
+      <a
+        href="/categories/allItems"
         on:click={toggleMobileMenu}
-        class="mt-8 rounded-full text-red-500 font-semibold px-6 py-3 md:px-8 md:py-4 transition-colors duration-300 focus:outline-none"
+        class="block text-center text-lg font-medium py-4 px-6  text-black border border-gray-700 rounded-lg  hover:bg-gray-700 hover:border-gray-600 transition-colors duration-300 ease-in-out"
       >
-        Close
-      </button>
-    </div>
-  </div>
+        All items in shop
+      </a>
+    </li>
+
+    <li class="w-full">
+      <a
+        href="/categories/men"
+        on:click={toggleMobileMenu}
+        class="block text-center text-lg font-medium py-4 px-6  text-black border border-gray-700 rounded-lg  hover:bg-gray-700 hover:border-gray-600 transition-colors duration-300 ease-in-out"
+      >
+        Men Items
+      </a>
+    </li>
+
+    <li class="w-full">
+      <a
+        href="/categories/woman"
+        on:click={toggleMobileMenu}
+        class="block text-center text-lg font-medium py-4 px-6  text-black border border-gray-700 rounded-lg  hover:bg-gray-700 hover:border-gray-600 transition-colors duration-300 ease-in-out"
+      >
+        Women Items
+      </a>
+    </li>
+
+    <li class="w-full">
+      <a
+        href="/categories/newitems"
+        on:click={toggleMobileMenu}
+        class="block text-center text-lg font-medium py-4 px-6  text-black border border-gray-700 rounded-lg  hover:bg-gray-700 hover:border-gray-600 transition-colors duration-300 ease-in-out"
+      >
+        Unisex
+      </a>
+    </li>
+
+    <li class="w-full">
+      <a
+        href="/categories/Sales"
+        on:click={toggleMobileMenu}
+        class="block text-center text-lg font-medium py-4 px-6  text-black border border-gray-700 rounded-lg  hover:bg-gray-700 hover:border-gray-600 transition-colors duration-300 ease-in-out"
+      >
+        Sales
+      </a>
+    </li>
+
+  </ul>
+
+  <button
+    on:click={toggleMobileMenu}
+    class="my-5  text-red-600"
+  >
+    Close
+  </button>
+</div>
+
+
 </header>
 <br />
 <br />
