@@ -125,7 +125,7 @@
   class="md:hidden fixed inset-0 bg-gradient-to-br from-gray-100 to-gray-200 flex flex-col items-center justify-center p-6"
   style="display: {isMobileMenuOpen ? 'flex' : 'none'}; z-index: 50;"
 >
-  <h2 class="text-4xl font-extrabold text-black mb-10 text-shadow-lg text-center">Sock Vibes  Menu</h2>
+  <h2 class="text-2xl font-extrabold text-black mb-10 text-shadow-lg text-center">Sock Vibes  Menu</h2>
 
   <ul class="w-full max-w-md flex flex-col items-center space-y-6">
     
@@ -133,7 +133,7 @@
       <a
         href="/categories/allItems"
         on:click={toggleMobileMenu}
-        class="block text-center text-lg font-medium py-4 px-6  text-black border border-gray-700 rounded-lg  hover:bg-gray-700 hover:border-gray-600 transition-colors duration-300 ease-in-out"
+        class="block text-center text-lg font-medium py-3 px-2  text-black border border-gray-700 rounded-lg  hover:bg-gray-700 hover:border-gray-600 w-2/4 mx-auto"
       >
         All items in shop
       </a>
@@ -143,7 +143,7 @@
       <a
         href="/categories/men"
         on:click={toggleMobileMenu}
-        class="block text-center text-lg font-medium py-4 px-6  text-black border border-gray-700 rounded-lg  hover:bg-gray-700 hover:border-gray-600 transition-colors duration-300 ease-in-out"
+        class="block text-center text-lg font-medium py-3 px-2  text-black border border-gray-700 rounded-lg  hover:bg-gray-700 hover:border-gray-600 w-2/4 mx-auto"
       >
         Men Items
       </a>
@@ -153,7 +153,7 @@
       <a
         href="/categories/woman"
         on:click={toggleMobileMenu}
-        class="block text-center text-lg font-medium py-4 px-6  text-black border border-gray-700 rounded-lg  hover:bg-gray-700 hover:border-gray-600 transition-colors duration-300 ease-in-out"
+        class="block text-center text-lg font-medium py-3 px-2  text-black border border-gray-700 rounded-lg  hover:bg-gray-700 hover:border-gray-600 w-2/4 mx-auto"
       >
         Women Items
       </a>
@@ -163,7 +163,7 @@
       <a
         href="/categories/newitems"
         on:click={toggleMobileMenu}
-        class="block text-center text-lg font-medium py-4 px-6  text-black border border-gray-700 rounded-lg  hover:bg-gray-700 hover:border-gray-600 transition-colors duration-300 ease-in-out"
+        class="block text-center text-lg font-medium py-3 px-2  text-black border border-gray-700 rounded-lg  hover:bg-gray-700 hover:border-gray-600 w-2/4 mx-auto"
       >
         Unisex
       </a>
@@ -173,7 +173,7 @@
       <a
         href="/categories/Sales"
         on:click={toggleMobileMenu}
-        class="block text-center text-lg font-medium py-4 px-6  text-black border border-gray-700 rounded-lg  hover:bg-gray-700 hover:border-gray-600 transition-colors duration-300 ease-in-out"
+        class="block text-center text-lg font-medium py-3 px-2  text-black border border-gray-700 rounded-lg  hover:bg-gray-700 hover:border-gray-600 w-2/4 mx-auto"
       >
         Sales
       </a>

@@ -16,9 +16,9 @@
   import { quantity } from "../../fresh/products";
   import { increment } from "../../fresh/store";
   import Badge from "../../../../../lib/components/ui/badge/badge.svelte";
-  
+  import Loading from '$lib/loading/loading.svelte'
 
-  let errorMessage: string = '';
+  let errorMessage: string = "";
   let items: any[] = [];
   let selectedProduct: any = null;
   let selectedQuantity = quantity[0].value;
@@ -36,16 +36,16 @@
       const socksId = $page.params.socksId;
 
       // Set the selectedProduct based on the socksId
-      selectedProduct = items.find(item => item.id === parseInt(socksId)) || null;
+      selectedProduct =
+        items.find((item) => item.id === parseInt(socksId)) || null;
     }
   }
-
 
   // Fetch product data on mount
   onMount(() => {
     loadItems();
   });
-  let max:number = 4
+  let max: number = 4;
   let api: CarouselAPI;
   let count = 0;
   let current = 0;
@@ -85,18 +85,34 @@
 <Toaster />
 
 <!-- Product Details -->
-<br>
+<br />
 
 <div class="flex flex-col mx-4 md:mx-20 md:flex-row md:space-x-8">
+
   <!-- Product Images -->
   <div class="w-full">
+    
     <Carousel.Root bind:api class="w-full md:w-3/4 mx-auto my-10 md:my-28">
+      <a href="/" class="text-blue-500 text-md underline ">Go back</a>
       <Carousel.Content class="md:-ml-1">
         {#if selectedProduct}
           {#each [selectedProduct.img, selectedProduct.img2, selectedProduct.img3, selectedProduct.img4] as url, index}
-            <Carousel.Item class="flex-shrink-0 w-full" >
+            <Carousel.Item class="flex-shrink-0 w-full">
               <Card.Root class="border-none bg-transparent shadow-none">
-                <img src={url} alt={selectedProduct.name} class="w-full h-64 object-cover lg:h-1/2" />
+                <img
+                  src={url}
+                  alt={selectedProduct.name}
+                  class="w-full h-64 object-cover lg:h-1/2"
+                />
+                {#if selectedProduct.status !== "Out Of Stock"}
+                  <Badge class="bg-green-500 text-white"
+                    >{selectedProduct.status}</Badge
+                  >
+                {:else}
+                  <Badge class="bg-red-500 text-white"
+                    >{selectedProduct.status}</Badge
+                  >
+                {/if}
               </Card.Root>
             </Carousel.Item>
           {/each}
@@ -104,16 +120,19 @@
       </Carousel.Content>
       <div class="my-5 rounded-md">
         <h1 class="text-center my-2">{current}</h1>
-        <Progress value={current} max={max} class="h-1" />
+        <Progress value={current} {max} class="h-1" />
       </div>
     </Carousel.Root>
   </div>
 
   <!-- Selected Items -->
   <div class="w-full md:w-1/2 mt-4 md:mt-0">
-    <br>
-    <br>
-    
+    <br />
+    <br />
+
+    {#if !selectedProduct || selectedProduct.status === "Out Of Stock"}
+    <p class="text-lg text-center">Item will be available soon</p>
+    {:else if selectedProduct || selectedProduct.status === "In Stock"}
     <Button
       class="w-full  bg-yellow-300 hover:bg-yellow-400 text-black my-5 text-md"
       on:click={addToCart}
@@ -121,14 +140,19 @@
     >
       Add to Cart
     </Button>
- 
+    {:else}
+    <Loading></Loading>
+{/if}
     <div class="my-5 p-6 border border-gradient-purple-blue">
       <h2 class="text-3xl mb-2 font-bold">{selectedProduct?.name}</h2>
       <div class="mb-2">
         <p class="text-2xl">{selectedProduct?.price}$</p>
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild let:builder>
-            <Button class="bg-white hover:bg-white mx-8 w-10 text-blue-600" builders={[builder]}>
+            <Button
+              class="bg-white hover:bg-white mx-8 w-10 text-blue-600"
+              builders={[builder]}
+            >
               Free returns <DropIcon />
             </Button>
           </DropdownMenu.Trigger>
@@ -152,17 +176,12 @@
         Qty
         <select bind:value={selectedQuantity}>
           {#each quantity as { value, label }}
-            <option value={value}>{label}</option>
+            <option {value}>{label}</option>
           {/each}
         </select>
       </h1>
     </div>
     <div>
- {#if selectedProduct.status === 'In Stock' }
-      <Badge class='bg-green-500 text-white'>{selectedProduct.status}</Badge>
-      {:else}
-      <Badge class='bg-red-500 text-white'>{selectedProduct.status}</Badge>
-      {/if}
       <br />
       <br />
       <hr />
