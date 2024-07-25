@@ -15,6 +15,8 @@
 
   import { quantity } from "../../fresh/products";
   import { increment } from "../../fresh/store";
+  import Badge from "../../../../../lib/components/ui/badge/badge.svelte";
+  
 
   let errorMessage: string = '';
   let items: any[] = [];
