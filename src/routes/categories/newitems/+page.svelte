@@ -9,21 +9,9 @@
   import PriceTag from "$lib/Icons/pricetag.svelte";
   import Swipe from "$lib/Icons/swipe.svelte";
   import { goto } from "$app/navigation";
-  import { Item } from "$lib/components/ui/dropdown-menu";
   import supabase from "$lib/db";
+  import type { Item } from '../../types'
 
-  interface Item {
-  id: number;
-  name: string;
-  price: number;
-  img: string;
-  description?: string;
-  img2?: string;
-  img3?: string;
-  img4?: string;
-  category: string;
-  status: string;
-}
 
   let items: Item[] = [];
   let errorMessage: string = '';
@@ -94,8 +82,8 @@
                 <div class="p-1">
                   <Card.Root class='rounded-md'>
                     <div class="flex items-center">
-                      <PriceTag />
-                      <p class="text-black ml-2">{item.price}</p>
+                    
+                      
                     </div>
 
                     <Card.Content
@@ -113,10 +101,7 @@
               <Carousel.Item>
                 <div class="p-1">
                   <Card.Root>
-                    <div class="flex items-center">
-                      <PriceTag />
-                      <p class="text-black ml-2">{item.price}</p>
-                    </div>
+                   
                     <Card.Content
                       class="flex aspect-square items-center justify-center p-4 sm:p-6"
                     >
@@ -133,8 +118,7 @@
                 <div class="p-1">
                   <Card.Root>
                     <div class="flex items-center">
-                      <PriceTag />
-                      <p class="text-black ml-2">{item.price}</p>
+                  
                     </div>
 
                     <Card.Content
@@ -163,8 +147,8 @@
             <p
               class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-yellow-gray-900"
             >
-              <Badge class="bg-green-500 text-gray-100 rounded-md">New</Badge>
-            </p>
+            <p class="text-black ml-2">{item.price}$</p>
+          
           </div>
           <p class="text-gray-800 my-2">Category: {item.category}</p>
           {#if item.status !== 'In Stock'}

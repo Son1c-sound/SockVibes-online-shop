@@ -136,7 +136,7 @@
             </button>
           </div>
           
-          <h1 class="text-xl font-bold">{item.price}</h1>
+          <h1 class="text-xl font-bold">{item.price}$</h1>
         </div>
         
       {/each}

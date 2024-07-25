@@ -44,9 +44,8 @@
    on:mousenter={plugin.stop}
    on:mouseleave={plugin.reset} 
    class="w-3/4 mx-auto  my-28">
-   <h1 class="text-5xl font-bold text-center mb-10 bg-gradient-to-r from-blue-700 to-gray-500 text-transparent bg-clip-text italic">Braclet Collections</h1>
+   <h1 class="text-5xl font-bold text-center mb-10 bg-gradient-to-r from-blue-700 to-gray-500 text-transparent bg-clip-text italic">Most Bought of the Week</h1>
 
-   <br>
     <Carousel.Content class="-ml-1 bg-transparent border-none outline-none shadow-none">
       {#each other as product}
         <Carousel.Item class="pl-4 md:basis-1/2 lg:basis-1/4 bg-transparent border-none shadow-none ">
@@ -79,6 +78,6 @@
  
   <style>
    * {
-        font-family: "Jura", sans-serif;
+    font-family:  Arial, Helvetica, sans-serif;
     }
   </style>

@@ -18,6 +18,7 @@
   let errorMessage:any = ''
   let filterNew: Item[] = [];
   let filterMan: Item[] = []
+  let filterWoman: Item[] = []
   async function loadItems() {
     const { data, error} = await supabase.from("allitems").select("*");
 
@@ -42,6 +43,19 @@
   }
 
 
+  async function loadWomenItems() {
+     const { data, error } = await supabase.from('allitems').select("*")
+
+      if(error) {
+        errorMessage = 'error'
+      } else {
+        items = data
+        filterWoman = items.filter(w => w.category === 'Women')
+
+      }
+  }
+
+
   let api: CarouselAPI;
   let count = 0;
   let current = 0;
@@ -55,6 +69,7 @@
   }
 loadItems()
 loadMenItem()
+loadWomenItems()
 </script>
 
 <body class="text-white">
@@ -143,11 +158,7 @@ loadMenItem()
        
       </p>
       
-      <p
-        class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
-      ><Badge class=' bg-yellow-300 rounded-md text-gray-900 '>{item.price}$</Badge>
-        
-      </p>
+      <p class="text-black ml-2">{item.price}$</p>
  
     </div>
     <p class="text-gray-600 my-2">Category: {item.category}</p>
@@ -174,7 +185,7 @@ loadMenItem()
   <div
     class="relative mx-1 mt-4 overflow-hidden text-gray-700  bg-clip-border "
   >
-  <button class="w-full  p-1 rounded-md text-black " on:click={() => goto(`/categories/newitems/${item.id}`)}>
+  <button class="w-full  p-1 rounded-md text-black " on:click={() => goto(`/categories/men/${item.id}`)}>
     <Carousel.Root class=" my-4 w-full mx-auto max-w-full" bind:api>
       <Carousel.Content>
         <Carousel.Item>
@@ -232,11 +243,97 @@ loadMenItem()
        
       </p>
       
+         
+      <p class="text-black ml-2">{item.price}$</p>
+        
+ 
+    </div>
+    <p class="text-gray-600 my-2">Category: {item.category}</p>
+    
+    {#if item.status !== 'Out Of Stock'}
+    
+    <p class=' text-green-500 text-sm'>{item.status}</p>
+      {:else}
+      <p class='  text-red-500 text-sm'>{item.status}</p>
+    {/if}
+  </div>
+
+  <div class="p-2 sm:p-1 pt-0">
+    <Button class="w-full hover:bg-yellow-400  bg-yellow-300 text-black " on:click={() => goto(`/categories/men/${item.id}`)}>Purchase</Button>
+  </div>
+</div>
+
+{/each}
+   
+{#each filterWoman as item} 
+  
+<div
+  class="relative flex flex-col bg-clip-border m-1 text-gray-900  rounded-md "
+>
+  <div
+    class="relative mx-1 mt-4 overflow-hidden text-gray-700  bg-clip-border "
+  >
+  <button class="w-full  p-1 rounded-md text-black " on:click={() => goto(`/categories/woman/${item.id}`)}>
+    <Carousel.Root class=" my-4 w-full mx-auto max-w-full" bind:api>
+      <Carousel.Content>
+        <Carousel.Item>
+          <div class="p-1">
+            <Card.Root>
+              <Card.Content
+                class="flex aspect-square items-center justify-center p-4 sm:p-6"
+              >
+                <img
+                  src={item.img}
+                  class="w-full h-full object-cover text-2xl font-semibold"
+                alt='item' />
+              </Card.Content>
+            </Card.Root>
+          </div>
+        </Carousel.Item>
+        <Carousel.Item>
+          <div class="p-1">
+            <Card.Root>
+              <Card.Content
+                class="flex aspect-square items-center justify-center p-4 sm:p-6"
+              >
+                <img
+                  src={item.img2}
+                  class="w-full h-full object-cover text-4xl font-semibold"
+                 alt='item'/>
+              </Card.Content>
+            </Card.Root>
+          </div>
+        </Carousel.Item>
+        <Carousel.Item>
+          <div class="p-1">
+            <Card.Root>
+              <Card.Content
+                class="flex aspect-square items-center justify-center p-4 sm:p-6"
+              >
+                <img
+                  src={item.img3}
+                  class="w-full h-full object-cover text-4xl font-semibold"
+                alt='item'/>
+              </Card.Content>
+            </Card.Root>
+          </div>
+        </Carousel.Item>
+      </Carousel.Content>
+    </Carousel.Root>
+  </button>
+  </div>
+  <div class="p-4 sm:p-6">
+    <div class="flex items-center justify-between mb-2">
       <p
         class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
-      ><Badge class=' bg-yellow-300 rounded-md text-gray-900 '>{item.price}$</Badge>
-        
+      > {item.name}
+      
+       
       </p>
+      
+      <p class="text-black ml-2">{item.price}$</p>
+        
+      
  
     </div>
     <p class="text-gray-600 my-2">Category: {item.category}</p>
@@ -249,7 +346,7 @@ loadMenItem()
   </div>
 
   <div class="p-2 sm:p-1 pt-0">
-    <Button class="w-full hover:bg-yellow-400  bg-yellow-300 text-black " on:click={() => goto(`/categories/newitems/${item.id}`)}>Purchase</Button>
+    <Button class="w-full hover:bg-yellow-400  bg-yellow-300 text-black " on:click={() => goto(`/categories/woman/${item.id}`)}>Purchase</Button>
   </div>
 </div>
 
@@ -262,7 +359,7 @@ loadMenItem()
 <style>
   h1 {
     font-family: sans-serif;
-    font-weight: bold;
+  
   }
 
 

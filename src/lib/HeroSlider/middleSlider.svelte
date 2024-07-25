@@ -59,7 +59,7 @@
    on:mousenter={plugin.stop}
    on:mouseleave={plugin.reset} 
    class="w-3/4 mx-auto my-5">
-   <h1 class="text-5xl  text-center mb-10 bg-gradient-to-r from-gray-700 to-blue-500 text-transparent bg-clip-text  italic">Popular </h1>
+   <h1 class="text-5xl  text-center mb-10 bg-gradient-to-r from-gray-700 to-blue-500 text-transparent bg-clip-text  italic">Popular  Items in store</h1>
 
   
     <Carousel.Content class="-ml-1">
@@ -97,6 +97,6 @@
  
   <style>
    * {
-        font-family: "Jura", sans-serif;
+        font-family:  Arial, Helvetica, sans-serif;
     }
   </style>

@@ -13,18 +13,7 @@
   let count = 0;
   let current = 0;
 
-  interface Item {
-  id: number;
-  name: string;
-  price: number;
-  img: string;
-  description?: string;
-  img2?: string;
-  img3?: string;
-  img4?: string;
-  category: string;
-  status: string;
-}
+  import type { Item } from '../../types'
 
   let items: Item[] = []
   let errorMessage: string = ''
@@ -151,11 +140,7 @@
            
           </p>
           
-          <p
-            class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
-          ><Badge class='  rounded-md bg-yellow-300 text-black'>{item.price}</Badge>
-            
-          </p>
+          <p class="text-black ml-2">{item.price}$</p>
      
         </div>
         <p class="text-gray-600 my-2">Category: {item.category}</p>
@@ -164,7 +149,7 @@
         <p class="text-red-500 text-sm">{item.status}</p>
         {:else}
 
-        <p class="text-green-500 ">{item.status}</p>
+        <p class="text-green-500 text-sm">{item.status}</p>
 
         {/if}
       </div>
@@ -183,7 +168,7 @@
 <style>
   h1 {
     font-family: "Sans", sans-serif;
-    font-weight: bold;
+  
     
   }
 

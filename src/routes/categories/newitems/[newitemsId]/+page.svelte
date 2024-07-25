@@ -99,7 +99,7 @@ async function loadItems() {
 <br />
 
 <a href="/categories/newitems" class="text-blue-600 underline">
-  <i class="mx-6 fa-solid fa-chevron-left"></i>Go back to new items
+  <i class="mx-6 fa-solid fa-chevron-left"></i>Go back 
 </a>
 
 {#if errorMessage}
