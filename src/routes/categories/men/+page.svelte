@@ -143,9 +143,7 @@
           <p class="text-black ml-2">{item.price}$</p>
      
         </div>
-        {#if item.seller === 'yes'}
-        <Badge class='my-2 rounded-none bg-orange-700'>Best Seller</Badge>
-        {/if}
+        
         <p class="text-gray-600 my-2">Category: {item.category}</p>
         
         {#if item.status !== 'Sold out'}

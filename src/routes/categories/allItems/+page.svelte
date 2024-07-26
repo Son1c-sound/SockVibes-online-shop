@@ -95,14 +95,14 @@
 {#each filterNew as item} 
   
 <div
-  class="relative flex flex-col bg-clip-border m-1 text-gray-900  rounded-md "
+  class="relative flex flex-col bg-clip-border m-1 text-gray-900  rounded-md"
 >
   <div
     class="relative mx-1 mt-4 overflow-hidden text-gray-700  bg-clip-border "
   >
   
   <button class="w-full  p-1 rounded-md text-black " on:click={() => goto(`/categories/newitems/${item.id}`)}>
-    <Carousel.Root class=" my-4 w-full mx-auto max-w-full" bind:api>
+    <Carousel.Root class="bg-white rounded-md  w-full mx-auto max-w-full" bind:api>
       <Carousel.Content>
         
         <Carousel.Item>
@@ -183,7 +183,7 @@
     {#if item.seller === 'yes'}
     <Badge class='my-2 rounded-none bg-orange-700'>Best Seller</Badge>
     {/if}
-    
+  
 
     {#if item.status === 'Sold out'}
     <p class=' text-red-500 text-sm'>{item.status}</p>
@@ -192,9 +192,7 @@
     {/if}
   </div>
 
-  <div class="p-2 sm:p-1 pt-0">
-    <Button class="w-full hover:bg-yellow-400  bg-yellow-300 text-black " on:click={() => goto(`/categories/newitems/${item.id}`)}>Purchase</Button>
-  </div>
+
 </div>
 
 {/each}
@@ -202,27 +200,37 @@
 {#each filterMan as item} 
   
 <div
-  class="relative flex flex-col bg-clip-border m-1 text-gray-900  rounded-md "
+  class="relative flex flex-col bg-clip-border m-1 text-gray-900  rounded-md"
 >
   <div
     class="relative mx-1 mt-4 overflow-hidden text-gray-700  bg-clip-border "
   >
-  <button class="w-full  p-1 rounded-md text-black " on:click={() => goto(`/categories/men/${item.id}`)}>
-    <Carousel.Root class=" my-4 w-full mx-auto max-w-full" bind:api>
+  
+  <button class="w-full  p-1 rounded-md text-black " on:click={() => goto(`/categories/newitems/${item.id}`)}>
+    <Carousel.Root class="bg-white rounded-md  w-full mx-auto max-w-full" bind:api>
       <Carousel.Content>
+        
         <Carousel.Item>
+          
           <div class="p-1">
+            
             <Card.Root>
+             
+
               <Card.Content
                 class="flex aspect-square items-center justify-center p-4 sm:p-6"
               >
+             
                 <img
                   src={item.img}
                   class="w-full h-full object-cover text-2xl font-semibold"
                 alt='item' />
               </Card.Content>
+             
             </Card.Root>
+         
           </div>
+        
         </Carousel.Item>
         <Carousel.Item>
           <div class="p-1">
@@ -235,7 +243,10 @@
                   class="w-full h-full object-cover text-4xl font-semibold"
                  alt='item'/>
               </Card.Content>
+          
+
             </Card.Root>
+          
           </div>
         </Carousel.Item>
         <Carousel.Item>
@@ -249,11 +260,17 @@
                   class="w-full h-full object-cover text-4xl font-semibold"
                 alt='item'/>
               </Card.Content>
+             
             </Card.Root>
           </div>
+     
+
         </Carousel.Item>
+
       </Carousel.Content>
+
     </Carousel.Root>
+
   </button>
   </div>
   <div class="p-4 sm:p-6">
@@ -262,29 +279,25 @@
         class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
       > {item.name}
       
-       
+
       </p>
-      
-         
       <p class="text-black ml-2">{item.price}$</p>
-        
  
     </div>
     <p class="text-gray-600 my-2">Category: {item.category}</p>
     {#if item.seller === 'yes'}
     <Badge class='my-2 rounded-none bg-orange-700'>Best Seller</Badge>
     {/if}
-    {#if item.status !== 'Sold out'}
-    
-    <p class=' text-green-500 text-sm'>{item.status}</p>
+  
+
+    {#if item.status === 'Sold out'}
+    <p class=' text-red-500 text-sm'>{item.status}</p>
       {:else}
-      <p class='  text-red-500 text-sm'>{item.status}</p>
+      <p class='  text-green-500 text-sm'>{item.status}</p>
     {/if}
   </div>
 
-  <div class="p-2 sm:p-1 pt-0">
-    <Button class="w-full hover:bg-yellow-400  bg-yellow-300 text-black " on:click={() => goto(`/categories/men/${item.id}`)}>Purchase</Button>
-  </div>
+
 </div>
 
 {/each}
@@ -292,27 +305,37 @@
 {#each filterWoman as item} 
   
 <div
-  class="relative flex flex-col bg-clip-border m-1 text-gray-900  rounded-md "
+  class="relative flex flex-col bg-clip-border m-1 text-gray-900  rounded-md"
 >
   <div
     class="relative mx-1 mt-4 overflow-hidden text-gray-700  bg-clip-border "
   >
-  <button class="w-full  p-1 rounded-md text-black " on:click={() => goto(`/categories/woman/${item.id}`)}>
-    <Carousel.Root class=" my-4 w-full mx-auto max-w-full" bind:api>
+  
+  <button class="w-full  p-1 rounded-md text-black " on:click={() => goto(`/categories/newitems/${item.id}`)}>
+    <Carousel.Root class="bg-white rounded-md  w-full mx-auto max-w-full" bind:api>
       <Carousel.Content>
+        
         <Carousel.Item>
+          
           <div class="p-1">
+            
             <Card.Root>
+             
+
               <Card.Content
                 class="flex aspect-square items-center justify-center p-4 sm:p-6"
               >
+             
                 <img
                   src={item.img}
                   class="w-full h-full object-cover text-2xl font-semibold"
                 alt='item' />
               </Card.Content>
+             
             </Card.Root>
+         
           </div>
+        
         </Carousel.Item>
         <Carousel.Item>
           <div class="p-1">
@@ -325,7 +348,10 @@
                   class="w-full h-full object-cover text-4xl font-semibold"
                  alt='item'/>
               </Card.Content>
+          
+
             </Card.Root>
+          
           </div>
         </Carousel.Item>
         <Carousel.Item>
@@ -339,11 +365,17 @@
                   class="w-full h-full object-cover text-4xl font-semibold"
                 alt='item'/>
               </Card.Content>
+             
             </Card.Root>
           </div>
+     
+
         </Carousel.Item>
+
       </Carousel.Content>
+
     </Carousel.Root>
+
   </button>
   </div>
   <div class="p-4 sm:p-6">
@@ -352,60 +384,62 @@
         class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
       > {item.name}
       
-       
+
       </p>
-      
       <p class="text-black ml-2">{item.price}$</p>
-        
-      
  
     </div>
     <p class="text-gray-600 my-2">Category: {item.category}</p>
     {#if item.seller === 'yes'}
     <Badge class='my-2 rounded-none bg-orange-700'>Best Seller</Badge>
     {/if}
-    
-    {#if item.status !== 'Sold out'}
-    <p class=' text-green-500 text-sm'>{item.status}</p>
+  
+
+    {#if item.status === 'Sold out'}
+    <p class=' text-red-500 text-sm'>{item.status}</p>
       {:else}
-      <p class='  text-red-500 text-sm'>{item.status}</p>
+      <p class='  text-green-500 text-sm'>{item.status}</p>
     {/if}
   </div>
 
-  <div class="p-2 sm:p-1 pt-0">
-    <Button class="w-full hover:bg-yellow-400  bg-yellow-300 text-black " on:click={() => goto(`/categories/woman/${item.id}`)}>Purchase</Button>
-  </div>
+
 </div>
 
 {/each}
 {#each items as item} 
- 
-
+  
 <div
-  class="relative flex flex-col bg-clip-border m-1 text-gray-900  rounded-md "
+  class="relative flex flex-col bg-clip-border m-1 text-gray-900  rounded-md"
 >
-
-
   <div
     class="relative mx-1 mt-4 overflow-hidden text-gray-700  bg-clip-border "
   >
-
-  <button class="w-full  p-1 rounded-md text-black " on:click={() => goto(`/categories/Sales/${item.id}`)}>
-    <Carousel.Root class=" my-4 w-full mx-auto max-w-full" bind:api>
+  
+  <button class="w-full  p-1 rounded-md text-black " on:click={() => goto(`/categories/newitems/${item.id}`)}>
+    <Carousel.Root class="bg-white rounded-md  w-full mx-auto max-w-full" bind:api>
       <Carousel.Content>
+        
         <Carousel.Item>
+          
           <div class="p-1">
+            
             <Card.Root>
+             
+
               <Card.Content
                 class="flex aspect-square items-center justify-center p-4 sm:p-6"
               >
+             
                 <img
                   src={item.img}
                   class="w-full h-full object-cover text-2xl font-semibold"
                 alt='item' />
               </Card.Content>
+             
             </Card.Root>
+         
           </div>
+        
         </Carousel.Item>
         <Carousel.Item>
           <div class="p-1">
@@ -418,7 +452,10 @@
                   class="w-full h-full object-cover text-4xl font-semibold"
                  alt='item'/>
               </Card.Content>
+          
+
             </Card.Root>
+          
           </div>
         </Carousel.Item>
         <Carousel.Item>
@@ -432,11 +469,17 @@
                   class="w-full h-full object-cover text-4xl font-semibold"
                 alt='item'/>
               </Card.Content>
+             
             </Card.Root>
           </div>
+     
+
         </Carousel.Item>
+
       </Carousel.Content>
+
     </Carousel.Root>
+
   </button>
   </div>
   <div class="p-4 sm:p-6">
@@ -445,29 +488,30 @@
         class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
       > {item.name}
       
-       
+
       </p>
-      
-      <h1 class="text-md  p-1  text-gray-800 rounded-md">{item.price}$</h1>
+      <p class="text-black ml-2">{item.price}$</p>
  
     </div>
-    <p>Category: {item.category}</p>
+    <p class="text-gray-600 my-2">Category: {item.category}</p>
+ 
     <div class="mx-auto ">
-      <Badge class='my-2 text-sm bg-red-500 rounded-none text-white text-center'>Sale {item.sale}%</Badge>
+      <Badge class=' text-sm bg-red-500 rounded-none text-white text-center my-2'>Sale {item.sale}%</Badge>
      </div>
+  
+    {#if item.seller === 'yes'}
+    <Badge class='my-2 rounded-none bg-orange-700'>Best Seller</Badge>
+    {/if}
+  
 
-    {#if item.status !== 'In Stock'}
-    <p class="text-red-500 text-sm">{item.status}</p>
-    {:else}
-
-    <p class="text-green-500 text-sm">{item.status}</p>
-
+    {#if item.status === 'Sold out'}
+    <p class=' text-red-500 text-sm'>{item.status}</p>
+      {:else}
+      <p class='  text-green-500 text-sm'>{item.status}</p>
     {/if}
   </div>
 
-  <div class="p-2 sm:p-1 pt-0">
-    <Button class="w-full hover:bg-yellow-400  bg-yellow-300 text-black " on:click={() => goto(`/categories/Sales/${item.id}`)}>Purchase</Button>
-  </div>
+
 </div>
 
 {/each}
