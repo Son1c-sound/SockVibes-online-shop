@@ -23,7 +23,7 @@
   const saleId: any = $page.params.saleId;
 
   async function loaditems() {
-    const { data, error } = await supabase.from("sale").select("*");
+    const { data, error } = await supabase.from("allitems").select("*");
 
     if (error) {
       errorMessage = `Error loading items: ${error.message}`;
@@ -183,9 +183,9 @@
         </h1>
       </div>
       {#if selectedProduct.status === "In Stock"}
-        <Badge class="bg-green-500 text-white">{selectedProduct.status}</Badge>
+        <Badge class="rounded-none bg-green-500 text-white">{selectedProduct.status}</Badge>
       {:else}
-        <Badge class="bg-red-500 text-white">{selectedProduct.status}</Badge>
+        <Badge class="bg-red-500 rounded-none text-white">{selectedProduct.status}</Badge>
       {/if}
 
       <div>
