@@ -157,9 +157,7 @@
         {/if}
 
 
-        {#if item.seller === 'yes'}
-        <Badge class='my-2 rounded-none bg-orange-700'>Best Seller</Badge>
-        {/if}
+
         {#if item.status !== 'In Stock'}
         <p class="text-red-500 text-sm">{item.status}</p>
         {:else}
