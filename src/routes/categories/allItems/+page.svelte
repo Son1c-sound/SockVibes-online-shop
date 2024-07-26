@@ -30,41 +30,33 @@
   let filterMan: Item[] = []
   let filterWoman: Item[] = []
   async function loadItems() {
-    const { data, error} = await supabase.from("allitems").select("*");
+  try {
+    const { data, error } = await supabase
+      .from("allitems")
+      .select("*");
 
-    if(error) {
-      errorMessage = `Error loading items: ${error.message}`;
+    if (error) throw error;
+    items = data;
+    filterNew = items.filter(item => item.category === 'Unisex');
+    filterMan = items.filter(item => item.category === 'Men');
+    filterWoman = items.filter(item => item.category === 'Women');
+    loadSale()
+  } catch (error) {
+    errorMessage = `Error loading items:`;
+  }
+}
+
+  async function loadSale() {
+    const { data, error } = await supabase.from('sale').select("*")
+    if( error) {
+      errorMessage = 'erorr'
     } else {
-      items = data;
-      filterNew = items.filter(item => item.category === 'Unisex')
+      items = data
     }
+    
   }
-
-
-  async function loadMenItem() {
-    const { data, error} = await supabase.from("allitems").select("*");
-
-    if(error) {
-      errorMessage = `Error loading items: ${error.message}`;
-    } else {
-      items = data;
-      filterMan = items.filter(item => item.category === 'Men')
-    }
-  }
-
-
-  async function loadWomenItems() {
-     const { data, error } = await supabase.from('allitems').select("*")
-
-      if(error) {
-        errorMessage = 'error'
-      } else {
-        items = data
-        filterWoman = items.filter(w => w.category === 'Women')
-
-      }
-  }
-
+  loadItems()
+ 
 
   let api: CarouselAPI;
   let count = 0;
@@ -77,9 +69,7 @@
       current = api.selectedScrollSnap() + 1;
     });
   }
-loadItems()
-loadMenItem()
-loadWomenItems()
+
 </script>
 
 <body class="text-white">
@@ -110,22 +100,32 @@ loadWomenItems()
   <div
     class="relative mx-1 mt-4 overflow-hidden text-gray-700  bg-clip-border "
   >
+  
   <button class="w-full  p-1 rounded-md text-black " on:click={() => goto(`/categories/newitems/${item.id}`)}>
     <Carousel.Root class=" my-4 w-full mx-auto max-w-full" bind:api>
       <Carousel.Content>
+        
         <Carousel.Item>
+          
           <div class="p-1">
+            
             <Card.Root>
+             
+
               <Card.Content
                 class="flex aspect-square items-center justify-center p-4 sm:p-6"
               >
+             
                 <img
                   src={item.img}
                   class="w-full h-full object-cover text-2xl font-semibold"
                 alt='item' />
               </Card.Content>
+             
             </Card.Root>
+         
           </div>
+        
         </Carousel.Item>
         <Carousel.Item>
           <div class="p-1">
@@ -138,7 +138,10 @@ loadWomenItems()
                   class="w-full h-full object-cover text-4xl font-semibold"
                  alt='item'/>
               </Card.Content>
+          
+
             </Card.Root>
+          
           </div>
         </Carousel.Item>
         <Carousel.Item>
@@ -152,11 +155,17 @@ loadWomenItems()
                   class="w-full h-full object-cover text-4xl font-semibold"
                 alt='item'/>
               </Card.Content>
+             
             </Card.Root>
           </div>
+     
+
         </Carousel.Item>
+
       </Carousel.Content>
+
     </Carousel.Root>
+
   </button>
   </div>
   <div class="p-4 sm:p-6">
@@ -165,14 +174,14 @@ loadWomenItems()
         class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
       > {item.name}
       
-       
+
       </p>
-      
       <p class="text-black ml-2">{item.price}$</p>
  
     </div>
     <p class="text-gray-600 my-2">Category: {item.category}</p>
-    
+    <Badge class='my-2 rounded-none bg-orange-700'>Best Seller</Badge>
+
     {#if item.status === 'Sold out'}
     <p class=' text-red-500 text-sm'>{item.status}</p>
       {:else}
@@ -357,6 +366,99 @@ loadWomenItems()
 
   <div class="p-2 sm:p-1 pt-0">
     <Button class="w-full hover:bg-yellow-400  bg-yellow-300 text-black " on:click={() => goto(`/categories/woman/${item.id}`)}>Purchase</Button>
+  </div>
+</div>
+
+{/each}
+{#each items as item} 
+ 
+
+<div
+  class="relative flex flex-col bg-clip-border m-1 text-gray-900  rounded-md "
+>
+
+
+  <div
+    class="relative mx-1 mt-4 overflow-hidden text-gray-700  bg-clip-border "
+  >
+
+  <button class="w-full  p-1 rounded-md text-black " on:click={() => goto(`/categories/Sales/${item.id}`)}>
+    <Carousel.Root class=" my-4 w-full mx-auto max-w-full" bind:api>
+      <Carousel.Content>
+        <Carousel.Item>
+          <div class="p-1">
+            <Card.Root>
+              <Card.Content
+                class="flex aspect-square items-center justify-center p-4 sm:p-6"
+              >
+                <img
+                  src={item.img}
+                  class="w-full h-full object-cover text-2xl font-semibold"
+                alt='item' />
+              </Card.Content>
+            </Card.Root>
+          </div>
+        </Carousel.Item>
+        <Carousel.Item>
+          <div class="p-1">
+            <Card.Root>
+              <Card.Content
+                class="flex aspect-square items-center justify-center p-4 sm:p-6"
+              >
+                <img
+                  src={item.img2}
+                  class="w-full h-full object-cover text-4xl font-semibold"
+                 alt='item'/>
+              </Card.Content>
+            </Card.Root>
+          </div>
+        </Carousel.Item>
+        <Carousel.Item>
+          <div class="p-1">
+            <Card.Root>
+              <Card.Content
+                class="flex aspect-square items-center justify-center p-4 sm:p-6"
+              >
+                <img
+                  src={item.img3}
+                  class="w-full h-full object-cover text-4xl font-semibold"
+                alt='item'/>
+              </Card.Content>
+            </Card.Root>
+          </div>
+        </Carousel.Item>
+      </Carousel.Content>
+    </Carousel.Root>
+  </button>
+  </div>
+  <div class="p-4 sm:p-6">
+    <div class="flex items-center justify-between mb-2">
+      <p
+        class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
+      > {item.name}
+      
+       
+      </p>
+      
+      <h1 class="text-md  p-1  text-gray-800 rounded-md">{item.price}$</h1>
+ 
+    </div>
+    <p>Category: {item.category}</p>
+    <div class="mx-auto ">
+      <Badge class='my-2 text-sm bg-red-500 rounded-none text-white text-center'>Sale {item.sale}%</Badge>
+     </div>
+
+    {#if item.status !== 'In Stock'}
+    <p class="text-red-500 text-sm">{item.status}</p>
+    {:else}
+
+    <p class="text-green-500 text-sm">{item.status}</p>
+
+    {/if}
+  </div>
+
+  <div class="p-2 sm:p-1 pt-0">
+    <Button class="w-full hover:bg-yellow-400  bg-yellow-300 text-black " on:click={() => goto(`/categories/Sales/${item.id}`)}>Purchase</Button>
   </div>
 </div>
 

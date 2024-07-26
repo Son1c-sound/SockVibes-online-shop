@@ -84,7 +84,7 @@
         class="relative mx-1 mt-4 overflow-hidden text-gray-700  bg-clip-border "
       >
    
-      <button class="w-full  p-1 rounded-md text-black " on:click={() => goto(`woman/${item.id}`)}>
+      <button class="w-full  p-1 rounded-md text-black " on:click={() => goto(`/categories/Sales/${item.id}`)}>
         <Carousel.Root class=" my-4 w-full mx-auto max-w-full" bind:api>
           <Carousel.Content>
             <Carousel.Item>
@@ -157,7 +157,7 @@
       </div>
 
       <div class="p-2 sm:p-1 pt-0">
-        <Button class="w-full hover:bg-yellow-400  bg-yellow-300 text-black " on:click={() => goto(`woman/${item.id}`)}>Purchase</Button>
+        <Button class="w-full hover:bg-yellow-400  bg-yellow-300 text-black " on:click={() => goto(`/categories/Sales/${item.id}`)}>Purchase</Button>
       </div>
     </div>
 
