@@ -18,15 +18,16 @@
   let items: Item[] = []
   let errorMessage: string = ''
 
-
+  let salefilter: Item[] = []
 
   async function loaditems() {
-     const { data, error } = await supabase.from('sale').select("*")
+     const { data, error } = await supabase.from('allitems').select("*")
 
       if(error) {
         errorMessage = 'error'
       } else {
         items = data
+        salefilter = items.filter(s => s.onsale === 'yes')
 
       }
   }
@@ -70,14 +71,15 @@
   class=" my-5 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 mx-auto max-w-screen-xl "
 >
 
-  {#each items as item} 
+
+  {#each salefilter as item} 
  
 
     <div
       class="relative flex flex-col bg-clip-border m-1 text-gray-900  rounded-md "
     >
     <div class="mx-auto ">
-      <Badge class=' text-sm bg-red-500 rounded-none text-white text-center'>Sale {item.sale}%</Badge>
+      <Badge class=' text-sm bg-red-500 rounded-none text-white text-center'>Sale {item.saleprecent}%</Badge>
      </div>
  
       <div
@@ -165,7 +167,7 @@
 
   {/each}
 
- 
+
 
 </div>
 </body>

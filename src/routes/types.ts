@@ -13,11 +13,12 @@ export const quantity: quantityItem[] = [
 
 
 export interface Item {
+  saleprecent: number;
   newitem: string;
   new: string;
   seller: string;
   sale: any;
-  text: any;
+  text: string;
   storage: any;
   stock: number;
   id: number;
@@ -31,4 +32,5 @@ export interface Item {
   category: string;
   status: string;
   logo: any;
+  onsale: string;
 }

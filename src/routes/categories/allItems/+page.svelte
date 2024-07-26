@@ -29,6 +29,7 @@
   let filterNew: Item[] = [];
   let filterMan: Item[] = []
   let filterWoman: Item[] = []
+  let salefilter: Item[] = []
   async function loadItems() {
   try {
     const { data, error } = await supabase
@@ -40,6 +41,7 @@
     filterNew = items.filter(item => item.category === 'Unisex');
     filterMan = items.filter(item => item.category === 'Men');
     filterWoman = items.filter(item => item.category === 'Women');
+    salefilter = items.filter(item => item.onsale === 'yes')
     loadSale()
   } catch (error) {
     errorMessage = `Error loading items:`;
@@ -416,7 +418,7 @@
 </div>
 
 {/each}
-{#each items as item} 
+{#each salefilter as item} 
   
 <div
   class="relative flex flex-col bg-clip-border m-1 text-gray-900  rounded-md"
@@ -508,7 +510,7 @@
    
   
     <div class="mx-auto ">
-      <Badge class=' text-sm bg-red-500 rounded-none text-white text-center my-2'>Sale {item.sale}%</Badge>
+      <Badge class=' text-sm bg-red-500 rounded-none text-white text-center my-2'>Sale {item.saleprecent}%</Badge>
      </div>
     
     {#if item.seller === 'yes'}
