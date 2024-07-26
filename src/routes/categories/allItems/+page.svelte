@@ -361,6 +361,9 @@
  
     </div>
     <p class="text-gray-600 my-2">Category: {item.category}</p>
+    {#if item.seller === 'yes'}
+    <Badge class='my-2 rounded-none bg-orange-700'>Best Seller</Badge>
+    {/if}
     
     {#if item.status !== 'Sold out'}
     <p class=' text-green-500 text-sm'>{item.status}</p>
