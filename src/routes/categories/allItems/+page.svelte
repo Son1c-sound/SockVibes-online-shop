@@ -180,7 +180,7 @@
  
     </div>
     <p class="text-gray-600 my-2">Category: {item.category}</p>
-    {#if item.new === 'yes'}
+    {#if item.newitem === 'yes'}
     <Badge class='my-2 rounded-none bg-green-600'>New</Badge>
     {/if}
 
@@ -289,7 +289,7 @@
  
     </div>
     <p class="text-gray-600 my-2">Category: {item.category}</p>
-    {#if item.new === 'yes'}
+    {#if item.newitem === 'yes'}
     <Badge class='my-2 rounded-none bg-green-600'>New</Badge>
     {/if}
     {#if item.seller === 'yes'}
@@ -397,7 +397,7 @@
  
     </div>
     <p class="text-gray-600 my-2">Category: {item.category}</p>
-    {#if item.new === 'yes'}
+    {#if item.newitem === 'yes'}
     <Badge class='my-2 rounded-none bg-green-600'>New</Badge>
     {/if}
     {#if item.seller === 'yes'}

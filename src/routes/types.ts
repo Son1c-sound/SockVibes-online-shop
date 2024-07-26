@@ -13,6 +13,7 @@ export const quantity: quantityItem[] = [
 
 
 export interface Item {
+  newitem: string;
   new: string;
   seller: string;
   sale: any;
