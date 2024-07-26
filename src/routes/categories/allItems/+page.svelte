@@ -29,7 +29,7 @@
   let filterNew: Item[] = [];
   let filterMan: Item[] = []
   let filterWoman: Item[] = []
-  let salefilter: Item[] = []
+
   async function loadItems() {
   try {
     const { data, error } = await supabase
@@ -41,7 +41,7 @@
     filterNew = items.filter(item => item.category === 'Unisex');
     filterMan = items.filter(item => item.category === 'Men');
     filterWoman = items.filter(item => item.category === 'Women');
-    salefilter = items.filter(item => item.onsale === 'yes')
+   
     loadSale()
   } catch (error) {
     errorMessage = `Error loading items:`;
@@ -182,6 +182,9 @@
  
     </div>
     <p class="text-gray-600 my-2">Category: {item.category}</p>
+    {#if item.onsale === 'yes'}
+    <Badge class='text-white  rounded-none bg-red-600 my-2'>Sale {item.saleprecent}%</Badge>
+    {/if}
     {#if item.newitem === 'yes'}
     <Badge class='my-2 rounded-none bg-green-600'>New</Badge>
     {/if}
@@ -291,6 +294,9 @@
  
     </div>
     <p class="text-gray-600 my-2">Category: {item.category}</p>
+    {#if item.onsale === 'yes'}
+    <Badge class='text-white  rounded-none bg-red-600 my-2'>Sale {item.saleprecent}%</Badge>
+    {/if}
     {#if item.newitem === 'yes'}
     <Badge class='my-2 rounded-none bg-green-600'>New</Badge>
     {/if}
@@ -399,6 +405,9 @@
  
     </div>
     <p class="text-gray-600 my-2">Category: {item.category}</p>
+    {#if item.onsale === 'yes'}
+    <Badge class='text-white  rounded-none bg-red-600 my-2'>Sale {item.saleprecent}%</Badge>
+    {/if}
     {#if item.newitem === 'yes'}
     <Badge class='my-2 rounded-none bg-green-600'>New</Badge>
     {/if}
@@ -418,117 +427,7 @@
 </div>
 
 {/each}
-{#each salefilter as item} 
-  
-<div
-  class="relative flex flex-col bg-clip-border m-1 text-gray-900  rounded-md"
->
-  <div
-    class="relative mx-1 mt-4 overflow-hidden text-gray-700  bg-clip-border "
-  >
-  
-  <button class="w-full  p-1 rounded-md text-black " on:click={() => goto(`/categories/newitems/${item.id}`)}>
-    <Carousel.Root class="bg-white rounded-md  w-full mx-auto max-w-full" bind:api>
-      <Carousel.Content>
-        
-        <Carousel.Item>
-          
-          <div class="p-1">
-            
-            <Card.Root>
-             
 
-              <Card.Content
-                class="flex aspect-square items-center justify-center p-4 sm:p-6"
-              >
-             
-                <img
-                  src={item.img}
-                  class="w-full h-full object-cover text-2xl font-semibold"
-                alt='item' />
-              </Card.Content>
-             
-            </Card.Root>
-         
-          </div>
-        
-        </Carousel.Item>
-        <Carousel.Item>
-          <div class="p-1">
-            <Card.Root>
-              <Card.Content
-                class="flex aspect-square items-center justify-center p-4 sm:p-6"
-              >
-                <img
-                  src={item.img2}
-                  class="w-full h-full object-cover text-4xl font-semibold"
-                 alt='item'/>
-              </Card.Content>
-          
-
-            </Card.Root>
-          
-          </div>
-        </Carousel.Item>
-        <Carousel.Item>
-          <div class="p-1">
-            <Card.Root>
-              <Card.Content
-                class="flex aspect-square items-center justify-center p-4 sm:p-6"
-              >
-                <img
-                  src={item.img3}
-                  class="w-full h-full object-cover text-4xl font-semibold"
-                alt='item'/>
-              </Card.Content>
-             
-            </Card.Root>
-          </div>
-     
-
-        </Carousel.Item>
-
-      </Carousel.Content>
-
-    </Carousel.Root>
-
-  </button>
-  </div>
-  <div class="p-4 sm:p-6">
-    <div class="flex items-center justify-between mb-2">
-      <p
-        class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
-      > {item.name}
-      
-
-      </p>
-      <p class="text-black ml-2">{item.price}$</p>
- 
-    </div>
-    <p class="text-gray-600 my-2">Category: {item.category}</p>
-
-   
-  
-    <div class="mx-auto ">
-      <Badge class=' text-sm bg-red-500 rounded-none text-white text-center my-2'>Sale {item.saleprecent}%</Badge>
-     </div>
-    
-    {#if item.seller === 'yes'}
-    <Badge class='my-2 rounded-none bg-orange-700'>Best Seller</Badge>
-    {/if}
-  
-
-    {#if item.status === 'Sold out'}
-    <p class=' text-red-500 text-sm'>{item.status}</p>
-      {:else}
-      <p class='  text-green-500 text-sm'>{item.status}</p>
-    {/if}
-  </div>
-
-
-</div>
-
-{/each}
    
   
   </div>

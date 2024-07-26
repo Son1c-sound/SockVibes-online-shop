@@ -11,6 +11,7 @@
     import { goto } from '$app/navigation'
   import supabase from "$lib/db";
   import type { Item } from '../../types'
+  import { sale } from "./products";
   let api: CarouselAPI;
   let count = 0;
   let current = 0;
@@ -78,9 +79,7 @@
     <div
       class="relative flex flex-col bg-clip-border m-1 text-gray-900  rounded-md "
     >
-    <div class="mx-auto ">
-      <Badge class=' text-sm bg-red-500 rounded-none text-white text-center'>Sale {item.saleprecent}%</Badge>
-     </div>
+
  
       <div
         class="relative mx-1 mt-4 overflow-hidden text-gray-700  bg-clip-border "
@@ -151,6 +150,13 @@
         {#if item.new === 'yes'}
         <Badge class='my-2 rounded-none bg-green-600'>New</Badge>
         {/if}
+        {#if item.onsale === 'yes'}
+        <div class="mx-auto ">
+          <Badge class='my-2 text-sm bg-red-600 rounded-none text-white text-center'>Sale {item.saleprecent}%</Badge>
+         </div>
+        {/if}
+
+
         {#if item.seller === 'yes'}
         <Badge class='my-2 rounded-none bg-orange-700'>Best Seller</Badge>
         {/if}

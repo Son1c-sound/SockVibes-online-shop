@@ -149,9 +149,14 @@
             <p class="text-black ml-2">{item.price}$</p>
           
           </div>
-          {#if item.new === 'yes'}
+          
+          {#if item.onsale === 'yes'}
+          <Badge class='text-white  rounded-none bg-red-600 my-2'>Sale {item.saleprecent}%</Badge>
+          {/if}
+          {#if item.newitem === 'yes'}
           <Badge class='my-2 rounded-none bg-green-600'>New</Badge>
           {/if}
+      
           {#if item.seller === 'yes'}
           <Badge class='my-2 rounded-none bg-orange-700'>Best Seller</Badge>
           {/if}
