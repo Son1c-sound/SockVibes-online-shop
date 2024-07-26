@@ -182,6 +182,13 @@
           </select>
         </h1>
       </div>
+      {#if selectedProduct.seller === 'yes'}
+      <Badge class='bg-orange-700 rounded-none'>Best Seller</Badge>
+      {/if}
+      {#if selectedProduct.onsale === 'yes'}
+      <Badge class='bg-red-500 rounded-none'>Limited time deal</Badge>
+      <Badge class='bg-red-500 rounded-none'>{selectedProduct.saleprecent}% Sale</Badge>
+      {/if}
       {#if selectedProduct.status === "In Stock"}
         <Badge class="rounded-none bg-green-500 text-white">{selectedProduct.status}</Badge>
       {:else}

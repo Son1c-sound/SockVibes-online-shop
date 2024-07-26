@@ -215,7 +215,7 @@
     class="relative mx-1 mt-4 overflow-hidden text-gray-700  bg-clip-border "
   >
   
-  <button class="w-full  p-1 rounded-md text-black " on:click={() => goto(`/categories/newitems/${item.id}`)}>
+  <button class="w-full  p-1 rounded-md text-black " on:click={() => goto(`/categories/men/${item.id}`)}>
     <Carousel.Root class="bg-white rounded-md  w-full mx-auto max-w-full" bind:api>
       <Carousel.Content>
         
@@ -326,7 +326,7 @@
     class="relative mx-1 mt-4 overflow-hidden text-gray-700  bg-clip-border "
   >
   
-  <button class="w-full  p-1 rounded-md text-black " on:click={() => goto(`/categories/newitems/${item.id}`)}>
+  <button class="w-full  p-1 rounded-md text-black " on:click={() => goto(`/categories/woman/${item.id}`)}>
     <Carousel.Root class="bg-white rounded-md  w-full mx-auto max-w-full" bind:api>
       <Carousel.Content>
         

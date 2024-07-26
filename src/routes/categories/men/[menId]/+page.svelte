@@ -138,6 +138,7 @@
           on:click={addToCart}
           on:click={increment}>Add to Cart</Button
         >
+     
       {/if}
 
       <div class="p-6 my-4 border border-gradient-purple-blue">
@@ -179,10 +180,14 @@
           </select>
         </h1>
       </div>
+      {#if selectedProduct.onsale === 'yes'}
+      <Badge class='bg-red-500 rounded-none'>Limited time deal</Badge>
+      <Badge class='bg-red-500 rounded-none'>{selectedProduct.saleprecent}% Sale</Badge>
+      {/if}
       {#if selectedProduct.status === "In Stock"}
-        <Badge class="bg-green-500 text-white">{selectedProduct.status}</Badge>
+        <Badge class="rounded-none bg-green-500 text-white">{selectedProduct.status}</Badge>
       {:else}
-        <Badge class="bg-red-500 text-white">{selectedProduct.status}</Badge>
+        <Badge class="rounded-none bg-red-500 text-white">{selectedProduct.status}</Badge>
       {/if}
 
       <div>
