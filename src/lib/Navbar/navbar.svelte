@@ -5,16 +5,31 @@
   import CartIc from "./cartIc.svelte";
   import SearchIc from "./searchIc.svelte";
   import { goto } from "$app/navigation";
-
+  import supabase from "$lib/db";
   let isMobileMenuOpen = false;
-
+  import type { Item } from '../../routes/types'
   function toggleMobileMenu() {
     isMobileMenuOpen = !isMobileMenuOpen;
   }
 
+  let items:Item[] = []
+  let errorMessage = ''
+  async function loadLogo() {
+    const { data, error } = await supabase.from("weblogo").select("*");
+
+    if (error) {
+      errorMessage = `Error loading items: ${error.message}`;
+    } else {
+      items = data;
+    }
+  }
+
+
   function menucart() {
     goto("/Cart");
   }
+
+  loadLogo()
 </script>
 
 <header
@@ -23,11 +38,15 @@
   <Anouncment></Anouncment>
   <div class="container mx-auto flex items-center h-24">
     <a href="/" class="flex items-center justify-center">
+      {#each items as item}
       <img
         class="h-14"
-        src="https://i.ibb.co/9497j0z/450211942-845890467465486-8095787243396923148-n.jpg"
+        src="{item.logo}"
         alt="Logo"
       />
+    {/each}
+    
+   
     </a>
     <nav class="relative hidden md:flex ml-4 flex-grow">
       <ul class="flex items-center justify-center mx-auto">
@@ -96,7 +115,7 @@
 
     <div class="ml-auto md:hidden">
       <button class="md:hidden mx-5" on:click={toggleMobileMenu}>
-        <SearchIc></SearchIc>
+        
       </button>
       <button class="md:hidden" on:click={menucart}>
         <CartIc></CartIc>
@@ -110,7 +129,7 @@
       <button
         class="border border-white rounded-full font-bold px-4 py-2 hidden md:block"
       >
-        <SearchIc></SearchIc>
+        
       </button>
       <button
         on:click={menucart}

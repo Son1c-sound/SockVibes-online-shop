@@ -13,7 +13,7 @@
   import { onMount } from "svelte";
   import toast, { Toaster } from "svelte-french-toast";
 
-  import { quantity } from "../../fresh/products";
+  import  { quantity } from "../../../../types";
   import { increment } from "../../fresh/store";
   import Badge from "../../../../../lib/components/ui/badge/badge.svelte";
   import Loading from '$lib/loading/loading.svelte'

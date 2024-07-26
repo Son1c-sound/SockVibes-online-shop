@@ -1,88 +1,102 @@
 <script lang="ts">
-    import * as Card from "$lib/components/ui/card/";
-    import * as Carousel from "$lib/components/ui/carousel/";
-    import Autoplay from "embla-carousel-autoplay";
-    import { onMount } from "svelte";
-     import { Progress } from "$lib/components/ui/progress/index.js";
-    import { fresh } from '../../routes/CheckOut/products/fresh/products'
-    import { goto } from "$app/navigation";
-    import { type CarouselAPI } from "$lib/components/ui/carousel/context.js";
-
-    let loading = true
-    const plugin = Autoplay({ delay: 2000, stopOnInteraction: true });
-
-    function navigateToSocks(freshid: any) {
-          goto(`CheckOut/products/fresh/${freshid}`);
-      }
-
-
-      function getFirstImageUrl(slide: any) {
-        if (slide.type === 'image' && slide.urls && slide.urls.length > 0) {
-            return slide.urls[0]; 
-        } else {
-            return slide.url; 
-        }
-        loading = false
-
-    }
-
-
-
-    let api: CarouselAPI;
-    let count = 0;
-    let current = 0;
-  
-    $: if (api) {
-      count = api.scrollSnapList().length;
-      current = api.selectedScrollSnap() + 1;
-      api.on("select", () => {
-        current = api.selectedScrollSnap() + 1;
-      });
-    }
-  </script>
+  import Button from "$lib/components/ui/button/button.svelte";
+   import * as Card from "$lib/components/ui/card/";
+   import * as Carousel from "$lib/components/ui/carousel/";
+   import supabase from "$lib/db";
    
-  
-
-   <Carousel.Root bind:api plugins={[plugin]}
-
-   on:mousenter={plugin.stop}
-   on:mouseleave={plugin.reset} 
-   class="w-3/4 mx-auto  my-28">
-
-    <Carousel.Content class="-ml-1 ">
-      {#each fresh as slide}
-        <Carousel.Item class=" pl-4 md:basis-1/2 lg:basis-1/3">
-          <button on:click={() => navigateToSocks(slide.id)}>   
-            <Card.Root class='border-none bg-transparent  shadow-none'>
-              <Card.Content>
-              </Card.Content>
-              {#if slide.type === 'image'}
-                <div class=" h-96 flex flex-col justify-center items-center">
-                  <img src={getFirstImageUrl(slide)} alt="" class="h-full object-cover">
-                  <p class="text-center  mt-2 text-xl text-gray-900">{slide.name}</p>
-                  <p class="text-center  mt-2 text-xl text-gray-900">{slide.price}</p>
-                </div>
-              {:else if slide.type === 'text'}
-                <div class="rounded-2xl h-96 flex justify-center items-center">
-                 
-                </div>
-              {/if}
-            </Card.Root>
-          </button>
-        </Carousel.Item>
-      {/each}
-    </Carousel.Content>
-    <Carousel.Previous />
-    <Carousel.Next />
-    <div class="border-gray-300 my-9 w-10 mx-auto ">
-    <p class="text-center border-2 rounded-md">{current}</p>
-    </div>
-
-  </Carousel.Root>
-  
+   import Autoplay from "embla-carousel-autoplay";
  
-  <style>
-    * {
-      font-family:  Arial, Helvetica, sans-serif;
-     }
-   </style>
+   import { goto } from "$app/navigation";
+   import { type CarouselAPI } from "$lib/components/ui/carousel/context.js";
+   import { Progress } from "$lib/components/ui/progress/index.js";
+   import Contentload from "$lib/loading/contentload.svelte";
+
+   function navigateToSocks(freshId: any) {
+       goto(`CheckOut/products/fresh/${freshId}`);
+   }
+
+ 
+
+  
+ const plugin = Autoplay({ delay: 4000, stopOnInteraction: true });
+
+
+   let api: CarouselAPI;
+   let count = 0;
+   let current = 0;
+ 
+   $: if (api) {
+     count = api.scrollSnapList().length;
+     current = api.selectedScrollSnap() + 1;
+     api.on("select", () => {
+       current = api.selectedScrollSnap() + 1;
+     });
+   }
+
+   // loading data from supabase
+   let errorMessage:any = ''
+   let items:any[] = []
+
+   async function loadItems() {
+   const { data, error } = await supabase.from("popular2").select("*");
+
+   if (error) {
+     errorMessage = `Error loading items: ${error.message}`;
+     console.error(error);
+   } else {
+     items = data;
+   }
+ 
+ }
+ 
+ loadItems();
+
+ </script>
+
+    
+  <Carousel.Root bind:api  plugins={[plugin]}
+
+  on:mousenter={plugin.stop}
+  on:mouseleave={plugin.reset} 
+  class="w-3/4 mx-auto my-5">
+
+
+ 
+   <Carousel.Content class="-ml-1">
+     {#each items as slide}
+       <Carousel.Item class="pl-4 md:basis-1/2 lg:basis-1/4">
+         <button on:click={() => navigateToSocks(slide.id)}>
+               
+           <Card.Root class='border-none shadow-none bg-transparent'>
+             <Card.Content>
+             </Card.Content>
+
+               <div class=" h-96 flex flex-col justify-center items-center">
+                 <img src={slide.img} alt="" class="h-full  object-cover">
+                 <p class="text-center  mt-2 text-xl text-gray-900">{slide.name}</p>
+                 <p class="text-center  mt-2 text-xl text-gray-900">{slide.price}$</p>
+               </div>
+ 
+
+           </Card.Root>
+         </button>
+       </Carousel.Item>
+     {/each}
+
+
+   </Carousel.Content>
+
+
+
+   <Carousel.Previous />
+   
+   <Carousel.Next />
+   <p class="text-center border-2 p-2 w-8 h-10 mx-auto rounded-md border-gray-200">{current}</p>
+ </Carousel.Root>
+
+
+ <style>
+  * {
+       font-family:  Arial, Helvetica, sans-serif;
+   }
+ </style>

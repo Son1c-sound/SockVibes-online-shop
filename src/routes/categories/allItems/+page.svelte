@@ -1,6 +1,5 @@
 <script lang="ts">
 
-  import { newItems } from "../newitems/products";
   import supabase from "$lib/db";
   import { Button } from "$lib/components/ui/button";
   import * as Card from "$lib/components/ui/card/index.js";

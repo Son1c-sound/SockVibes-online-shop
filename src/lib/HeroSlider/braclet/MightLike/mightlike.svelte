@@ -1,66 +1,104 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
-    import * as Card from "$lib/components/ui/card/";
-    import * as Carousel from "$lib/components/ui/carousel/";
-    import Autoplay from "embla-carousel-autoplay";
-    import { fresh } from "../../../../routes/CheckOut/products/fresh/products";
-
-    
-    function navigateToProductDetail(footerId: any) {
-      goto(`/CheckOut/products/fresh/${footerId}`, {  });
-    }
-
-
-    
-  const plugin = Autoplay({ delay: 4000, stopOnInteraction: true });
-  function getFirstImageUrl(product:any) {
-    if (product.type === 'image' && product.urls && product.urls.length > 0) {
-      return product.urls[0]; // Return the first URL from urls array
-    } else {
-      return product.url; // Return the single URL if there's no urls array
-    }
-  }
-
-  </script>
-   <hr class="mx-16">
+  import Button from "$lib/components/ui/button/button.svelte";
+   import * as Card from "$lib/components/ui/card/";
+   import * as Carousel from "$lib/components/ui/carousel/";
+   import supabase from "$lib/db";
+   
+   import Autoplay from "embla-carousel-autoplay";
  
-   <Carousel.Root  plugins={[plugin]}
+   import { goto } from "$app/navigation";
+   import { type CarouselAPI } from "$lib/components/ui/carousel/context.js";
+   import { Progress } from "$lib/components/ui/progress/index.js";
+   import Contentload from "$lib/loading/contentload.svelte";
 
-   on:mousenter={plugin.stop}
-   on:mouseleave={plugin.reset} 
-   class="w-3/4 mx-auto  my-28">
-   <h1 class=' font-style: italic text-5xl font-bold'>You might Like</h1>
-   <br>
-    <Carousel.Content class="-ml-1 bg-transparent border-none outline-none shadow-none">
-      {#each fresh as product}
-        <Carousel.Item class="pl-4 md:basis-1/2 lg:basis-1/4 bg-transparent border-none shadow-none ">
-          <a href={`/CheckOut/products/fresh/${product.id}`} target="_blank">
-                
-            <Card.Root class='border-none bg-transparent outline-none shadow-none'>
-              <Card.Content class='border-none bg-transparent shadow-none outline-none'>
-              </Card.Content>
-              {#if product.type === 'image'}
-                <div class=" h-96 flex flex-col justify-center items-center">
-                  <img src={getFirstImageUrl(product)} alt="" class="h-full  object-cover">
-                  <p class="text-center  mt-2 p-2 text-xl text-gray-900">{product.name}</p>
-                  <p class="text-center  mt-2 text-xl text-gray-900">{product.price}</p>
-                </div>
-              {:else if product.type === 'text'}
-                <div class="rounded-2xl h-96 flex justify-center items-center">
-                 
-                </div>
-              {/if}
-            </Card.Root>
-          </a>
-        </Carousel.Item>
-      {/each}
-    </Carousel.Content>
-    <Carousel.Previous />
-    <Carousel.Next />
-  </Carousel.Root>
+   function navigateToSocks(socksId: any) {
+       goto(`/CheckOut/products/Socks/${socksId}`);
+   }
+
+ 
+
   
-  <style>
-    * {
-        font-family: 'Jura', sans-serif; /* Ensure Noto Sans is applied universally */
-    }
-</style>
+ const plugin = Autoplay({ delay: 4000, stopOnInteraction: true });
+
+
+   let api: CarouselAPI;
+   let count = 0;
+   let current = 0;
+ 
+   $: if (api) {
+     count = api.scrollSnapList().length;
+     current = api.selectedScrollSnap() + 1;
+     api.on("select", () => {
+       current = api.selectedScrollSnap() + 1;
+     });
+   }
+
+   // loading data from supabase
+   let errorMessage:any = ''
+   let items:any[] = []
+
+   async function loadItems() {
+   const { data, error } = await supabase.from("popularItems").select("*");
+
+   if (error) {
+     errorMessage = `Error loading items: ${error.message}`;
+     console.error(error);
+   } else {
+     items = data;
+   }
+ 
+ }
+ 
+ loadItems();
+
+ </script>
+<hr>
+<br>
+    <br>
+    <br>
+  <Carousel.Root bind:api  plugins={[plugin]}
+
+  on:mousenter={plugin.stop}
+  on:mouseleave={plugin.reset} 
+  class="w-3/4 mx-auto my-5">
+  <h1 class="text-5xl  text-center mb-10 bg-gradient-to-r from-gray-700 to-blue-500 text-transparent bg-clip-text  italic">You might also like</h1>
+
+ 
+   <Carousel.Content class="-ml-1">
+     {#each items as slide}
+       <Carousel.Item class="pl-4 md:basis-1/2 lg:basis-1/4">
+         <button on:click={() => navigateToSocks(slide.id)}>
+               
+           <Card.Root class='border-none shadow-none bg-transparent'>
+             <Card.Content>
+             </Card.Content>
+
+               <div class=" h-96 flex flex-col justify-center items-center">
+                 <img src={slide.img} alt="" class="h-full  object-cover">
+                 <p class="text-center  mt-2 text-xl text-gray-900">{slide.name}</p>
+                 <p class="text-center  mt-2 text-xl text-gray-900">{slide.price}$</p>
+               </div>
+ 
+
+           </Card.Root>
+         </button>
+       </Carousel.Item>
+     {/each}
+
+
+   </Carousel.Content>
+
+
+
+   <Carousel.Previous />
+   
+   <Carousel.Next />
+   <Progress value={current} max={6} class='h-1 my-10' />
+ </Carousel.Root>
+
+
+ <style>
+  * {
+       font-family:  Arial, Helvetica, sans-serif;
+   }
+ </style>

@@ -5,6 +5,7 @@
     import { Button } from "$lib/components/ui/button/";
     import  supabase  from '$lib/db'
     import Loading from '$lib/loading/loading.svelte';
+  import { goto } from '$app/navigation';
     let swiperInstance:any;
     let interval:any;
     let loading = false;
@@ -61,7 +62,7 @@
             <div class="h-96 lg:h-[650px] relative">
               <img src={slide.img} alt="" class="h-full w-full object-cover">
               <div class='absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center w-full'>
-                <Button class='h-12 w-32 bg-white text-black text-md hover:text-gray-900 hover:bg-gray-200'>Shop Now</Button>
+                <Button class='h-12 w-32 bg-white text-black text-md hover:text-gray-900 hover:bg-gray-200' on:click={() => goto('/categories/allItems')}>Shop Now</Button>
               </div>
             </div>
           </div>

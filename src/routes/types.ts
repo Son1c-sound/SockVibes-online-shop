@@ -13,6 +13,8 @@ export const quantity: quantityItem[] = [
 
 
 export interface Item {
+  sale: any;
+  text: any;
   storage: any;
   stock: number;
   id: number;
@@ -25,4 +27,5 @@ export interface Item {
   img4?: string;
   category: string;
   status: string;
+  logo: any;
 }

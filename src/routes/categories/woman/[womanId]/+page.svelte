@@ -1,6 +1,5 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { woman } from "../products"; // Importing products from external file
   import Button from "$lib/components/ui/button/button.svelte";
   import * as Select from "$lib/components/ui/select/index.js";
   import * as Card from "$lib/components/ui/card/index.js";
@@ -9,7 +8,7 @@
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
   import DropIcon from '../../../../lib/Icons/dropdwon.svelte';
   import type { CarouselAPI } from "$lib/components/ui/carousel/context.js";
-  import { quantity } from "../products";
+  import { quantity } from "../../../types";
   import { onMount } from 'svelte';
   import toast, { Toaster } from 'svelte-french-toast';
   import LoaderCircle from "lucide-svelte/icons/loader-circle";
