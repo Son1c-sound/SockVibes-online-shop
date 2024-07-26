@@ -2,7 +2,8 @@
     import { addnumber, increment, decrement } from "../../routes/CheckOut/products/fresh/store";
     import { onMount } from 'svelte';
     import toast, { Toaster } from 'svelte-french-toast';
-    import Button from "$lib/components/ui/button/button.svelte";
+    import Button from "$lib/components/ui/button/button.svelte"; 
+    import { goto } from '$app/navigation'
  
     import RightArrow from '$lib/Icons/rightarrow.svelte'
     import MightLike from '../../lib/HeroSlider/braclet/MightLike/mightlike.svelte'
@@ -119,8 +120,9 @@
       {#each cartItems as item}
         <hr class="bg-gray-900" />
         <div class="flex items-center justify-between p-4 bg-white rounded-lg w-full">
+        
           <img src="{item.image}" alt="{item.name}" class="w-24 h-24 object-cover rounded-md" />
-          
+      
           <div class="flex-1 ml-4">
             <h3 class="text-lg font-semibold text-gray-800">{item.name}</h3>
             <p class="text-gray-600">Quantity: {item.quantity}</p>
