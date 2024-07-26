@@ -149,6 +149,9 @@
             <p class="text-black ml-2">{item.price}$</p>
           
           </div>
+          {#if item.new === 'yes'}
+          <Badge class='my-2 rounded-none bg-green-600'>New</Badge>
+          {/if}
           {#if item.seller === 'yes'}
           <Badge class='my-2 rounded-none bg-orange-700'>Best Seller</Badge>
           {/if}
@@ -163,12 +166,7 @@
        
 
   
-        <div class="p-2 sm:p-1 pt-0">
-          <Button
-            class="w-full bg-yellow-300 border border-yellow-300 hover:bg-yellow-500 text-black"
-            on:click={() => navigateToProductDetail(item.id)}>Check Item</Button
-          >
-        </div>
+     
       </div>
     {/each}
   </div>

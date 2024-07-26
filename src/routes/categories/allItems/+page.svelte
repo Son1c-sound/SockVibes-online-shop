@@ -180,6 +180,10 @@
  
     </div>
     <p class="text-gray-600 my-2">Category: {item.category}</p>
+    {#if item.new === 'yes'}
+    <Badge class='my-2 rounded-none bg-green-600'>New</Badge>
+    {/if}
+
     {#if item.seller === 'yes'}
     <Badge class='my-2 rounded-none bg-orange-700'>Best Seller</Badge>
     {/if}
@@ -285,6 +289,9 @@
  
     </div>
     <p class="text-gray-600 my-2">Category: {item.category}</p>
+    {#if item.new === 'yes'}
+    <Badge class='my-2 rounded-none bg-green-600'>New</Badge>
+    {/if}
     {#if item.seller === 'yes'}
     <Badge class='my-2 rounded-none bg-orange-700'>Best Seller</Badge>
     {/if}
@@ -390,6 +397,9 @@
  
     </div>
     <p class="text-gray-600 my-2">Category: {item.category}</p>
+    {#if item.new === 'yes'}
+    <Badge class='my-2 rounded-none bg-green-600'>New</Badge>
+    {/if}
     {#if item.seller === 'yes'}
     <Badge class='my-2 rounded-none bg-orange-700'>Best Seller</Badge>
     {/if}
@@ -494,11 +504,13 @@
  
     </div>
     <p class="text-gray-600 my-2">Category: {item.category}</p>
- 
+
+   
+  
     <div class="mx-auto ">
       <Badge class=' text-sm bg-red-500 rounded-none text-white text-center my-2'>Sale {item.sale}%</Badge>
      </div>
-  
+    
     {#if item.seller === 'yes'}
     <Badge class='my-2 rounded-none bg-orange-700'>Best Seller</Badge>
     {/if}

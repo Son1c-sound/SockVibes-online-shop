@@ -146,7 +146,12 @@
      
         </div>
         <p class="text-gray-600 my-2">Category: {item.category}</p>
-        
+        {#if item.new === 'yes'}
+        <Badge class='my-2 rounded-none bg-green-600'>New</Badge>
+        {/if}
+        {#if item.seller === 'yes'}
+        <Badge class='my-2 rounded-none bg-orange-700'>Best Seller</Badge>
+        {/if}
         {#if item.status !== 'In Stock'}
         <p class="text-red-500 text-sm">{item.status}</p>
         {:else}
@@ -156,9 +161,6 @@
         {/if}
       </div>
 
-      <div class="p-2 sm:p-1 pt-0">
-        <Button class="w-full hover:bg-yellow-400  bg-yellow-300 text-black " on:click={() => goto(`/categories/Sales/${item.id}`)}>Purchase</Button>
-      </div>
     </div>
 
   {/each}

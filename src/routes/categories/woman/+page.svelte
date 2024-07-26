@@ -140,9 +140,14 @@
           <h1 class="text-md  p-1  text-gray-800 rounded-md">{item.price}$</h1>
      
         </div>
-        {#if item.seller === 'yes'}
-        <Badge class='my-2 rounded-none bg-orange-700'>Best Seller</Badge>
-        {/if}
+
+           {#if item.new === 'yes'}
+          <Badge class='my-2 rounded-none bg-green-600'>New</Badge>
+          {/if}
+          {#if item.seller === 'yes'}
+          <Badge class='my-2 rounded-none bg-orange-700'>Best Seller</Badge>
+          {/if}
+  
         <p class="text-gray-600 my-2">Category: {item.category}</p>
         
         {#if item.status !== 'In Stock'}
@@ -154,9 +159,7 @@
         {/if}
       </div>
 
-      <div class="p-2 sm:p-1 pt-0">
-        <Button class="w-full hover:bg-yellow-400  bg-yellow-300 text-black " on:click={() => goto(`woman/${item.id}`)}>Purchase</Button>
-      </div>
+
     </div>
 
   {/each}
