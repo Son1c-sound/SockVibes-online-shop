@@ -5,12 +5,14 @@
     import { Button } from "$lib/components/ui/button/";
     import  supabase  from '$lib/db'
     import Loading from '$lib/loading/loading.svelte';
-  import { goto } from '$app/navigation';
+   import { goto } from '$app/navigation';
+
     let swiperInstance:any;
     let interval:any;
-    let loading = false;
     let errorMessage = "";
     let items:any[] = [];
+
+    let loading = true; 
     async function loadItems() {
     try {
       const { data, error } = await supabase.from("banners").select("*");
@@ -20,10 +22,10 @@
         items = data;
       }
     } catch (error) {
-      errorMessage = `Unexpected error:`;
-      
+      errorMessage = `Unexpected error: ${error}`;
+    } finally {
+      loading = false; 
     }
-   
   }
 
     
@@ -39,10 +41,13 @@
           prevEl: ".swiper-button-prev",
         },
       });
-      
+    
       interval = setInterval(() => {
       swiperInstance.slideNext();
     }, 3000);
+
+    loadItems()
+
   });
   
 
@@ -50,10 +55,13 @@
     clearInterval(interval);
   });
 
-  loadItems()
   </script>
 
+{#if loading}
+
+<Loading></Loading>
  
+{:else}
 <div class="w-full  relative">
     <div class="swiper default-carousel swiper-container ">
       <div class="swiper-wrapper">
@@ -71,7 +79,7 @@
     </div>
 
   </div>
-  
+  {/if}
  
   <style>
     .swiper-wrapper {
