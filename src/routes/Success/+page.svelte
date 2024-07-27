@@ -6,6 +6,13 @@
     function cont() {
         goto('/')
     }
+
+   
+    window.onload = () => {
+    // Clear local storage
+    localStorage.removeItem('cart');
+
+};
 </script>
 <b>
     
