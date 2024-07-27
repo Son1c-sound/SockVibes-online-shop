@@ -4,15 +4,17 @@ import type { CartItem } from "../../../app";
 import { env } from "$env/dynamic/private";
 
 import type { Item } from "../../types";
-
+import { addnumber } from "../../CheckOut/products/fresh/store";
+import { onMount } from "svelte";
 const stripeSecretKey: any = env.STRIPE_API;
 
 const stripe = new Stripe(stripeSecretKey, {
   apiVersion: "2024-06-20",
 });
 
-const successUrl = "http://localhost:5173/Success";
-const cancelUrl = "http://localhost:5173/Canceled";
+
+const successUrl = "http://localhost:5174/Success";
+const cancelUrl = "http://localhost:5174/Canceled";
 
 export const POST: RequestHandler = async ({ request }) => {
   try {
@@ -43,7 +45,7 @@ export const POST: RequestHandler = async ({ request }) => {
         enabled: true,
       },
     });
-
+    removeThings() 
     return new Response(JSON.stringify({ url: session.url }), {
       status: 200,
       headers: {
@@ -63,4 +65,10 @@ export const POST: RequestHandler = async ({ request }) => {
     );
   }
 };
+
+function removeThings() {
+  console.log('Component mounted, clearing localStorage and resetting store');
+  localStorage.removeItem('cart');
+  addnumber.set(0);
+}
 
