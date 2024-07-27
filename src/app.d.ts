@@ -13,6 +13,7 @@ declare global {
 export {};
 
 export interface CartItem {
+    session_id: string;
     productId: any;
     quantity: number;
     id: number;

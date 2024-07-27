@@ -30,6 +30,7 @@ export const POST: RequestHandler = async ({ request }) => {
       },
       quantity: item.quantity,
     }));
+  
 
     const session = await stripe.checkout.sessions.create({
       line_items: lineItems,
@@ -43,9 +44,8 @@ export const POST: RequestHandler = async ({ request }) => {
         enabled: true,  // Update phone number collection behavior if needed
       },
     });
-
     // Call insertSoldItems function after successful session creation
-    await insertSoldItems(cartItems);
+
 
     return new Response(JSON.stringify({ url: session.url }), {
       status: 200,
@@ -53,6 +53,7 @@ export const POST: RequestHandler = async ({ request }) => {
         "Content-Type": "application/json",
       },
     });
+    
   } catch (error) {
     console.error("Error creating checkout session:", error);
     return new Response(
@@ -67,23 +68,6 @@ export const POST: RequestHandler = async ({ request }) => {
   }
 };
 
-async function insertSoldItems(cartItems: CartItem[]) {
-  const soldItems = cartItems.map((item) => ({
-    product_id: item.productId, // Assuming productId is the correct field
-    quantity: item.quantity,
-    name: item.name, // Add product name to the object
-  }));
-
-  const { error } = await supabase
-    .from('sold_items')
-    .insert(soldItems);
-
-  if (error) {
-    console.error('Error inserting sold items:', error);
-  } else {
-    console.log('Sold items inserted successfully!');
-  }
-}
 
 // You don't need to call getAvailableStock here
 // This function is for a separate purpose (e.g., displaying stock on product page)
