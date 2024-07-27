@@ -89,7 +89,7 @@ async function loadPreviousPage() {
 
   <h1 class="text-gray-900 text-center my-9">Sock Vibes </h1>
   <div class="mx-3 sm:mx-auto ">
-    <h1 class="text-center  text-5xl  p-2 rounded-md  text-gray-900 ">
+    <h1 class="text-center  text-5xl  p-2 rounded-md  text-gray-900 font-bold">
       Items in Women category
     </h1>
   </div>

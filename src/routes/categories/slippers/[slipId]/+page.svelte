@@ -26,7 +26,7 @@
   async function loaditems() {
 
     try {
-      const { data, error } = await supabase.from("allitems").select("*");
+      const { data, error } = await supabase.from("slippers").select("*");
 
 if (error) {
   errorMessage = `Error loading items: ${error.message}`;
