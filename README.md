@@ -16,37 +16,21 @@ Contractor: sock vibes management
 
 ## 🛒 How the Shop Works
 
-**SockVibes** operates dynamically, meaning all shop data is loaded from the database. This flexibility allows clients to:
-
-- **Adjust**: Easily modify product details, including prices, descriptions, and statuses through a custom-built admin interface.
-- **Add/Remove Products**: Manage the inventory without technical constraints.
-
-**Shopping Experience:**
-
-- **No Login Required:** Users can add items to their cart without needing to log in. Cart items are stored locally in the browser’s localStorage.
-- **Dynamic Checkout:** The cart details, including item images, quantities, and prices, are passed to Stripe for a streamlined checkout process.
-
 ## 💳 Stripe Integration
 
 Stripe handles the checkout process by:
 
-- Collecting user shipping addresses, email, and phone numbers.
-- Notifying the client with details of the order, including what items were purchased and where they are to be shipped.
+- items array is passed to stripe in which cart items are stored and passed to stripe allows dynamic checkouts
+- Stripe Collecting user shipping addresses, email, and phone numbers which helps in shipping the product.
 
 ## 🗃️ Database
 
-- **PostgreSQL**:  stores all data related to products, inventory, and transactions.
-- **Node.js API**: Facilitates communication between the frontend and the PostgreSQL database.
+- **PostgreSQL**:  stores all data related to products, inventory, transactions and any data that is loaded on pages.
+- Upon entering to web load function is initialized which fetches all the necessary info , panignation implemented for smoother experience.
+- **Node.js as server**
 
-## 🎨 UI/UX
+##libraries on UI
+- **Shadcn Components:** 
 
-- **Shadcn Components:** Utilized for creating reusable and customizable UI components.
-- **Tailwind CSS:** Provides a responsive and modern design framework, ensuring a beautiful and consistent look across the site.
-
-## 📈 Key Features
-
-- **Dynamic Product Management**: Update products in real-time without code changes.
-- **Seamless Checkout**: Quick and easy checkout with Stripe integration.
-- **Local Storage Cart**: Persistent cart functionality without user login.
-
-
+## Usage
+You can clone code npm install , npm run dev and run it locally, dont forget to add your en variables of stripe api and supabase url with apikey, this way u can redsign code as you want.
