@@ -1,20 +1,21 @@
 <script>
-  import Donemark from "$lib/Icons/donemark.svelte";
-    import {Button} from '$lib/components/ui/button' 
-    import { addnumber, increment, decrement } from "../../routes/CheckOut/products/fresh/store"; 
-    import { goto } from '$app/navigation'
+    import { onMount } from 'svelte';
+    import Donemark from "$lib/Icons/donemark.svelte";
+    import { Button } from '$lib/components/ui/button';
+    import { addnumber } from "../../routes/CheckOut/products/fresh/store";
+    import { goto } from '$app/navigation';
+  
     function cont() {
-        goto('/')
+      goto('/');
     }
-
-   
-    window.onload = () => {
-    // Clear local storage
-    localStorage.removeItem('cart');
-    addnumber.set(0);
-
-};
-</script>
+  
+    onMount(() => {
+      console.log('Component mounted, clearing localStorage and resetting store');
+      localStorage.removeItem('cart');
+      addnumber.set(0);
+    });
+  </script>
+  
 <b>
     
 </b>
