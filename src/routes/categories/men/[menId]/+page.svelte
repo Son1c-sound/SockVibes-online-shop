@@ -142,18 +142,13 @@ selectedProduct = items.find((men) => men.id === parseInt(menId)) || null;
 
     <!-- Product Details -->
     <div class="w-full md:w-1/2 mt-4 md:mt-0">
-      {#if selectedProduct.status !== "In Stock"}
-        <Button
-          class="w-full bg-transparent text-black my-5 text-md hover:bg-transparent"
-        >Item Will be added soon</Button>
-      {:else}
+      
         <Button
           class="w-full bg-yellow-300 hover:bg-yellow-400 text-black my-5 text-md"
           on:click={addToCart}
           on:click={increment}
         >Add to Cart</Button>
-      {/if}
-
+ 
       <div class="p-6 my-4 border border-gradient-purple-blue">
         <h2 class="text-3xl mb-2 font-bold">{selectedProduct.name}</h2>
         <p class="text-2xl mb-2">{selectedProduct.price}</p>
@@ -193,12 +188,9 @@ selectedProduct = items.find((men) => men.id === parseInt(menId)) || null;
         <Badge class="bg-red-500 rounded-none">{selectedProduct.saleprecent}% Sale</Badge>
       {/if}
 
-      {#if selectedProduct.status === "In Stock"}
-      <Badge class="rounded-none bg-green-500 text-white">{selectedProduct.status}</Badge>
-      {/if}
-    {#if selectedProduct.status === "Sold out"}
-      <Badge class="rounded-none bg-red-500 text-white">{selectedProduct.status}</Badge>
-    {/if}
+   
+      
+
 
       <div class="mt-4">
         <hr class="my-4" />

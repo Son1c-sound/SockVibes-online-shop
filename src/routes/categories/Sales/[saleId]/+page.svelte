@@ -127,7 +127,7 @@ selectedProduct = items.find((sale) => sale.id === parseInt(saleId)) || null
         <Carousel.Content class="md:-ml-1">
           {#each [selectedProduct.img, selectedProduct.img2, selectedProduct.img3, selectedProduct.img4] as url, index}
             {#if url}
-              <Carousel.Item class="flex-shrink-0 w-full" key={index}>
+              <Carousel.Item class="flex-shrink-0 w-full" >
                 <Card.Root class="border-none bg-transparent shadow-none">
                   <img
                     src={url}

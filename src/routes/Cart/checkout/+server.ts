@@ -2,7 +2,7 @@ import Stripe from "stripe";
 import type { RequestHandler } from "@sveltejs/kit";
 import type { CartItem } from "../../../app";
 import { env } from "$env/dynamic/private";
-
+import supabase from "$lib/db";
 import type { Item } from "../../types";
 
 const stripeSecretKey: any = env.STRIPE_API;
@@ -21,7 +21,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
     const lineItems = cartItems.map((item) => ({
       price_data: {
-        currency: "USD",
+        currency: "USD", // Update currency if needed
         product_data: {
           name: item.name,
           images: [item.image],
@@ -34,15 +34,18 @@ export const POST: RequestHandler = async ({ request }) => {
     const session = await stripe.checkout.sessions.create({
       line_items: lineItems,
       shipping_address_collection: {
-        allowed_countries: ["US"],
+        allowed_countries: ["US"], // Update allowed countries if needed
       },
       mode: "payment",
       success_url: successUrl,
       cancel_url: cancelUrl,
       phone_number_collection: {
-        enabled: true,
+        enabled: true,  // Update phone number collection behavior if needed
       },
     });
+
+    // Call insertSoldItems function after successful session creation
+    await insertSoldItems(cartItems);
 
     return new Response(JSON.stringify({ url: session.url }), {
       status: 200,
@@ -63,4 +66,25 @@ export const POST: RequestHandler = async ({ request }) => {
     );
   }
 };
+
+async function insertSoldItems(cartItems: CartItem[]) {
+  const soldItems = cartItems.map((item) => ({
+    product_id: item.productId, // Assuming productId is the correct field
+    quantity: item.quantity,
+    name: item.name, // Add product name to the object
+  }));
+
+  const { error } = await supabase
+    .from('sold_items')
+    .insert(soldItems);
+
+  if (error) {
+    console.error('Error inserting sold items:', error);
+  } else {
+    console.log('Sold items inserted successfully!');
+  }
+}
+
+// You don't need to call getAvailableStock here
+// This function is for a separate purpose (e.g., displaying stock on product page)
 
