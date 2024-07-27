@@ -55,66 +55,33 @@
         </li>
         <!-- Dropdown item 1 -->
         <li class="relative text-uppercase p-5 xl:p-8 font-bold group">
-          <a href="/categories/men" class="block mx-5">Men</a>
+          <a href="/categories/men" class="block ">Men</a>
           <!-- Dropdown menu -->
-          <div
-            class="absolute left-1/2 mt-2 w-64 bg-white text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform -translate-x-1/2"
-          >
-            <ul class="flex flex-col items-start p-2">
-              <li class="p-2 w-full text-center hover:bg-gray-200">
-                <a href="/categories/men">All Items</a>
-              </li>
-              <li class="p-2 w-full text-center hover:bg-gray-200">
-                <a href="/categories/men/menSlippers">Men Slippers</a>
-              </li>
-              <li class="p-2 w-full text-center hover:bg-gray-200">
-                <a href="/categories/men/menSocks">Men Socks</a>
-              </li>
-              <!-- Add more categories here -->
-            </ul>
-          </div>
+      
         </li>
 
         <!-- Dropdown item 2 -->
         <li class="relative text-uppercase p-5 xl:p-8 font-bold group mx-4">
-          <a href="/categories/woman" class="block mx-5">Women</a>
+          <a href="/categories/woman" class="block ">Women</a>
           <!-- Dropdown menu -->
-          <div
-            class="absolute left-1/2 mt-2 w-64 bg-white text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform -translate-x-1/2"
-          >
-            <ul class="flex flex-col items-start p-2">
-              <li class="p-2 w-full text-center hover:bg-gray-200">
-                <a href="/categories/woman">All Items</a>
-              </li>
-              <li class="p-2 w-full text-center hover:bg-gray-200">
-                <a href="/categories/woman/womanSocks">Women Socks</a>
-              </li>
-              <li class="p-2 w-full text-center hover:bg-gray-200">
-                <a href="/categories/woman/womanSlipper">Women Slippers</a>
-              </li>
-              <!-- Add more categories here -->
-            </ul>
-          </div>
+          
         </li>
 
+       
         <li class="relative text-uppercase p-5 xl:p-8 font-bold group mx-4">
-          <a href="/categories/newitems" class="block mx-5">Unisex</a>
+          <a href="/categories/Sales" class="block ">Slippers</a>
           <!-- Dropdown menu -->
-          <div
-            class="absolute left-1/2 mt-2 w-64 bg-white text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform -translate-x-1/2"
-          ></div>
         </li>
-
         <!-- Dropdown item 4 -->
         <li class="relative text-uppercase p-5 xl:p-8 font-bold group mx-4">
-          <a href="/categories/Sales" class="block mx-5">Sales</a>
+          <a href="/categories/Sales" class="block ">Sales</a>
           <!-- Dropdown menu -->
         </li>
       </ul>
     </nav>
 
     <div class="ml-auto md:hidden">
-      <button class="md:hidden mx-5" on:click={toggleMobileMenu}>
+      <button class="md:hidden " on:click={toggleMobileMenu}>
         
       </button>
       <button class="md:hidden" on:click={menucart}>
@@ -178,16 +145,16 @@
       </a>
     </li>
 
+
     <li class="w-full">
       <a
         href="/categories/newitems"
         on:click={toggleMobileMenu}
         class="block text-center text-lg font-medium py-3 px-2  text-black border border-gray-700 rounded-lg  hover:bg-gray-700 hover:border-gray-600 w-2/4 mx-auto"
       >
-        Unisex
+        Slippers
       </a>
     </li>
-
     <li class="w-full">
       <a
         href="/categories/Sales"

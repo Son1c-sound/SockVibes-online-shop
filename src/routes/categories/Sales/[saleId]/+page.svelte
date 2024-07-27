@@ -129,6 +129,7 @@
     </div>
 
     <!-- Selected Items -->
+  
     <div class="w-full md:w-1/2 mt-4 md:mt-0">
       {#if selectedProduct.status !== "In Stock"}
         <Button
@@ -187,7 +188,9 @@
       {:else}
         <Badge class="bg-red-500 rounded-none text-white">{selectedProduct.status}</Badge>
       {/if}
-
+      {#if selectedProduct.saleprecent > 0}
+      <Badge class=" bg-red-500  rounded-none text-white">Sale {selectedProduct.saleprecent}%</Badge>
+    {/if}
       <div>
         <br />
         <br />

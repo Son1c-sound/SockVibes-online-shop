@@ -28,7 +28,7 @@
         errorMessage = 'error'
       } else {
         items = data
-        salefilter = items.filter(s => s.onsale === 'yes')
+        salefilter = items.filter(s => s.saleprecent > 0)
 
       }
   }
@@ -150,7 +150,7 @@
         {#if item.new === 'yes'}
         <Badge class='my-2 rounded-none bg-green-600'>New</Badge>
         {/if}
-        {#if item.onsale === 'yes'}
+        {#if item.saleprecent > 0}
         <div class="mx-auto ">
           <Badge class='my-2 text-sm bg-red-600 rounded-none text-white text-center'>Sale {item.saleprecent}%</Badge>
          </div>

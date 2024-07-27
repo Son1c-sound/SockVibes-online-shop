@@ -180,7 +180,7 @@
           </select>
         </h1>
       </div>
-      {#if selectedProduct.onsale === 'yes'}
+      {#if selectedProduct.saleprecent > 0}
       <Badge class='bg-red-500 rounded-none'>Limited time deal</Badge>
       <Badge class='bg-red-500 rounded-none'>{selectedProduct.saleprecent}% Sale</Badge>
       {/if}

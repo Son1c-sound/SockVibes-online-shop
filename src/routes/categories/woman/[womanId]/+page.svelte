@@ -185,7 +185,7 @@
       {#if selectedProduct.seller === 'yes'}
       <Badge class='bg-orange-700 rounded-none'>Best Seller</Badge>
       {/if}
-      {#if selectedProduct.onsale === 'yes'}
+      {#if selectedProduct.saleprecent > 0}
       <Badge class='bg-red-500 rounded-none'>Limited time deal</Badge>
       <Badge class='bg-red-500 rounded-none'>{selectedProduct.saleprecent}% Sale</Badge>
       {/if}

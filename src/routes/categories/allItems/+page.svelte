@@ -30,34 +30,52 @@
   let filterMan: Item[] = []
   let filterWoman: Item[] = []
 
+  let page = 1; 
+  const pageSize = 19; 
+  let hasMorePages:boolean = true;
+
   async function loadItems() {
   try {
     const { data, error } = await supabase
       .from("allitems")
-      .select("*");
+      .select("*")
+      .range((page - 1) * pageSize, page * pageSize - 1);
 
     if (error) throw error;
     items = data;
     filterNew = items.filter(item => item.category === 'Unisex');
     filterMan = items.filter(item => item.category === 'Men');
     filterWoman = items.filter(item => item.category === 'Women');
-   
-    loadSale()
+    hasMorePages = data.length === pageSize;
+
+    scrollToTop();
+ 
   } catch (error) {
     errorMessage = `Error loading items:`;
   }
 }
 
-  async function loadSale() {
-    const { data, error } = await supabase.from('sale').select("*")
-    if( error) {
-      errorMessage = 'erorr'
-    } else {
-      items = data
-    }
-    
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+async function loadNextPage() {
+  page += 1;
+  await loadItems();
+}
+
+// Function to load the previous page
+async function loadPreviousPage() {
+  if (page > 1) {
+    page -= 1;
+    await loadItems();
   }
+}
+
+onMount(() => {
   loadItems()
+  });
+
  
 
   let api: CarouselAPI;
@@ -103,7 +121,7 @@
     class="relative mx-1 mt-4 overflow-hidden text-gray-700  bg-clip-border "
   >
   
-  <button class="w-full  p-1 rounded-md text-black " on:click={() => goto(`/categories/newitems/${item.id}`)}>
+  <button class="w-full  p-1 rounded-md text-black " on:click={() => goto(`/categories/unisex/${item.id}`)}>
     <Carousel.Root class="bg-white rounded-md  w-full mx-auto max-w-full" bind:api>
       <Carousel.Content>
         
@@ -182,7 +200,7 @@
  
     </div>
     <p class="text-gray-600 my-2">Category: {item.category}</p>
-    {#if item.onsale === 'yes'}
+    {#if item.saleprecent > 0}
     <Badge class='text-white  rounded-none bg-red-600 my-2'>Sale {item.saleprecent}%</Badge>
     {/if}
     {#if item.newitem === 'yes'}
@@ -294,7 +312,7 @@
  
     </div>
     <p class="text-gray-600 my-2">Category: {item.category}</p>
-    {#if item.onsale === 'yes'}
+    {#if item.saleprecent > 0}
     <Badge class='text-white  rounded-none bg-red-600 my-2'>Sale {item.saleprecent}%</Badge>
     {/if}
     {#if item.newitem === 'yes'}
@@ -405,7 +423,7 @@
  
     </div>
     <p class="text-gray-600 my-2">Category: {item.category}</p>
-    {#if item.onsale === 'yes'}
+    {#if item.saleprecent > 0}
     <Badge class='text-white  rounded-none bg-red-600 my-2'>Sale {item.saleprecent}%</Badge>
     {/if}
     {#if item.newitem === 'yes'}
@@ -428,11 +446,16 @@
 
 {/each}
 
-   
-  
-  </div>
-</body>
 
+
+</body>
+   
+<div class="my-5 mx-auto text-center pagination-controls">
+  <div class="pagination-controls">
+    <Button on:click={loadPreviousPage} disabled={page === 1}><i class="fa-solid fa-angle-left mx-1"></i>Previous Page</Button>
+    <Button on:click={loadNextPage} disabled={!hasMorePages}>Next Page <i class="ml-1 fa-solid fa-angle-right"></i></Button>
+  </div>
+</div>
 <style>
   h1 {
     font-family: sans-serif;
