@@ -1,3 +1,4 @@
+// src/routes/CheckOut/products/fresh/store.js
 import { writable } from 'svelte/store';
 
 // Safely get the initial value from localStorage or default to 0

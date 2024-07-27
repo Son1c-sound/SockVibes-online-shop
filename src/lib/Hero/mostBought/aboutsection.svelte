@@ -1,6 +1,5 @@
 <script>
-  import Button from "$lib/components/ui/button/button.svelte";
-
+  
   
   // Define an array of objects containing image data
   const collections = [
@@ -25,7 +24,7 @@
 </script>
 
 <div class="bg-gray-100 py-8 gradient-bg">
-  <p class="text-center text-gray-100">Grab Latest Collections</p>
+  <p class="text-center text-gray-100">Grab a giftboxes</p>
 
   <div class="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
     {#each collections as collection}
