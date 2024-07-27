@@ -24,7 +24,7 @@
   let hasMorePages:boolean = true;
   let loading:boolean = true
   let page = 1;
-  const pageSize = 21; 
+  const pageSize = 12; 
   async function loadItems() {
     try {
       const { data, error } = await supabase
