@@ -69,7 +69,7 @@
 
        
         <li class="relative text-uppercase p-5 xl:p-8 font-bold group mx-4">
-          <a href="/categories/Sales" class="block ">Slippers</a>
+          <a href="/categories/slippers" class="block ">Slippers</a>
           <!-- Dropdown menu -->
         </li>
         <!-- Dropdown item 4 -->
@@ -148,7 +148,7 @@
 
     <li class="w-full">
       <a
-        href="/categories/newitems"
+        href="/categories/slippers"
         on:click={toggleMobileMenu}
         class="block text-center text-lg font-medium py-3 px-2  text-black border border-gray-700 rounded-lg  hover:bg-gray-700 hover:border-gray-600 w-2/4 mx-auto"
       >
