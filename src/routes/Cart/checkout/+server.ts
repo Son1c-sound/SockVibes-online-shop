@@ -2,20 +2,17 @@ import Stripe from "stripe";
 import type { RequestHandler } from "@sveltejs/kit";
 import type { CartItem } from "../../../app";
 import { env } from "$env/dynamic/private";
-import { addnumber, increment, decrement } from "../../../routes/CheckOut/products/fresh/store";
 
 import type { Item } from "../../types";
 
-
-let cartItems: CartItem[] = [];
 const stripeSecretKey: any = env.STRIPE_API;
 
 const stripe = new Stripe(stripeSecretKey, {
   apiVersion: "2024-06-20",
 });
 
-const successUrl = "http://localhost:5174/Success";
-const cancelUrl = "http://localhost:5174/Canceled";
+const successUrl = "http://localhost:5173/Success";
+const cancelUrl = "http://localhost:5173/Canceled";
 
 export const POST: RequestHandler = async ({ request }) => {
   try {
@@ -46,7 +43,7 @@ export const POST: RequestHandler = async ({ request }) => {
         enabled: true,
       },
     });
-    clearLocalStorageAfterDelay()
+
     return new Response(JSON.stringify({ url: session.url }), {
       status: 200,
       headers: {
@@ -66,18 +63,4 @@ export const POST: RequestHandler = async ({ request }) => {
     );
   }
 };
-
-
-
-
-
-
-function clearLocalStorageAfterDelay(): void {
-    setTimeout(() => {
-        localStorage.removeItem('cart');
-        cartItems = [];
-        addnumber.set(0);
-    }, );
-}
-
 

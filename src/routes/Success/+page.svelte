@@ -1,7 +1,7 @@
 <script>
   import Donemark from "$lib/Icons/donemark.svelte";
     import {Button} from '$lib/components/ui/button' 
-
+    import { addnumber, increment, decrement } from "../../routes/CheckOut/products/fresh/store"; 
     import { goto } from '$app/navigation'
     function cont() {
         goto('/')
@@ -11,6 +11,7 @@
     window.onload = () => {
     // Clear local storage
     localStorage.removeItem('cart');
+    addnumber.set(0);
 
 };
 </script>
