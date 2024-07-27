@@ -10,12 +10,14 @@
    import { type CarouselAPI } from "$lib/components/ui/carousel/context.js";
    import { Progress } from "$lib/components/ui/progress/index.js";
    import Contentload from "$lib/loading/contentload.svelte";
-
+  import { onMount } from "svelte";
+    
    function navigateToSocks(otherId: any) {
        goto(`CheckOut/products/other/${otherId}`);
    }
 
- 
+   
+   let loading = true
 
   
  const plugin = Autoplay({ delay: 4000, stopOnInteraction: true });
@@ -38,22 +40,32 @@
    let items:any[] = []
 
    async function loadItems() {
-   const { data, error } = await supabase.from("popular3").select("*");
+    try {
+      const { data, error } = await supabase.from("popular3").select("*");
 
-   if (error) {
-     errorMessage = `Error loading items: ${error.message}`;
-     console.error(error);
-   } else {
-     items = data;
-   }
- 
+      if (error) {
+        errorMessage = `Error loading items: ${error.message}`;
+        console.error(error);
+      } else {
+        items = data;
+      }
+    } catch( error) {
+      console.log("error", error)
+    } finally {
+      loading = false
+    }
+
  }
  
- loadItems();
+ onMount(() => {
+    loadItems();
+  });
 
  </script>
 <br>
-    
+    {#if loading}
+        <Contentload></Contentload>
+    {:else}
   <Carousel.Root bind:api  plugins={[plugin]}
 
   on:mousenter={plugin.stop}
@@ -94,7 +106,7 @@
    <Progress value={current} max={6} class='h-1 my-10' />
  </Carousel.Root>
 
-
+{/if}
  <style>
   * {
        font-family:  Arial, Helvetica, sans-serif;

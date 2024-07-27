@@ -11,7 +11,7 @@
   import Swipe from "$lib/Icons/swipe.svelte";
   import { goto } from "$app/navigation";
   import { onMount } from 'svelte';
-
+  import ContentLoad from '$lib/loading/categoryloading.svelte'
   onMount(() => {
     // Check if the current URL matches the success URL
     const successUrl = 'http://localhost:5173/Success';
@@ -33,7 +33,7 @@
   let page = 1; 
   const pageSize = 19; 
   let hasMorePages:boolean = true;
-
+  let loading = true;
   async function loadItems() {
   try {
     const { data, error } = await supabase
@@ -52,6 +52,8 @@
  
   } catch (error) {
     errorMessage = `Error loading items:`;
+  } finally {
+    loading = false
   }
 }
 
@@ -91,7 +93,9 @@ onMount(() => {
   }
 
 </script>
-
+{#if loading}
+    <ContentLoad></ContentLoad>
+{:else}
 <body class="text-white">
 
   <h1 class="text-gray-900 text-center my-9">Sock Vibes </h1>
@@ -456,6 +460,8 @@ onMount(() => {
     <Button on:click={loadNextPage} disabled={!hasMorePages}>Next Page <i class="ml-1 fa-solid fa-angle-right"></i></Button>
   </div>
 </div>
+
+{/if}
 <style>
   h1 {
     font-family: sans-serif;

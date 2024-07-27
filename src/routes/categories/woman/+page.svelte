@@ -8,7 +8,7 @@
   import { Badge } from "$lib/components/ui/badge/index.js";
   import * as Select from "$lib/components/ui/select/index.js";
   import { onMount } from 'svelte';
-
+  import CategoryLoad from '$lib/loading/categoryloading.svelte'
   import Swipe from "$lib/Icons/swipe.svelte";
     import { goto } from '$app/navigation'
   import supabase from "$lib/db";
@@ -22,11 +22,12 @@
   let filterWoman: Item[] = []
   let filterUni: Item[] = []
   let hasMorePages:boolean = true;
-
+  let loading:boolean = true
   let page = 1;
   const pageSize = 21; 
   async function loadItems() {
-  const { data, error } = await supabase
+    try {
+      const { data, error } = await supabase
     .from('allitems')
     .select("*")
     .range((page - 1) * pageSize, page * pageSize - 1);
@@ -42,6 +43,13 @@
     hasMorePages = data.length === pageSize;
     scrollToTop();
   }
+    } catch (error ) {
+        console.log(error, 'error')
+
+    } finally {
+      loading = false
+    }
+ 
 }
 async function loadNextPage() {
   page += 1;
@@ -72,7 +80,9 @@ async function loadPreviousPage() {
   });
 </script>
 
-
+{#if loading}
+   <CategoryLoad></CategoryLoad>
+{:else}
 <body >
     
 
@@ -310,6 +320,7 @@ async function loadPreviousPage() {
 
 </div>
 </body>
+{/if}
 <style>
   h1 {
     font-family: "Sans", sans-serif;

@@ -10,7 +10,7 @@
    import { type CarouselAPI } from "$lib/components/ui/carousel/context.js";
    import { Progress } from "$lib/components/ui/progress/index.js";
    import Contentload from "$lib/loading/contentload.svelte";
-
+  import { onMount } from "svelte";
    function navigateToSocks(freshId: any) {
        goto(`CheckOut/products/fresh/${freshId}`);
    }
@@ -24,7 +24,6 @@
    let api: CarouselAPI;
    let count = 0;
    let current = 0;
- 
    $: if (api) {
      count = api.scrollSnapList().length;
      current = api.selectedScrollSnap() + 1;
@@ -36,24 +35,36 @@
    // loading data from supabase
    let errorMessage:any = ''
    let items:any[] = []
-
+   let loading = true
    async function loadItems() {
-   const { data, error } = await supabase.from("popular2").select("*");
+    try {
+      const { data, error } = await supabase.from("popular2").select("*");
 
-   if (error) {
-     errorMessage = `Error loading items: ${error.message}`;
-     console.error(error);
-   } else {
-     items = data;
-   }
- 
- }
- 
- loadItems();
+      if (error) {
+        errorMessage = `Error loading items: ${error.message}`;
+        console.error(error);
+      } else {
+        items = data;
+      }
+    }catch( erorr) {
+      errorMessage = `Unexpected error: `;
+    } finally {
+      loading = false; 
+    }
+  }
+  onMount(() => {
+    loadItems();
+  });
+
 
  </script>
 
-    
+{#if loading}
+    <Contentload>
+
+    </Contentload>
+
+    {:else}
   <Carousel.Root bind:api  plugins={[plugin]}
 
   on:mousenter={plugin.stop}
@@ -93,7 +104,7 @@
    <Carousel.Next />
    <p class="text-center border-2 p-2 w-8 h-10 mx-auto rounded-md border-gray-200">{current}</p>
  </Carousel.Root>
-
+{/if}
 
  <style>
   * {

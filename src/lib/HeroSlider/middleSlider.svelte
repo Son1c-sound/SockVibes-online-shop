@@ -5,12 +5,13 @@
     import supabase from "$lib/db";
     
     import Autoplay from "embla-carousel-autoplay";
-  
     import { goto } from "$app/navigation";
     import { type CarouselAPI } from "$lib/components/ui/carousel/context.js";
     import { Progress } from "$lib/components/ui/progress/index.js";
     import Contentload from "$lib/loading/contentload.svelte";
+  import { onMount } from "svelte";
 
+  
     function navigateToSocks(socksId: any) {
         goto(`CheckOut/products/Socks/${socksId}`);
     }
@@ -36,23 +37,37 @@
     // loading data from supabase
     let errorMessage:any = ''
     let items:any[] = []
-
+    let loading = true;
     async function loadItems() {
-    const { data, error } = await supabase.from("popularItems").select("*");
+    try {
+      const { data, error } = await supabase.from("popularItems").select("*");
 
-    if (error) {
-      errorMessage = `Error loading items: ${error.message}`;
-      console.error(error);
-    } else {
-      items = data;
+      if (error) {
+        errorMessage = `Error loading items: ${error.message}`;
+        console.error(error);
+      } else {
+        items = data;
+      }
+    } catch (error) {
+      errorMessage = `Unexpected error: ${error}`;
+    } finally {
+      loading = false; 
     }
+}
+
+
   
-  }
-  
-  loadItems();
+onMount(() => {
+    loadItems();
+  });
 
   </script>
 
+{#if loading}
+
+<Contentload></Contentload>
+
+{:else}
      
    <Carousel.Root bind:api  plugins={[plugin]}
 
@@ -93,7 +108,7 @@
     <Carousel.Next />
     <Progress value={current} max={6} class='h-1 my-10' />
   </Carousel.Root>
-
+{/if}
  
   <style>
    * {

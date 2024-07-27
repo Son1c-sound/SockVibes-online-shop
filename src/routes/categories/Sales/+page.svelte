@@ -11,6 +11,8 @@
     import { goto } from '$app/navigation'
   import supabase from "$lib/db";
   import type { Item } from '../../types'
+  import Categoryload from '$lib/loading/categoryloading.svelte'
+  import { onMount } from 'svelte';
   import { sale } from "./products";
   let api: CarouselAPI;
   let count = 0;
@@ -19,18 +21,27 @@
   let items: Item[] = []
   let errorMessage: string = ''
 
+  let loading = true
   let salefilter: Item[] = []
 
+  
   async function loaditems() {
-     const { data, error } = await supabase.from('allitems').select("*")
+    try {
+      const { data, error } = await supabase.from('allitems').select("*")
 
-      if(error) {
-        errorMessage = 'error'
-      } else {
-        items = data
-        salefilter = items.filter(s => s.saleprecent > 0)
+        if(error) {
+          errorMessage = 'error'
+        } else {
+          items = data
+          salefilter = items.filter(s => s.saleprecent > 0)
 
-      }
+        }
+    } catch (error) {
+      console.log("error", error)
+    } finally {
+      loading = false
+    }
+    
   }
 
   $: if (api) {
@@ -40,8 +51,15 @@
       current = api.selectedScrollSnap() + 1;
     });
   }
-  loaditems()
+  onMount(() => {
+    loaditems()
+  })
+
 </script>
+
+{#if loading}
+  <Categoryload></Categoryload>
+{:else}
 
 
 <body >
@@ -175,6 +193,7 @@
 
 </div>
 </body>
+{/if}
 <style>
   h1 {
     font-family: "Sans", sans-serif;

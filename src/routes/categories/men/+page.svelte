@@ -6,6 +6,7 @@
   import { type CarouselAPI } from "$lib/components/ui/carousel/context.js";
   import { Badge } from "$lib/components/ui/badge/index.js";
   import * as Select from "$lib/components/ui/select/index.js";
+  import Loadcategory from '$lib/loading/categoryloading.svelte'
   import { onMount } from "svelte";
   import Swipe from "$lib/Icons/swipe.svelte";
   import { goto } from '$app/navigation'
@@ -22,10 +23,12 @@
   let filterUni: Item[] = []
   let hasMorePages:boolean = true;
 
+  let loading = true
   let page = 1;
   const pageSize = 20; 
   async function loadItems() {
-  const { data, error } = await supabase
+    try {
+      const { data, error } = await supabase
     .from('allitems')
     .select("*")
     .range((page - 1) * pageSize, page * pageSize - 1);
@@ -39,8 +42,14 @@
     
     hasMorePages = data.length === pageSize;
     scrollToTop()
+     }
+
+    } catch (error) {
+      console.log("error", error)
+    } finally {
+      loading = false
+    }
   }
-}
 async function loadNextPage() {
   page += 1;
   await loadItems();
@@ -75,6 +84,11 @@ async function loadPreviousPage() {
 
 </script>
 
+
+{#if loading}
+<Loadcategory></Loadcategory>
+
+{:else}
 <body >
     
 <!-- Pagination Controls -->
@@ -309,6 +323,8 @@ async function loadPreviousPage() {
 </div>
 
 </body>
+
+{/if}
 <style>
   h1 {
     font-family: "Sans", sans-serif;
