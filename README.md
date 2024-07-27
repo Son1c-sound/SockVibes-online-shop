@@ -3,7 +3,7 @@
 **SockVibes**, a dynamic online shopping platform for a major U.S. brand with over 11 stores across the country. 
 (Freelance project)
 
-Contractor: sock vibes management
+Contractor: sock vibes management - miami,fl
 
 ## 🚀 Tech Stack
 
