@@ -1,48 +1,57 @@
-<script>
-  
-  
-  // Define an array of objects containing image data
-  const collections = [
-    {
-      src: "https://img.freepik.com/free-photo/galactic-night-sky-astronomy-science-combined-generative-ai_188544-9656.jpg",
-      alt: "First Image",
-    },
-    {
-      src: "https://i.imgur.com/5fQUPDl.jpg",
-      alt: "Second Image",
-    },
-    {
-      src: "https://i.ibb.co/8z2cCWv/blue-purple-beautiful-scenery-ultra-hd-wallpaper-4k-sr10012421-1706505497434-cover.webp",
-      alt: "Third Image",
-    },
-    {
-      src: "https://i.ibb.co/8z2cCWv/blue-purple-beautiful-scenery-ultra-hd-wallpaper-4k-sr10012421-1706505497434-cover.webp",
-      alt: "Third Image",
-    },
-    // Add more objects as needed
-  ];
+<script lang='ts'>
+  import supabase from "$lib/db";
+  import { onMount } from "svelte";
+
+  import type { Item } from "../../../routes/types";
+  import { goto } from "$app/navigation";
+
+
+  let errorMessage: string = ''
+  let item:Item[] = []
+  async function loadItems() {
+    try {
+      const { data, error } = await supabase.from("giftboxes").select("*")
+      if (error ) {
+        errorMessage = 'error'
+      } else {
+        item = data;
+      }
+    } catch {
+
+    }
+  }
+
+  onMount(() => {
+    loadItems()
+  })
+  function handleClick(id: number) {
+    goto(`/categories/giftboxes/${id}`);
+  }
 </script>
 
 <div class="bg-gray-100 py-8 gradient-bg">
   <p class="text-center text-gray-100">Grab a giftboxes</p>
 
   <div class="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-    {#each collections as collection}
+    {#each item as collection}
+    <button on:click={() => handleClick(collection.id)}>
       <div class="relative mb-6 sm:mb-0">
         <!-- svelte-ignore a11y-invalid-attribute -->
         <a href="#" class="rounded-lg image-link relative block overflow-hidden">
+          <!-- svelte-ignore a11y-missing-attribute -->
           <img
             class="h-64 w-full object-cover transform transition-transform hover:scale-105"
-            src={collection.src}
-            alt={collection.alt}
+            src={collection.img2}
+            
           />
           <div class="overlay absolute top-0 left-0 w-full h-full opacity-0 bg-gray-800 hover:opacity-50 transition-opacity"></div>
           <div class="absolute bottom-0 left-0 p-4 w-full bg-gray-900 bg-opacity-75 text-white text-center">
-            <span class="block text-sm font-semibold">Sock</span>
-            <span class="block text-xs">20,00$</span>
+            <span class="block text-sm font-semibold">{collection.name}</span>
+            <span class="block text-xs">{collection.price}</span>
           </div>
         </a>
       </div>
+    </button>
     {/each}
   </div>
 

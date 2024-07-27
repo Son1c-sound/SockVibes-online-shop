@@ -4,7 +4,7 @@
     import toast, { Toaster } from 'svelte-french-toast';
     import Button from "$lib/components/ui/button/button.svelte"; 
     import { goto } from '$app/navigation'
- 
+    import Loading from '$lib/loading/categoryloading.svelte'
     import RightArrow from '$lib/Icons/rightarrow.svelte'
     import MightLike from '../../lib/HeroSlider/braclet/MightLike/mightlike.svelte'
 
@@ -21,6 +21,11 @@
         }
     } catch (error) {
         console.error('Error parsing cart from localStorage:', error);
+    }
+
+    let loadingitem = false
+    function loadit() {
+      loadingitem = true
     }
 
     function removeItem(itemid: number): void {
@@ -45,6 +50,8 @@
     onMount(() => {
         clearLocalStorageAfterDelay(21600000);
     });
+
+
 
     function calculateSubtotal(): number {
         return cartItems.reduce((total, item) => {
@@ -87,7 +94,11 @@
     }
 </script>
 
-
+{#if loadingitem}
+                
+      <Loading></Loading>
+            
+{:else}
 <br>
 <br>
 <h1 class="text-2xl font-arial text-center font-bold ">Review Shopping Cart</h1>
@@ -132,10 +143,12 @@
             <br />
             <button on:click={(decrement)}
               on:click={() => removeItem(item.id)}
-              class="text-blue-600 hover:text-blue-800 font-medium focus:outline-none"
+              on:click={loadit} class="text-blue-600 hover:text-blue-800 font-medium focus:outline-none"
             >
-              Remove
-            </button>
+           
+              <p>Remove</p>
+              
+            </button> 
           </div>
           
           <h1 class="text-xl font-bold">{item.price}$</h1>
@@ -167,5 +180,5 @@
 
 
 {/if}
-
+{/if}
 <MightLike></MightLike>
