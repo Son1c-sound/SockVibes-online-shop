@@ -102,46 +102,40 @@ if (error) {
 
   <!-- Product Images -->
   <div class="w-full">
-    
     <Carousel.Root bind:api class="w-full md:w-3/4 mx-auto my-10 md:my-28">
-      <a href="/" class="text-blue-500 text-md underline ">Go back</a>
+      <a href="/" class="text-blue-500 text-md underline">Go back</a>
       <Carousel.Content class="md:-ml-1">
         {#if selectedProduct}
           {#each [selectedProduct.img, selectedProduct.img2, selectedProduct.img3, selectedProduct.img4] as url, index}
-            <Carousel.Item class="flex-shrink-0 w-full">
-              <Card.Root class="border-none bg-transparent shadow-none">
-                <img
-                  src={url}
-                  alt={selectedProduct.name}
-                  class="w-full h-64 object-cover lg:h-1/2"
-                />
-                {#if selectedProduct.status !== "Out Of Stock"}
-                  <Badge class="bg-green-500 text-white"
-                    >{selectedProduct.status}</Badge
-                  >
-                {:else}
-                  <Badge class="bg-red-500 text-white"
-                    >{selectedProduct.status}</Badge
-                  >
-                {/if}
-              </Card.Root>
-            </Carousel.Item>
+            {#if url}
+              <Carousel.Item class="flex-shrink-0 w-full" key={index}>
+                <Card.Root class="border-none bg-transparent shadow-none">
+                  <img
+                    src={url}
+                    alt={selectedProduct.name || "Product image"}
+                    class="w-full h-64 object-cover lg:h-1/2"
+                  />
+                 
+                </Card.Root>
+              </Carousel.Item>
+            {/if}
           {/each}
         {/if}
       </Carousel.Content>
       <div class="my-5 rounded-md">
         <h1 class="text-center my-2">{current}</h1>
-        <Progress value={current} {max} class="h-1" />
+        <Progress value={current} max={count} class="h-1" />
       </div>
     </Carousel.Root>
   </div>
+  
 
   <!-- Selected Items -->
   <div class="w-full md:w-1/2 mt-4 md:mt-0">
     <br />
     <br />
 
-    {#if !selectedProduct || selectedProduct.status === "Out Of Stock"}
+    {#if !selectedProduct || selectedProduct.status === "Sold Out"}
     <p class="text-lg text-center">Item will be available soon</p>
     {:else if selectedProduct || selectedProduct.status === "In Stock"}
     <Button
