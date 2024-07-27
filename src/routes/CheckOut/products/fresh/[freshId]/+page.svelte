@@ -9,7 +9,7 @@
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
   import DropIcon from "../../../../../lib/Icons/dropdwon.svelte";
   import type { CarouselAPI } from "$lib/components/ui/carousel/context.js";
-
+  import Categ from '$lib/loading/categoryloading.svelte'
   import { onMount } from "svelte";
   import toast, { Toaster } from "svelte-french-toast";
 
@@ -22,23 +22,30 @@
   let items: any[] = [];
   let selectedProduct: any = null;
   let selectedQuantity = quantity[0].value;
-
+  let loading:boolean = true
   async function loadItems() {
-    const { data, error } = await supabase.from("popular2").select("*");
+    try {
+      const { data, error } = await supabase.from("popular2").select("*");
 
-    if (error) {
-      errorMessage = `Error loading items: ${error.message}`;
-      console.error(error);
-    } else {
-      items = data;
+if (error) {
+  errorMessage = `Error loading items: ${error.message}`;
+  console.error(error);
+} else {
+  items = data;
 
-      // Get the productId from the URL params
-      const freshId = $page.params.freshId;
+  // Get the productId from the URL params
+  const freshId = $page.params.freshId;
 
-      // Set the selectedProduct based on the freshId
-      selectedProduct =
-        items.find((item) => item.id === parseInt(freshId)) || null;
+  // Set the selectedProduct based on the freshId
+  selectedProduct =
+    items.find((item) => item.id === parseInt(freshId)) || null;
+}
+      } catch {
+
+    } finally {
+      loading = false
     }
+    
   }
 
   // Fetch product data on mount
@@ -81,6 +88,11 @@
     console.log("Cart updated:", cart);
   }
 </script>
+
+{#if loading} 
+<Categ></Categ>
+
+{:else}
 
 <Toaster />
 
@@ -201,7 +213,7 @@
     <br />
   </div>
 </div>
-
+{/if}
 <style>
   * {
     font-family: "Inter", sans-serif;

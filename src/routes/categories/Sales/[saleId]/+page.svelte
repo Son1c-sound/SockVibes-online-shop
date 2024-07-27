@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { page } from "$app/stores";
+import { page } from "$app/stores";
   import Button from "$lib/components/ui/button/button.svelte";
   import * as Select from "$lib/components/ui/select/index.js";
   import * as Card from "$lib/components/ui/card/index.js";
@@ -12,6 +12,7 @@
   import { onMount } from 'svelte';
   import toast, { Toaster } from 'svelte-french-toast';
   import LoaderCircle from "lucide-svelte/icons/loader-circle";
+  import Categ from '$lib/loading/categoryloading.svelte'
   import supabase from '$lib/db'
   import type {Item} from '../../../types'
   import Badge from '$lib/components/ui/badge/badge.svelte'
@@ -22,18 +23,26 @@
   let items: Item[] = []
   const saleId: any = $page.params.saleId;
 
+  let load = true
   async function loaditems() {
-    const { data, error } = await supabase.from("allitems").select("*");
+    try {
+      const { data, error } = await supabase.from("allitems").select("*");
 
-    if (error) {
-      errorMessage = `Error loading items: ${error.message}`;
-      console.error(error);
-    } else {
-      items = data
-      
+if (error) {
+  errorMessage = `Error loading items: ${error.message}`;
+  console.error(error);
+} else {
+  items = data
+  
+}
+const saleId: string = $page.params.saleId;
+selectedProduct = items.find((sale) => sale.id === parseInt(saleId)) || null
+    } catch {
+        console.log("error")
+    } finally {
+      load = false
     }
-    const saleId: string = $page.params.saleId;
-    selectedProduct = items.find((sale) => sale.id === parseInt(saleId)) || null
+    
 
   }
 
@@ -86,6 +95,13 @@
     loaditems();
   });
 </script>
+
+
+{#if load} 
+    <Categ></Categ>
+{:else}
+
+
 
 <Toaster />
 
@@ -214,6 +230,6 @@
 {:else}
   <p class="text-gray-500">Loading product details...</p>
 {/if}
-
+{/if}
 <style>
 </style>

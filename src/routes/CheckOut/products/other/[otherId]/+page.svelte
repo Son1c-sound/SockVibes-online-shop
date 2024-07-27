@@ -12,7 +12,7 @@
 
   import { onMount } from "svelte";
   import toast, { Toaster } from "svelte-french-toast";
-
+  import Categ from '$lib/loading/categoryloading.svelte'
   import { quantity } from "../../../../types";
   import { increment } from "../../fresh/store";
   import Badge from "../../../../../lib/components/ui/badge/badge.svelte";
@@ -23,22 +23,31 @@
   let selectedProduct: any = null;
   let selectedQuantity = quantity[0].value;
 
+  let loading:boolean = true
   async function loadItems() {
-    const { data, error } = await supabase.from("popular3").select("*");
 
-    if (error) {
-      errorMessage = `Error loading items: ${error.message}`;
-      console.error(error);
-    } else {
-      items = data;
+    try {
+      const { data, error } = await supabase.from("popular3").select("*");
 
-      // Get the productId from the URL params
-      const otherId = $page.params.otherId;
+if (error) {
+  errorMessage = `Error loading items: ${error.message}`;
+  console.error(error);
+} else {
+  items = data;
 
-      // Set the selectedProduct based on the otherId
-      selectedProduct =
-        items.find((item) => item.id === parseInt(otherId)) || null;
+  // Get the productId from the URL params
+  const otherId = $page.params.otherId;
+
+  // Set the selectedProduct based on the otherId
+  selectedProduct =
+    items.find((item) => item.id === parseInt(otherId)) || null;
+}
+    } catch {
+
+    } finally {
+      loading = false
     }
+    
   }
 
   // Fetch product data on mount
@@ -82,6 +91,12 @@
   }
 </script>
 
+
+{#if loading}
+
+<Categ></Categ>
+
+{:else}
 <Toaster />
 
 <!-- Product Details -->
@@ -201,7 +216,7 @@
     <br />
   </div>
 </div>
-
+{/if}
 <style>
   * {
     font-family: "Inter", sans-serif;

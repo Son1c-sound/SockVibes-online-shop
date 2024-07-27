@@ -15,27 +15,35 @@
   import supabase from "$lib/db";
   import Badge from "$lib/components/ui/badge/badge.svelte";
   import { addnumber, increment } from "../../../CheckOut/products/fresh/store";
+  import Categ from '$lib/loading/categoryloading.svelte'
   import type { Item } from "../../../types";
   let selectedProduct: any = null;
   let errorMessage = "";
 
-
+  
   let items: Item[] = [];
 
   let selectedQuantity = quantity[0].value;
-
+  let loading = true
   async function loaditems() {
-    const { data, error } = await supabase.from("allitems").select("*");
+    try {
+      const { data, error } = await supabase.from("allitems").select("*");
 
-    if (error) {
-      errorMessage = `Error loading items: ${error.message}`;
-      console.error(error);
-    } else {
-      items = data;
+if (error) {
+  errorMessage = `Error loading items: ${error.message}`;
+  console.error(error);
+} else {
+  items = data;
+}
+const menId: string = $page.params.menId;
+
+selectedProduct = items.find((men) => men.id === parseInt(menId)) || null;
+    }catch (error) {
+      console.log("error",error)
+    }finally {
+      loading = false
     }
-    const menId: string = $page.params.menId;
-
-    selectedProduct = items.find((men) => men.id === parseInt(menId)) || null;
+    
   }
 
   let api: CarouselAPI;
@@ -84,6 +92,11 @@
     loaditems();
   });
 </script>
+
+{#if loading}
+  <Categ></Categ>
+{:else}
+
 
 <Toaster />
 
@@ -184,10 +197,11 @@
       <Badge class='bg-red-500 rounded-none'>Limited time deal</Badge>
       <Badge class='bg-red-500 rounded-none'>{selectedProduct.saleprecent}% Sale</Badge>
       {/if}
+
       {#if selectedProduct.status === "In Stock"}
         <Badge class="rounded-none bg-green-500 text-white">{selectedProduct.status}</Badge>
       {:else}
-        <Badge class="rounded-none bg-red-500 text-white">{selectedProduct.status}</Badge>
+       <Badge class="rounded-none bg-red-500 text-white">{selectedProduct.status}</Badge>
       {/if}
 
       <div>
@@ -213,6 +227,6 @@
 {:else}
   <p class="text-gray-500">Loading product details...</p>
 {/if}
-
+{/if}
 <style>
 </style>

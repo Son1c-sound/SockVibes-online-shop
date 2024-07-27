@@ -29,6 +29,7 @@
   <div class="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
     {#each collections as collection}
       <div class="relative mb-6 sm:mb-0">
+        <!-- svelte-ignore a11y-invalid-attribute -->
         <a href="#" class="rounded-lg image-link relative block overflow-hidden">
           <img
             class="h-64 w-full object-cover transform transition-transform hover:scale-105"
@@ -71,18 +72,6 @@
     transition: opacity 0.3s ease-in-out;
   }
 
-  .image-link p {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    margin-bottom: 2px; /* Adjust as needed */
-    margin-left: 2px; /* Adjust as needed */
-  }
-
-  .image-link a {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-  }
 
   .gradient-bg {
     background-image: linear-gradient(to bottom right, #000000, #262230);

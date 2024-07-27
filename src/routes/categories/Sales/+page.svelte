@@ -13,7 +13,7 @@
   import type { Item } from '../../types'
   import Categoryload from '$lib/loading/categoryloading.svelte'
   import { onMount } from 'svelte';
-  import { sale } from "./products";
+
   let api: CarouselAPI;
   let count = 0;
   let current = 0;

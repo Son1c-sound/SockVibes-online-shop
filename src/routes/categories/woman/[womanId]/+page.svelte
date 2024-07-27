@@ -16,24 +16,33 @@
   import type {Item} from '../../../types'
   import Badge from '$lib/components/ui/badge/badge.svelte'
   import { addnumber, increment } from '../../../CheckOut/products/fresh/store';
+  import Categ from '$lib/loading/categoryloading.svelte'
   let selectedProduct: any = null;
 
   let errorMessage = ''
   let items: Item[] = []
   const womanId: any = $page.params.womanId;
-
+  let loading:boolean = true
   async function loaditems() {
-    const { data, error } = await supabase.from("allitems").select("*");
 
-    if (error) {
-      errorMessage = `Error loading items: ${error.message}`;
-      console.error(error);
-    } else {
-      items = data
+    try {
+      const { data, error } = await supabase.from("allitems").select("*");
+
+if (error) {
+  errorMessage = `Error loading items: ${error.message}`;
+  console.error(error);
+} else {
+  items = data
+  
+}
+const womanId: string = $page.params.womanId;
+selectedProduct = items.find((woman) => woman.id === parseInt(womanId)) || null
+    } catch {
       
+    } finally {
+      loading = false
     }
-    const womanId: string = $page.params.womanId;
-    selectedProduct = items.find((woman) => woman.id === parseInt(womanId)) || null
+    
 
   }
 
@@ -86,6 +95,16 @@
     loaditems();
   });
 </script>
+
+
+{#if loading}
+    <Categ>
+
+    </Categ>
+{:else}
+
+
+
 
 <Toaster />
 
@@ -218,6 +237,6 @@
 {:else}
   <p class="text-gray-500">Loading product details...</p>
 {/if}
-
+{/if}
 <style>
 </style>
