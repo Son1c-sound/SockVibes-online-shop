@@ -91,103 +91,78 @@
 >
 
 
-  {#each salefilter as item} 
- 
+{#each salefilter as item}
+  {#if item.img || item.img2 || item.img3}
+    <div class="relative flex flex-col bg-clip-border m-1 text-gray-900 rounded-md">
+      <div class="relative mx-1 mt-4 overflow-hidden text-gray-700 bg-clip-border">
+        <button class="w-full p-1 rounded-md text-black" on:click={() => goto(`/categories/Sales/${item.id}`)}>
+          <Carousel.Root class="my-4 w-full mx-auto max-w-full" bind:api>
+            <Carousel.Content>
+              {#if item.img}
+                <Carousel.Item>
+                  <div class="p-1">
+                    <Card.Root>
+                      <Card.Content class="flex aspect-square items-center justify-center p-4 sm:p-6">
+                        <img src={item.img} class="w-full h-full object-cover text-2xl font-semibold" alt="item" />
+                      </Card.Content>
+                    </Card.Root>
+                  </div>
+                </Carousel.Item>
+              {/if}
+              
+              {#if item.img2}
+                <Carousel.Item>
+                  <div class="p-1">
+                    <Card.Root>
+                      <Card.Content class="flex aspect-square items-center justify-center p-4 sm:p-6">
+                        <img src={item.img2} class="w-full h-full object-cover text-2xl font-semibold" alt="item" />
+                      </Card.Content>
+                    </Card.Root>
+                  </div>
+                </Carousel.Item>
+              {/if}
 
-    <div
-      class="relative flex flex-col bg-clip-border m-1 text-gray-900  rounded-md "
-    >
-
- 
-      <div
-        class="relative mx-1 mt-4 overflow-hidden text-gray-700  bg-clip-border "
-      >
-   
-      <button class="w-full  p-1 rounded-md text-black " on:click={() => goto(`/categories/Sales/${item.id}`)}>
-        <Carousel.Root class=" my-4 w-full mx-auto max-w-full" bind:api>
-          <Carousel.Content>
-            <Carousel.Item>
-              <div class="p-1">
-                <Card.Root>
-                  <Card.Content
-                    class="flex aspect-square items-center justify-center p-4 sm:p-6"
-                  >
-                    <img
-                      src={item.img}
-                      class="w-full h-full object-cover text-2xl font-semibold"
-                    alt='item' />
-                  </Card.Content>
-                </Card.Root>
-              </div>
-            </Carousel.Item>
-            <Carousel.Item>
-              <div class="p-1">
-                <Card.Root>
-                  <Card.Content
-                    class="flex aspect-square items-center justify-center p-4 sm:p-6"
-                  >
-                    <img
-                      src={item.img2}
-                      class="w-full h-full object-cover text-4xl font-semibold"
-                     alt='item'/>
-                  </Card.Content>
-                </Card.Root>
-              </div>
-            </Carousel.Item>
-            <Carousel.Item>
-              <div class="p-1">
-                <Card.Root>
-                  <Card.Content
-                    class="flex aspect-square items-center justify-center p-4 sm:p-6"
-                  >
-                    <img
-                      src={item.img3}
-                      class="w-full h-full object-cover text-4xl font-semibold"
-                    alt='item'/>
-                  </Card.Content>
-                </Card.Root>
-              </div>
-            </Carousel.Item>
-          </Carousel.Content>
-        </Carousel.Root>
-      </button>
+              {#if item.img3}
+                <Carousel.Item>
+                  <div class="p-1">
+                    <Card.Root>
+                      <Card.Content class="flex aspect-square items-center justify-center p-4 sm:p-6">
+                        <img src={item.img3} class="w-full h-full object-cover text-2xl font-semibold" alt="item" />
+                      </Card.Content>
+                    </Card.Root>
+                  </div>
+                </Carousel.Item>
+              {/if}
+            </Carousel.Content>
+          </Carousel.Root>
+        </button>
       </div>
       <div class="p-4 sm:p-6">
         <div class="flex items-center justify-between mb-2">
-          <p
-            class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
-          > {item.name}
-          
-           
+          <p class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900">
+            {item.name}
           </p>
-          
-          <h1 class="text-md  p-1  text-gray-800 rounded-md">{item.price}$</h1>
-     
+          <h1 class="text-md p-1 text-gray-800 rounded-md">{item.price}$</h1>
         </div>
         <p class="text-gray-600 my-2">Category: {item.category}</p>
         {#if item.new === 'yes'}
-        <Badge class='my-2 rounded-none bg-green-600'>New</Badge>
+          <Badge class='my-2 rounded-none bg-green-600'>New</Badge>
         {/if}
         {#if item.saleprecent > 0}
-        <div class="mx-auto ">
-          <Badge class='my-2 text-sm bg-red-600 rounded-none text-white text-center'>Sale {item.saleprecent}%</Badge>
-         </div>
+          <div class="mx-auto">
+            <Badge class='my-2 text-sm bg-red-600 rounded-none text-white text-center'>Sale {item.saleprecent}%</Badge>
+          </div>
         {/if}
-
-
-
         {#if item.status !== 'In Stock'}
-        <p class="text-red-500 text-sm">{item.status}</p>
+          <p class="text-red-500 text-sm">{item.status}</p>
         {:else}
-
-        <p class="text-green-500 text-sm">{item.status}</p>
-
+          <p class="text-green-500 text-sm">{item.status}</p>
         {/if}
       </div>
-
     </div>
+  {/if}
+{/each}
 
-  {/each}
 
 
 

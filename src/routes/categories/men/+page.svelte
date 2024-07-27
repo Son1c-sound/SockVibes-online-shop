@@ -118,200 +118,176 @@ async function loadPreviousPage() {
 <div
   class=" my-5 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 mx-auto max-w-screen-xl "
 >
-  {#each filterMen as item} 
+{#each filterMen as item}
+  {#if item.img || item.img2 || item.img3 || item.img4}
+    <div class="relative flex flex-col bg-clip-border m-1 text-gray-900 rounded-md">
+      <div class="relative mx-1 mt-4 overflow-hidden text-gray-700 bg-clip-border">
+        <button class="w-full p-1 rounded-md text-black" on:click={() => navigateToProductDetail(item.id)}>
+          <Carousel.Root class="my-4 w-full mx-auto max-w-full" bind:api>
+            <Carousel.Content>
+              {#if item.img}
+                <Carousel.Item>
+                  <div class="p-1">
+                    <Card.Root>
+                      <Card.Content class="flex aspect-square items-center justify-center p-4 sm:p-6">
+                        <img src={item.img} class="w-full h-full object-cover text-2xl font-semibold" alt="item" />
+                      </Card.Content>
+                    </Card.Root>
+                  </div>
+                </Carousel.Item>
+              {/if}
 
-    <div
-      class="relative flex flex-col bg-clip-border m-1 text-gray-900  rounded-md "
-    >
-      <div
-        class="relative mx-1 mt-4 overflow-hidden text-gray-700  bg-clip-border "
-      >
-      <button class="w-full  p-1 rounded-md text-black " on:click={() => navigateToProductDetail(item.id)}>
-        <Carousel.Root class=" my-4 w-full mx-auto max-w-full" bind:api>
-          <Carousel.Content>
-            <Carousel.Item>
-              <div class="p-1">
-                <Card.Root>
-                  <Card.Content
-                    class="flex aspect-square items-center justify-center p-4 sm:p-6"
-                  >
-                    <img
-                      src={item.img}
-                      class="w-full h-full object-cover text-2xl font-semibold"
-                    alt='item' />
-                  </Card.Content>
-                </Card.Root>
-              </div>
-            </Carousel.Item>
-            <Carousel.Item>
-              <div class="p-1">
-                <Card.Root>
-                  <Card.Content
-                    class="flex aspect-square items-center justify-center p-4 sm:p-6"
-                  >
-                    <img
-                      src={item.img2}
-                      class="w-full h-full object-cover text-4xl font-semibold"
-                     alt='item'/>
-                  </Card.Content>
-                </Card.Root>
-              </div>
-            </Carousel.Item>
-            <Carousel.Item>
-              <div class="p-1">
-                <Card.Root>
-                  <Card.Content
-                    class="flex aspect-square items-center justify-center p-4 sm:p-6"
-                  >
-                    <img
-                      src={item.img3}
-                      class="w-full h-full object-cover text-4xl font-semibold"
-                    alt='item'/>
-                  </Card.Content>
-                </Card.Root>
-              </div>
-            </Carousel.Item>
-          </Carousel.Content>
-        </Carousel.Root>
-      </button>
+              {#if item.img2}
+                <Carousel.Item>
+                  <div class="p-1">
+                    <Card.Root>
+                      <Card.Content class="flex aspect-square items-center justify-center p-4 sm:p-6">
+                        <img src={item.img2} class="w-full h-full object-cover text-2xl font-semibold" alt="item" />
+                      </Card.Content>
+                    </Card.Root>
+                  </div>
+                </Carousel.Item>
+              {/if}
+
+              {#if item.img3}
+                <Carousel.Item>
+                  <div class="p-1">
+                    <Card.Root>
+                      <Card.Content class="flex aspect-square items-center justify-center p-4 sm:p-6">
+                        <img src={item.img3} class="w-full h-full object-cover text-2xl font-semibold" alt="item" />
+                      </Card.Content>
+                    </Card.Root>
+                  </div>
+                </Carousel.Item>
+              {/if}
+
+              {#if item.img4}
+                <Carousel.Item>
+                  <div class="p-1">
+                    <Card.Root>
+                      <Card.Content class="flex aspect-square items-center justify-center p-4 sm:p-6">
+                        <img src={item.img4} class="w-full h-full object-cover text-2xl font-semibold" alt="item" />
+                      </Card.Content>
+                    </Card.Root>
+                  </div>
+                </Carousel.Item>
+              {/if}
+            </Carousel.Content>
+          </Carousel.Root>
+        </button>
       </div>
       <div class="p-4 sm:p-6">
         <div class="flex items-center justify-between mb-2">
-          <p
-            class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
-          > {item.name}
-          
-           
+          <p class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900">
+            {item.name}
           </p>
-          
           <p class="text-black ml-2">{item.price}$</p>
-     
         </div>
         {#if item.saleprecent > 0}
-        <Badge class='text-white  rounded-none bg-red-600 my-2'>Sale {item.saleprecent}%</Badge>
+          <Badge class='text-white rounded-none bg-red-600 my-2'>Sale {item.saleprecent}%</Badge>
         {/if}
         {#if item.newitem === 'yes'}
-        <Badge class='my-2 rounded-none bg-green-600'>New</Badge>
-        {/if}
-    
-      
-        {#if item.new === 'yes'}
-        <Badge class='my-2 rounded-none bg-green-600'>New</Badge>
+          <Badge class='my-2 rounded-none bg-green-600'>New</Badge>
         {/if}
         {#if item.seller === 'yes'}
-        <Badge class='my-2 rounded-none bg-orange-700'>Best Seller</Badge>
+          <Badge class='my-2 rounded-none bg-orange-700'>Best Seller</Badge>
         {/if}
-      
         <p class="text-gray-600 my-2">Category: {item.category}</p>
-        
         {#if item.status !== 'Sold out'}
-        <p class="text-green-500 text-sm">{item.status}</p>
+          <p class="text-green-500 text-sm">{item.status}</p>
         {:else}
-
-        <p class="text-red-500 text-sm">{item.status}</p>
-
+          <p class="text-red-500 text-sm">{item.status}</p>
         {/if}
       </div>
     </div>
+  {/if}
+{/each}
 
-  {/each}
-  {#each filterUni as item} 
+{#each filterUni as item}
+  {#if item.img || item.img2 || item.img3 || item.img4}
+    <div class="relative flex flex-col bg-clip-border m-1 text-gray-900 rounded-md">
+      <div class="relative mx-1 mt-4 overflow-hidden text-gray-700 bg-clip-border">
+        <button class="w-full p-1 rounded-md text-black" on:click={() => goto(`/categories/unisex/${item.id}`)}>
+          <Carousel.Root class="my-4 w-full mx-auto max-w-full" bind:api>
+            <Carousel.Content>
+              {#if item.img}
+                <Carousel.Item>
+                  <div class="p-1">
+                    <Card.Root>
+                      <Card.Content class="flex aspect-square items-center justify-center p-4 sm:p-6">
+                        <img src={item.img} class="w-full h-full object-cover text-2xl font-semibold" alt="item" />
+                      </Card.Content>
+                    </Card.Root>
+                  </div>
+                </Carousel.Item>
+              {/if}
 
-    <div
-      class="relative flex flex-col bg-clip-border m-1 text-gray-900  rounded-md "
-    >
-      <div
-        class="relative mx-1 mt-4 overflow-hidden text-gray-700  bg-clip-border "
-      >
-      <button class="w-full  p-1 rounded-md text-black " on:click={() => goto(`/categories/unisex/${item.id}`)}>
-        <Carousel.Root class=" my-4 w-full mx-auto max-w-full" bind:api>
-          <Carousel.Content>
-            <Carousel.Item>
-              <div class="p-1">
-                <Card.Root>
-                  <Card.Content
-                    class="flex aspect-square items-center justify-center p-4 sm:p-6"
-                  >
-                    <img
-                      src={item.img}
-                      class="w-full h-full object-cover text-2xl font-semibold"
-                    alt='item' />
-                  </Card.Content>
-                </Card.Root>
-              </div>
-            </Carousel.Item>
-            <Carousel.Item>
-              <div class="p-1">
-                <Card.Root>
-                  <Card.Content
-                    class="flex aspect-square items-center justify-center p-4 sm:p-6"
-                  >
-                    <img
-                      src={item.img2}
-                      class="w-full h-full object-cover text-4xl font-semibold"
-                     alt='item'/>
-                  </Card.Content>
-                </Card.Root>
-              </div>
-            </Carousel.Item>
-            <Carousel.Item>
-              <div class="p-1">
-                <Card.Root>
-                  <Card.Content
-                    class="flex aspect-square items-center justify-center p-4 sm:p-6"
-                  >
-                    <img
-                      src={item.img3}
-                      class="w-full h-full object-cover text-4xl font-semibold"
-                    alt='item'/>
-                  </Card.Content>
-                </Card.Root>
-              </div>
-            </Carousel.Item>
-          </Carousel.Content>
-        </Carousel.Root>
-      </button>
+              {#if item.img2}
+                <Carousel.Item>
+                  <div class="p-1">
+                    <Card.Root>
+                      <Card.Content class="flex aspect-square items-center justify-center p-4 sm:p-6">
+                        <img src={item.img2} class="w-full h-full object-cover text-2xl font-semibold" alt="item" />
+                      </Card.Content>
+                    </Card.Root>
+                  </div>
+                </Carousel.Item>
+              {/if}
+
+              {#if item.img3}
+                <Carousel.Item>
+                  <div class="p-1">
+                    <Card.Root>
+                      <Card.Content class="flex aspect-square items-center justify-center p-4 sm:p-6">
+                        <img src={item.img3} class="w-full h-full object-cover text-2xl font-semibold" alt="item" />
+                      </Card.Content>
+                    </Card.Root>
+                  </div>
+                </Carousel.Item>
+              {/if}
+
+              {#if item.img4}
+                <Carousel.Item>
+                  <div class="p-1">
+                    <Card.Root>
+                      <Card.Content class="flex aspect-square items-center justify-center p-4 sm:p-6">
+                        <img src={item.img4} class="w-full h-full object-cover text-2xl font-semibold" alt="item" />
+                      </Card.Content>
+                    </Card.Root>
+                  </div>
+                </Carousel.Item>
+              {/if}
+            </Carousel.Content>
+          </Carousel.Root>
+        </button>
       </div>
       <div class="p-4 sm:p-6">
         <div class="flex items-center justify-between mb-2">
-          <p
-            class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900"
-          > {item.name}
-          
-           
+          <p class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900">
+            {item.name}
           </p>
-          
           <p class="text-black ml-2">{item.price}$</p>
-     
         </div>
         {#if item.saleprecent > 0}
-        <Badge class='text-white  rounded-none bg-red-600 my-2'>Sale {item.saleprecent}%</Badge>
+          <Badge class='text-white rounded-none bg-red-600 my-2'>Sale {item.saleprecent}%</Badge>
         {/if}
         {#if item.newitem === 'yes'}
-        <Badge class='my-2 rounded-none bg-green-600'>New</Badge>
-        {/if}
-    
-      
-        {#if item.new === 'yes'}
-        <Badge class='my-2 rounded-none bg-green-600'>New</Badge>
+          <Badge class='my-2 rounded-none bg-green-600'>New</Badge>
         {/if}
         {#if item.seller === 'yes'}
-        <Badge class='my-2 rounded-none bg-orange-700'>Best Seller</Badge>
+          <Badge class='my-2 rounded-none bg-orange-700'>Best Seller</Badge>
         {/if}
-      
         <p class="text-gray-600 my-2">Category: {item.category}</p>
-        
         {#if item.status !== 'Sold out'}
-        <p class="text-green-500 text-sm">{item.status}</p>
+          <p class="text-green-500 text-sm">{item.status}</p>
         {:else}
-
-        <p class="text-red-500 text-sm">{item.status}</p>
-
+          <p class="text-red-500 text-sm">{item.status}</p>
         {/if}
       </div>
     </div>
+  {/if}
+{/each}
 
-  {/each}
 
 
 </div>

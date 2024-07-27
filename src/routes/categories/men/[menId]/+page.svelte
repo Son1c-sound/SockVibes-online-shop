@@ -120,15 +120,17 @@ selectedProduct = items.find((men) => men.id === parseInt(menId)) || null;
       <Carousel.Root bind:api class="w-full md:w-3/4 mx-auto my-4 md:my-6">
         <Carousel.Content class="md:-ml-1">
           {#each [selectedProduct.img, selectedProduct.img2, selectedProduct.img3, selectedProduct.img4] as url}
-            <Carousel.Item class="flex-shrink-0 w-full">
-              <Card.Root class="border-none bg-transparent shadow-none">
-                <img
-                  src={url}
-                  alt={selectedProduct.name || "Product image"}
-                  class="w-full h-64 object-cover lg:h-1/2"
-                />
-              </Card.Root>
-            </Carousel.Item>
+            {#if url}
+              <Carousel.Item class="flex-shrink-0 w-full">
+                <Card.Root class="border-none bg-transparent shadow-none">
+                  <img
+                    src={url}
+                    alt={selectedProduct.name || "Product image"}
+                    class="w-full h-64 object-cover lg:h-1/2"
+                  />
+                </Card.Root>
+              </Carousel.Item>
+            {/if}
           {/each}
         </Carousel.Content>
         <div class="my-3 rounded-md">
@@ -138,77 +140,68 @@ selectedProduct = items.find((men) => men.id === parseInt(menId)) || null;
       </Carousel.Root>
     </div>
 
-    <!-- Selected Items -->
+    <!-- Product Details -->
     <div class="w-full md:w-1/2 mt-4 md:mt-0">
       {#if selectedProduct.status !== "In Stock"}
         <Button
           class="w-full bg-transparent text-black my-5 text-md hover:bg-transparent"
-          >Item Will be added soon</Button
-        >
+        >Item Will be added soon</Button>
       {:else}
         <Button
           class="w-full bg-yellow-300 hover:bg-yellow-400 text-black my-5 text-md"
           on:click={addToCart}
-          on:click={increment}>Add to Cart</Button
-        >
-     
+          on:click={increment}
+        >Add to Cart</Button>
       {/if}
 
       <div class="p-6 my-4 border border-gradient-purple-blue">
         <h2 class="text-3xl mb-2 font-bold">{selectedProduct.name}</h2>
-        <div class="mb-2">
-          <p class="text-2xl">{selectedProduct.price}</p>
-          <DropdownMenu.Root>
-            <DropdownMenu.Trigger asChild let:builder>
-              <Button
-                class="bg-white hover:bg-white mx-8 w-10 text-blue-600"
-                builders={[builder]}>Free returns <DropIcon /></Button
-              >
-            </DropdownMenu.Trigger>
-            <DropdownMenu.Content class="w-56">
-              <DropdownMenu.Label>
-                Return this item for free: <br />
-                <span class="font-light"
-                  >We offer easy, convenient returns for any item. <br />
-                  <span class="text-blue-500 font-bold"
-                    >Read more about our return policy</span
-                  ></span
-                >
-              </DropdownMenu.Label>
-            </DropdownMenu.Content>
-          </DropdownMenu.Root>
-        </div>
+        <p class="text-2xl mb-2">{selectedProduct.price}</p>
 
-        <hr class="mb-2" />
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger asChild>
+            <Button class="bg-white hover:bg-white mx-8 w-10 text-blue-600">
+              Free returns <DropIcon />
+            </Button>
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content class="w-56">
+            <DropdownMenu.Label>
+              Return this item for free: <br />
+              <span class="font-light">
+                We offer easy, convenient returns for any item. <br />
+                <span class="text-blue-500 font-bold">Read more about our return policy</span>
+              </span>
+            </DropdownMenu.Label>
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
 
-        <p class="text-gray-500">{selectedProduct.description}</p>
+        <hr class="my-2" />
+        <p class="text-gray-500 mb-4">{selectedProduct.description}</p>
 
-        <br />
         <h1 class="text-gray-900 my-3 text-md">
           Qty
           <select bind:value={selectedQuantity}>
             {#each quantity as { value, label }}
-              <option {value}>{label}</option>
+              <option value={value}>{label}</option>
             {/each}
           </select>
         </h1>
       </div>
+
       {#if selectedProduct.saleprecent > 0}
-      <Badge class='bg-red-500 rounded-none'>Limited time deal</Badge>
-      <Badge class='bg-red-500 rounded-none'>{selectedProduct.saleprecent}% Sale</Badge>
+        <Badge class="bg-red-500 rounded-none">Limited time deal</Badge>
+        <Badge class="bg-red-500 rounded-none">{selectedProduct.saleprecent}% Sale</Badge>
       {/if}
 
       {#if selectedProduct.status === "In Stock"}
-        <Badge class="rounded-none bg-green-500 text-white">{selectedProduct.status}</Badge>
-      {:else}
-       <Badge class="rounded-none bg-red-500 text-white">{selectedProduct.status}</Badge>
+      <Badge class="rounded-none bg-green-500 text-white">{selectedProduct.status}</Badge>
       {/if}
+    {#if selectedProduct.status === "Sold out"}
+      <Badge class="rounded-none bg-red-500 text-white">{selectedProduct.status}</Badge>
+    {/if}
 
-      <div>
-        <br />
-        <br />
-        <hr />
-        <br />
+      <div class="mt-4">
+        <hr class="my-4" />
         <h1><span class="font-bold">Sold By:</span> Sock Vibes</h1>
         <h1><span class="font-bold">Ships From:</span> Sock Vibes</h1>
         <h1>
@@ -219,14 +212,13 @@ selectedProduct = items.find((men) => men.id === parseInt(menId)) || null;
           <span class="font-bold">Return Policy:</span>
           <span class="text-blue-700">Read more</span>
         </h1>
-        <br />
       </div>
-      <br />
     </div>
   </div>
 {:else}
   <p class="text-gray-500">Loading product details...</p>
 {/if}
+
 {/if}
 <style>
 </style>
