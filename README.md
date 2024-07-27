@@ -5,7 +5,7 @@
 
 Contractor: sock vibes management - miami,fl
 
-## 🚀 Tech Stack
+## Tech used
 
 - **Frontend:** [SvelteKit](https://kit.svelte.dev/)
 - **Backend:** [Node.js](https://nodejs.org/)
