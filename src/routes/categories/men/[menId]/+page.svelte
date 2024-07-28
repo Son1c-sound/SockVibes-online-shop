@@ -119,7 +119,7 @@ selectedProduct = items.find((men) => men.id === parseInt(menId)) || null;
     <div class="w-full">
       <Carousel.Root bind:api class="w-full md:w-3/4 mx-auto my-4 md:my-6">
         <Carousel.Content class="md:-ml-1">
-          {#each [selectedProduct.img, selectedProduct.img2, selectedProduct.img3, selectedProduct.img4] as url}
+          {#each [selectedProduct.img, selectedProduct.img2, selectedProduct.img3, selectedProduct.img4].filter(url => url) as url}
             <Carousel.Item class="flex-shrink-0 w-full">
               <Card.Root class="border-none bg-transparent shadow-none">
                 <img
@@ -141,17 +141,17 @@ selectedProduct = items.find((men) => men.id === parseInt(menId)) || null;
     <!-- Selected Items -->
     <div class="w-full md:w-1/2 mt-4 md:mt-0">
       {#if selectedProduct.status !== "In Stock"}
-        <Button
-          class="w-full bg-transparent text-black my-5 text-md hover:bg-transparent"
-          >Item Will be added soon</Button
-        >
+        <Button class="w-full bg-transparent text-black my-5 text-md hover:bg-transparent">
+          Item will be added soon
+        </Button>
       {:else}
         <Button
           class="w-full bg-yellow-300 hover:bg-yellow-400 text-black my-5 text-md"
           on:click={addToCart}
-          on:click={increment}>Add to Cart</Button
+          on:click={increment}
         >
-     
+          Add to Cart
+        </Button>
       {/if}
 
       <div class="p-6 my-4 border border-gradient-purple-blue">
@@ -160,20 +160,19 @@ selectedProduct = items.find((men) => men.id === parseInt(menId)) || null;
           <p class="text-2xl">{selectedProduct.price}</p>
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild let:builder>
-              <Button
-                class="bg-white hover:bg-white mx-8 w-10 text-blue-600"
-                builders={[builder]}>Free returns <DropIcon /></Button
-              >
+              <Button class="bg-white hover:bg-white mx-8 w-10 text-blue-600">
+                Free returns <DropIcon />
+              </Button>
             </DropdownMenu.Trigger>
             <DropdownMenu.Content class="w-56">
               <DropdownMenu.Label>
                 Return this item for free: <br />
-                <span class="font-light"
-                  >We offer easy, convenient returns for any item. <br />
-                  <span class="text-blue-500 font-bold"
-                    >Read more about our return policy</span
-                  ></span
-                >
+                <span class="font-light">
+                  We offer easy, convenient returns for any item. <br />
+                  <span class="text-blue-500 font-bold">
+                    Read more about our return policy
+                  </span>
+                </span>
               </DropdownMenu.Label>
             </DropdownMenu.Content>
           </DropdownMenu.Root>
@@ -188,20 +187,21 @@ selectedProduct = items.find((men) => men.id === parseInt(menId)) || null;
           Qty
           <select bind:value={selectedQuantity}>
             {#each quantity as { value, label }}
-              <option {value}>{label}</option>
+              <option value={value}>{label}</option>
             {/each}
           </select>
         </h1>
       </div>
+
       {#if selectedProduct.saleprecent > 0}
-      <Badge class='bg-red-500 rounded-none'>Limited time deal</Badge>
-      <Badge class='bg-red-500 rounded-none'>{selectedProduct.saleprecent}% Sale</Badge>
+        <Badge class="bg-red-500 rounded-none">Limited time deal</Badge>
+        <Badge class="bg-red-500 rounded-none">{selectedProduct.saleprecent}% Sale</Badge>
       {/if}
 
       {#if selectedProduct.status === "In Stock"}
         <Badge class="rounded-none bg-green-500 text-white">{selectedProduct.status}</Badge>
       {:else}
-       <Badge class="rounded-none bg-red-500 text-white">{selectedProduct.status}</Badge>
+        <Badge class="rounded-none bg-red-500 text-white">{selectedProduct.status}</Badge>
       {/if}
 
       <div>
@@ -227,6 +227,7 @@ selectedProduct = items.find((men) => men.id === parseInt(menId)) || null;
 {:else}
   <p class="text-gray-500">Loading product details...</p>
 {/if}
+
 {/if}
 <style>
 </style>
