@@ -1,34 +1,71 @@
-<script>
-   import { onMount } from 'svelte';
-  import Donemark from "$lib/Icons/donemark.svelte";
-  import { Button } from '$lib/components/ui/button';
+<script lang="ts">
+  import { onMount } from 'svelte';
+  import supabase from '$lib/db';
   import { addnumber } from "../../routes/CheckOut/products/fresh/store";
-  import { goto } from '$app/navigation';
 
-  function cont() {
-    goto('/');
+  onMount(async () => {
+    console.log('Mounted on /success route');
+    
+    const storedCart = localStorage.getItem('cart');
+    if (storedCart) {
+      console.log('Stored Cart:', storedCart);
+      const cartItems = JSON.parse(storedCart);
+      console.log('Cart Items:', cartItems);
+
+      // Update Supabase and ensure it completes before clearing localStorage
+      await updateInventory(cartItems);
+
+      // Clear cart and reset addnumber after updating inventory
+      clearLocalStorageAndResetStore();
+    }
+  });
+
+  async function updateInventory(cartItems: { name: string, quantity: number }[]) {
+    console.log('Updating inventory with:', cartItems);
+    for (const item of cartItems) {
+      const { name, quantity } = item;
+
+      // Retrieve the current storage value
+      const { data: currentData, error: fetchError } = await supabase
+        .from('allitems')
+        .select('storage')
+        .eq('name', name)
+        .single();
+
+      if (fetchError) {
+        console.error('Error fetching current storage:', fetchError);
+        continue;
+      }
+
+      // Calculate new storage value
+      const newStorageValue = currentData.storage - quantity;
+
+      // Update the storage value
+      const { error: updateError } = await supabase
+        .from('allitems')
+        .update({ storage: newStorageValue })
+        .eq('name', name);
+
+      if (updateError) {
+        console.error('Error updating inventory:', updateError);
+      }
+    }
   }
 
-  onMount(() => {
-
+  function clearLocalStorageAndResetStore() {
+    // Remove all relevant items from localStorage
     localStorage.removeItem('cart');
-    
-    // Reset the store value to 0
+    localStorage.removeItem('addnumber'); // Ensure to remove 'addnumber' if it was stored directly
+
+    // Reset the Svelte store value
     addnumber.set(0);
-
-    // Also update localStorage to persist the change
-    try {
-      localStorage.setItem('addnumber', JSON.stringify(0));
-    } catch (error) {
-      console.error('Error saving to localStorage:', error);
-    }
+  }
+</script>
 
 
-  });
-  </script>
   
   <div class="my-40 flex flex-col items-center justify-center text-center">
-    <Donemark />
+
     <h2 class="text-2xl font-bold mb-2">Payment Successful</h2>
     <p class="text-lg">
       Your order has been confirmed and is now being processed. We will email the receipt and shipping date.
@@ -36,8 +73,6 @@
       Thank you for shopping with us!
     </p>
     <br>
-    <Button on:click={cont}>Continue Shopping</Button>
-    <br>
-    <Button variant='outline'>Contact Support</Button>
+  
   </div>
   

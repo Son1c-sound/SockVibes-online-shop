@@ -140,11 +140,7 @@ selectedProduct = items.find((men) => men.id === parseInt(menId)) || null;
 
     <!-- Selected Items -->
     <div class="w-full md:w-1/2 mt-4 md:mt-0">
-      {#if selectedProduct.status !== "In Stock"}
-        <Button class="w-full bg-transparent text-black my-5 text-md hover:bg-transparent">
-          Item will be added soon
-        </Button>
-      {:else}
+  
         <Button
           class="w-full bg-yellow-300 hover:bg-yellow-400 text-black my-5 text-md"
           on:click={addToCart}
@@ -152,7 +148,7 @@ selectedProduct = items.find((men) => men.id === parseInt(menId)) || null;
         >
           Add to Cart
         </Button>
-      {/if}
+   
 
       <div class="p-6 my-4 border border-gradient-purple-blue">
         <h2 class="text-3xl mb-2 font-bold">{selectedProduct.name}</h2>

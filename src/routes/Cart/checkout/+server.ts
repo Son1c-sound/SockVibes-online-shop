@@ -11,8 +11,8 @@ const stripe = new Stripe(stripeSecretKey, {
   apiVersion: "2024-06-20",
 });
 
-const successUrl = "http://localhost:5174/Success";
-const cancelUrl = "http://localhost:5174/Canceled";
+const successUrl = "http://localhost:5173/Success";
+const cancelUrl = "http://localhost:5173/Canceled";
 
 export const POST: RequestHandler = async ({ request }) => {
   try {
