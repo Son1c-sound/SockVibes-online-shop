@@ -17,6 +17,7 @@
   import { addnumber, increment } from "../../../CheckOut/products/fresh/store";
   import Categ from '$lib/loading/categoryloading.svelte';
   import type { Item } from "../../../types";
+  import { goto } from "$app/navigation";
 
   let selectedProduct: Item | null = null;
   let errorMessage = "";
@@ -67,37 +68,47 @@
     if (!selectedProduct || !selectedQuantity) return;
 
     if (selectedProduct.storage <= 0) {
-      toast.error("Item is sold out");
-      return;
+        toast.error("Item is sold out");
+        return;
     }
 
     // Ensure quantity does not exceed storage
     if (selectedQuantity > selectedProduct.storage) {
-      toast.error("Insufficient stock available");
-      return;
+        toast.error("Insufficient stock available");
+        return;
     }
 
     const cartItem = {
-      name: selectedProduct.name,
-      image: selectedProduct.img,
-      price: selectedProduct.price,
-      quantity: selectedQuantity,
-      status: selectedProduct.status,
-      description: selectedProduct.description,
-      category: selectedProduct.category,
+        id: selectedProduct.id, // Ensure each item has a unique ID
+        name: selectedProduct.name,
+        image: selectedProduct.img,
+        price: selectedProduct.price,
+        quantity: selectedQuantity,
+        status: selectedProduct.status,
+        description: selectedProduct.description,
+        category: selectedProduct.category,
     };
 
     const cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
-    // Add new item to cart
-    cart.push(cartItem);
+    // Find if the item already exists in the cart
+    const existingItemIndex = cart.findIndex((item: { id: number; }) => item.id === cartItem.id);
+
+    if (existingItemIndex !== -1) {
+        // Update quantity if item exists
+        cart[existingItemIndex].quantity = selectedQuantity;
+    } else {
+        // Add new item to cart
+        cart.push(cartItem);
+    }
+
     toast.success("Added to Cart");
 
     localStorage.setItem("cart", JSON.stringify(cart));
 
     console.log("Cart updated:", cart);
-    // Optional: Update selectedProduct storage here if you want to decrement it in UI
-  }
+}
+
 
   onMount(() => {
     loaditems();
@@ -164,7 +175,7 @@
         <Button
           class="w-full bg-yellow-300 hover:bg-yellow-400 text-black my-5 text-md"
           on:click={addToCart}
-          on:click={increment}
+          on:click={() => goto('/Cart')}
         >
           Add to Cart
         </Button>
@@ -199,11 +210,11 @@
         <p class="text-gray-500">{selectedProduct.description}</p>
 
         <br />
-        <h1 class="text-gray-900 my-3 text-md">
-          Qty
-          <select bind:value={selectedQuantity}>
+        <h1 class="text-gray-900 my-3 text-md ">
+          Select Quantity
+          <select  class="w-1/4 rounded-lg bg-gray-100 p-2" bind:value={selectedQuantity}> 
             {#each availableQuantities as qty}
-              <option value={qty}>{qty}</option>
+              <option  value={qty}>{qty}</option>
             {/each}
           </select>
         </h1>

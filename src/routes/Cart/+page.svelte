@@ -39,6 +39,19 @@
         }
     }
 
+    function clearLocalStorageAfterDelay(delay: number): void {
+        setTimeout(() => {
+            localStorage.removeItem('cart');
+            cartItems = [];
+            addnumber.set(0);
+        }, delay);
+    }
+
+    onMount(() => {
+        clearLocalStorageAfterDelay(21600000);
+    });
+
+
 
     function calculateSubtotal(): number {
         return cartItems.reduce((total, item) => {
