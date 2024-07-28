@@ -1,52 +1,51 @@
 <script lang="ts">
-import { page } from "$app/stores";
+  import { page } from "$app/stores";
   import Button from "$lib/components/ui/button/button.svelte";
   import * as Select from "$lib/components/ui/select/index.js";
   import * as Card from "$lib/components/ui/card/index.js";
   import * as Carousel from "$lib/components/ui/carousel/index.js";
   import { Progress } from "$lib/components/ui/progress/index.js";
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
-  import DropIcon from '../../../../lib/Icons/dropdwon.svelte';
+  import DropIcon from "../../../../lib/Icons/dropdwon.svelte";
   import type { CarouselAPI } from "$lib/components/ui/carousel/context.js";
-  import { quantity } from "../../../types";
-  import { onMount } from 'svelte';
-  import toast, { Toaster } from 'svelte-french-toast';
+  import { quantity } from '../../../types';
+  import { onMount } from "svelte";
+  import toast, { Toaster } from "svelte-french-toast";
   import LoaderCircle from "lucide-svelte/icons/loader-circle";
-  import Categ from '$lib/loading/categoryloading.svelte'
-  import supabase from '$lib/db'
-  import type {Item} from '../../../types'
-  import Badge from '$lib/components/ui/badge/badge.svelte'
-  import { addnumber, increment } from '../../../CheckOut/products/fresh/store';
-  let selectedProduct: any = null;
+  import supabase from "$lib/db";
+  import Badge from "$lib/components/ui/badge/badge.svelte";
+  import { addnumber, increment } from "../../../CheckOut/products/fresh/store";
+  import Categ from '$lib/loading/categoryloading.svelte';
+  import type { Item } from "../../../types";
+  import { goto } from "$app/navigation";
 
-  let errorMessage = ''
-  let items: Item[] = []
-  const saleId: any = $page.params.saleId;
+  let selectedProduct: Item | null = null;
+  let errorMessage = "";
+  let items: Item[] = [];
+  let selectedQuantity = quantity[0].value;
+  let loading = true;
 
-  let load = true
+  // Generate quantity options based on storage
+  $: availableQuantities = Array.from({ length: Math.min(20, selectedProduct?.storage || 0) }, (_, i) => i + 1);
+
   async function loaditems() {
     try {
       const { data, error } = await supabase.from("allitems").select("*");
 
-if (error) {
-  errorMessage = `Error loading items: ${error.message}`;
-  console.error(error);
-} else {
-  items = data
-  
-}
-const saleId: string = $page.params.saleId;
-selectedProduct = items.find((sale) => sale.id === parseInt(saleId)) || null
-    } catch {
-        console.log("error")
+      if (error) {
+        errorMessage = `Error loading items: ${error.message}`;
+        console.error(error);
+      } else {
+        items = data;
+        const saleId: string = $page.params.saleId;
+        selectedProduct = items.find((men) => men.id === parseInt(saleId)) || null;
+      }
+    } catch (error) {
+      console.log("error", error);
     } finally {
-      load = false
+      loading = false;
     }
-    
-
   }
-
-  const qty = quantity[saleId - 1];
 
   let api: CarouselAPI;
   let count = 0;
@@ -60,48 +59,65 @@ selectedProduct = items.find((sale) => sale.id === parseInt(saleId)) || null
     });
   }
 
-  let showStatusBar:boolean = true;
-  let showActivityBar:boolean = false;
-  let showPanel:boolean = false;
+  let showStatusBar: boolean = true;
+  let showActivityBar: boolean = false;
+  let showPanel: boolean = false;
 
-  // localStorage test 
-  let selectedQuantity = quantity[0].value;
-
+  // Add to cart function
   function addToCart() {
-    if (!selectedProduct && !qty ) return; 
+    if (!selectedProduct || !selectedQuantity) return;
+
+    if (selectedProduct.storage <= 0) {
+        toast.error("Item is sold out");
+        return;
+    }
+
+    // Ensure quantity does not exceed storage
+    if (selectedQuantity > selectedProduct.storage) {
+        toast.error("Insufficient stock available");
+        return;
+    }
 
     const cartItem = {
-      name: selectedProduct.name,
-      image: selectedProduct.img, 
-      price: selectedProduct.price, 
-      quantity: selectedQuantity,
-      status: selectedProduct.status,
-      description: selectedProduct.description,
-      category: selectedProduct.category,
+        id: selectedProduct.id, // Ensure each item has a unique ID
+        name: selectedProduct.name,
+        image: selectedProduct.img,
+        price: selectedProduct.price,
+        quantity: selectedQuantity,
+        status: selectedProduct.status,
+        description: selectedProduct.description,
+        category: selectedProduct.category,
     };
 
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
-    // Add new item to cart
-    cart.push(cartItem);
+    // Find if the item already exists in the cart
+    const existingItemIndex = cart.findIndex((item: { id: number; }) => item.id === cartItem.id);
+
+    if (existingItemIndex !== -1) {
+        // Update quantity if item exists
+        cart[existingItemIndex].quantity = selectedQuantity;
+    } else {
+        // Add new item to cart
+        cart.push(cartItem);
+    }
+
     toast.success("Added to Cart");
 
-    localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem("cart", JSON.stringify(cart));
 
-    console.log('Cart updated:', cart);
-  }
+    console.log("Cart updated:", cart);
+}
+
 
   onMount(() => {
     loaditems();
   });
 </script>
 
-
-{#if load} 
-    <Categ></Categ>
+{#if loading}
+  <Categ></Categ>
 {:else}
-
-
 
 <Toaster />
 
@@ -110,9 +126,8 @@ selectedProduct = items.find((sale) => sale.id === parseInt(saleId)) || null
 <br />
 <br />
 
-
-<a href="/categories/Sales" class="text-blue-600 underline">
-  <i class="mx-6 fa-solid fa-chevron-left"></i>Go back to Sales
+<a href="/categories/men" class="text-blue-600 underline">
+  <i class="mx-6 fa-solid fa-chevron-left"></i>Go back to Men
 </a>
 
 {#if errorMessage}
@@ -125,18 +140,16 @@ selectedProduct = items.find((sale) => sale.id === parseInt(saleId)) || null
     <div class="w-full">
       <Carousel.Root bind:api class="w-full md:w-3/4 mx-auto my-4 md:my-6">
         <Carousel.Content class="md:-ml-1">
-          {#each [selectedProduct.img, selectedProduct.img2, selectedProduct.img3, selectedProduct.img4] as url, index}
-            {#if url}
-              <Carousel.Item class="flex-shrink-0 w-full" >
-                <Card.Root class="border-none bg-transparent shadow-none">
-                  <img
-                    src={url}
-                    alt={selectedProduct.name || "Product image"}
-                    class="w-full h-64 object-cover lg:h-1/2"
-                  />
-                </Card.Root>
-              </Carousel.Item>
-            {/if}
+          {#each [selectedProduct.img, selectedProduct.img2, selectedProduct.img3, selectedProduct.img4].filter(url => url) as url}
+            <Carousel.Item class="flex-shrink-0 w-full">
+              <Card.Root class="border-none bg-transparent shadow-none">
+                <img
+                  src={url}
+                  alt={selectedProduct.name || "Product image"}
+                  class="w-full h-64 object-cover lg:h-1/2"
+                />
+              </Card.Root>
+            </Carousel.Item>
           {/each}
         </Carousel.Content>
         <div class="my-3 rounded-md">
@@ -148,17 +161,21 @@ selectedProduct = items.find((sale) => sale.id === parseInt(saleId)) || null
 
     <!-- Selected Items -->
     <div class="w-full md:w-1/2 mt-4 md:mt-0">
-      {#if selectedProduct.status !== "In Stock"}
+      {#if selectedProduct.storage === 0}
         <Button
-          class="w-full bg-transparent text-black my-5 text-md hover:bg-transparent"
+          class="w-full bg-gray-300 text-black my-5 text-md"
+          disabled
         >
-          Item Will be added soon
+          Item Sold Out
         </Button>
       {:else}
+        {#if selectedProduct.storage <= 20}
+          <p class='text-red-800'>Only {selectedProduct.storage} left in stock</p>
+        {/if}
         <Button
           class="w-full bg-yellow-300 hover:bg-yellow-400 text-black my-5 text-md"
           on:click={addToCart}
-          on:click={increment}
+          on:click={() => goto('/Cart')}
         >
           Add to Cart
         </Button>
@@ -167,13 +184,10 @@ selectedProduct = items.find((sale) => sale.id === parseInt(saleId)) || null
       <div class="p-6 my-4 border border-gradient-purple-blue">
         <h2 class="text-3xl mb-2 font-bold">{selectedProduct.name}</h2>
         <div class="mb-2">
-          <p class="text-2xl">{selectedProduct.price}$</p>
+          <p class="text-2xl">{selectedProduct.price}</p>
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild let:builder>
-              <Button
-                class="bg-white hover:bg-white mx-8 w-10 text-blue-600"
-                builders={[builder]}
-              >
+              <Button class="bg-white hover:bg-white mx-8 w-10 text-blue-600">
                 Free returns <DropIcon />
               </Button>
             </DropdownMenu.Trigger>
@@ -196,24 +210,18 @@ selectedProduct = items.find((sale) => sale.id === parseInt(saleId)) || null
         <p class="text-gray-500">{selectedProduct.description}</p>
 
         <br />
-        <h1 class="text-gray-900 my-3 text-md">
-          Qty
-          <select bind:value={selectedQuantity}>
-            {#each quantity as { value, label }}
-              <option {value}>{label}</option>
+        <h1 class="text-gray-900 my-3 text-md ">
+          Select Quantity
+          <select  class="w-1/4 rounded-lg bg-gray-100 p-2" bind:value={selectedQuantity}> 
+            {#each availableQuantities as qty}
+              <option  value={qty}>{qty}</option>
             {/each}
           </select>
         </h1>
       </div>
-
-      {#if selectedProduct.status === "In Stock"}
-        <Badge class="rounded-none bg-green-500 text-white">{selectedProduct.status}</Badge>
-      {/if}
-      {#if selectedProduct.status === "Sold out"}
-        <Badge class="bg-red-500 rounded-none text-white">{selectedProduct.status}</Badge>
-      {/if}
       {#if selectedProduct.saleprecent > 0}
-        <Badge class="bg-red-500 rounded-none text-white">Sale {selectedProduct.saleprecent}%</Badge>
+        <Badge class="bg-red-500 rounded-none">Limited time deal</Badge>
+        <Badge class="bg-red-500 rounded-none">{selectedProduct.saleprecent}% Sale</Badge>
       {/if}
 
       <div>
@@ -239,7 +247,4 @@ selectedProduct = items.find((sale) => sale.id === parseInt(saleId)) || null
 {:else}
   <p class="text-gray-500">Loading product details...</p>
 {/if}
-
 {/if}
-<style>
-</style>

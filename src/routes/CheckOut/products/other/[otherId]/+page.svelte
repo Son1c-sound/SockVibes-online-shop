@@ -1,222 +1,165 @@
 <script lang="ts">
-  import supabase from "$lib/db";
-  import { page } from "$app/stores";
-  import Button from "$lib/components/ui/button/button.svelte";
-  import * as Select from "$lib/components/ui/select/index.js";
-  import * as Card from "$lib/components/ui/card/index.js";
-  import * as Carousel from "$lib/components/ui/carousel/index.js";
-  import { Progress } from "$lib/components/ui/progress/index.js";
-  import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
-  import DropIcon from "../../../../../lib/Icons/dropdwon.svelte";
-  import type { CarouselAPI } from "$lib/components/ui/carousel/context.js";
+  import { addnumber, increment, decrement } from "../../../../../routes/CheckOut/products/fresh/store";
+  import { onMount } from 'svelte';
+  import toast, { Toaster } from 'svelte-french-toast';
+  import Button from "$lib/components/ui/button/button.svelte"; 
+  import { goto } from '$app/navigation'
+  import Loading from '$lib/loading/categoryloading.svelte'
+  import RightArrow from '$lib/Icons/rightarrow.svelte'
+  import MightLike from '../../../../../lib/HeroSlider/braclet/MightLike/mightlike.svelte'
 
-  import { onMount } from "svelte";
-  import toast, { Toaster } from "svelte-french-toast";
-  import Categ from '$lib/loading/categoryloading.svelte'
-  import { quantity } from "../../../../types";
-  import { increment } from "../../fresh/store";
-  import Badge from "../../../../../lib/components/ui/badge/badge.svelte";
-  import Loading from '$lib/loading/loading.svelte'
+  import DoneMark from '$lib/Icons/donemark.svelte'
+import Cartfooter from "$lib/Footer/cartFoot/cartfooter.svelte";
+    import type { CartItem } from '../../../../../app';
 
-  let errorMessage: string = "";
-  let items: any[] = [];
-  let selectedProduct: any = null;
-  let selectedQuantity = quantity[0].value;
+  let cartItems: CartItem[] = [];
 
-  let loading:boolean = true
-  async function loadItems() {
-
-    try {
-      const { data, error } = await supabase.from("popular3").select("*");
-
-if (error) {
-  errorMessage = `Error loading items: ${error.message}`;
-  console.error(error);
-} else {
-  items = data;
-
-  // Get the productId from the URL params
-  const otherId = $page.params.otherId;
-
-  // Set the selectedProduct based on the otherId
-  selectedProduct =
-    items.find((item) => item.id === parseInt(otherId)) || null;
-}
-    } catch {
-
-    } finally {
-      loading = false
-    }
-    
+  try {
+      const storedCart = localStorage.getItem('cart');
+      if (storedCart) {
+          cartItems = JSON.parse(storedCart);
+      }
+  } catch (error) {
+      console.error('Error parsing cart from localStorage:', error);
   }
 
-  // Fetch product data on mount
-  onMount(() => {
-    loadItems();
-  });
-  let max: number = 4;
-  let api: CarouselAPI;
-  let count = 0;
-  let current = 0;
+ 
 
-  $: if (api) {
-    count = api.scrollSnapList().length;
-    current = api.selectedScrollSnap() + 1;
-    api.on("select", () => {
-      current = api.selectedScrollSnap() + 1;
-    });
+  function removeItem(itemid: number): void {
+      const index = cartItems.findIndex(item => item.id === itemid);
+
+      if (index !== -1) {
+          cartItems.splice(index, 1);
+
+          localStorage.setItem('cart', JSON.stringify(cartItems));
+     
+      }
   }
 
-  function addToCart() {
-    if (!selectedProduct) return; // Check if selectedProduct is defined
 
-    const cartItem = {
-      name: selectedProduct.name,
-      image: selectedProduct.img, // Default image
-      price: selectedProduct.price,
-      quantity: selectedQuantity,
-      status: selectedProduct.status,
-      description: selectedProduct.description,
-    };
 
-    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+  function calculateSubtotal(): number {
+      return cartItems.reduce((total, item) => {
 
-    // Add new item to cart
-    cart.push(cartItem);
-    toast.success("Added to Cart");
+          const price = parseFloat(item.price);
+          return total + (price * item.quantity);
+      }, 0);
+  }
 
-    localStorage.setItem("cart", JSON.stringify(cart));
+  async function checkout() {
+      try {
+          const response = await fetch("../Cart/checkout", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                  items: cartItems
+              }),
+          });
 
-    console.log("Cart updated:", cart);
+          if (!response.ok) {
+              throw new Error('Checkout failed');
+          }
+
+          const data = await response.json();
+          window.location.replace(data.url);
+
+ 
+          window.location.replace(data.url);
+      } catch (error) {
+          console.error('Error during checkout:', error);
+          toast.error('Failed to proceed with checkout.');
+      }
+  }
+
+  let loading = false
+  function loadCheck() {
+    loading = true
   }
 </script>
 
 
-{#if loading}
+<br>
+<br>
+<h1 class="text-2xl font-arial text-center font-bold ">Review Shopping Cart</h1>
+{#if cartItems.length > 0}
+<div style="display: flex; justify-content: center; align-items: center; gap: 10px;" >
+<DoneMark />
+<h2 class="font-arial my-2">No Sing Up required</h2>
+</div>
+<div style="display: flex; justify-content: center; align-items: center; gap: 10px;" >
+  <DoneMark />
+  <h2 class="font-arial my-2">Your order qualifies for FREE returns</h2>
+</div>
 
-<Categ></Categ>
 
-{:else}
-<Toaster />
+<div class="p-6 max-w-2xl mx-auto lg:border-2 lg:border-gray-900 rounded-md">
+  {#if loading}
+ 
+    <Button class='my-4' disabled>Redirecting to Checkout...</Button>
+    <br>
+  {:else}
+ 
+  <div class="my-4 flex justify-between items-center">
+    <Button  on:click={checkout} on:click={loadCheck}>Check Out ({cartItems.length} Items)</Button>
+    <h1 class="text-xl "><span class="font-arial ">Subtotal:</span> ${calculateSubtotal().toFixed(2)}</h1>
 
-<!-- Product Details -->
-<br />
-
-<div class="flex flex-col mx-4 md:mx-20 md:flex-row md:space-x-8">
-
-  <!-- Product Images -->
-  <div class="w-full">
-    <Carousel.Root bind:api class="w-full md:w-3/4 mx-auto my-10 md:my-28">
-      <a href="/" class="text-blue-500 text-md underline">Go back</a>
-      <Carousel.Content class="md:-ml-1">
-        {#if selectedProduct}
-          {#each [selectedProduct.img, selectedProduct.img2, selectedProduct.img3, selectedProduct.img4] as url, index}
-            {#if url}
-              <Carousel.Item class="flex-shrink-0 w-full" >
-                <Card.Root class="border-none bg-transparent shadow-none">
-                  <img
-                    src={url}
-                    alt={selectedProduct.name || "Product image"}
-                    class="w-full h-64 object-cover lg:h-1/2"
-                  />
-                  {#if selectedProduct.status !== "Out Of Stock"}
-                    <Badge class="bg-green-500 text-white">{selectedProduct.status}</Badge>
-                  {:else}
-                    <Badge class="bg-red-500 text-white">{selectedProduct.status}</Badge>
-                  {/if}
-                </Card.Root>
-              </Carousel.Item>
-            {/if}
-          {/each}
-        {/if}
-      </Carousel.Content>
-      <div class="my-5 rounded-md">
-        <h1 class="text-center my-2">{current}</h1>
-        <Progress value={current} max={count} class="h-1" />
-      </div>
-    </Carousel.Root>
-  </div>
-  
-
-  <!-- Selected Items -->
-  <div class="w-full md:w-1/2 mt-4 md:mt-0">
-    <br />
-    <br />
-
-    {#if !selectedProduct || selectedProduct.status === "Out Of Stock"}
-    <p class="text-lg text-center">Item will be available soon</p>
-    {:else if selectedProduct || selectedProduct.status === "In Stock"}
-    <Button
-      class="w-full  bg-yellow-300 hover:bg-yellow-400 text-black my-5 text-md"
-      on:click={addToCart}
-      on:click={increment}
-    >
-      Add to Cart
-    </Button>
-    {:else}
-    <Loading></Loading>
-{/if}
-    <div class="my-5 p-6 border border-gradient-purple-blue">
-      <h2 class="text-3xl mb-2 font-bold">{selectedProduct?.name}</h2>
-      <div class="mb-2">
-        <p class="text-2xl">{selectedProduct?.price}$</p>
-        <DropdownMenu.Root>
-          <DropdownMenu.Trigger asChild let:builder>
-            <Button
-              class="bg-white hover:bg-white mx-8 w-10 text-blue-600"
-              builders={[builder]}
-            >
-              Free returns <DropIcon />
-            </Button>
-          </DropdownMenu.Trigger>
-          <DropdownMenu.Content class="w-56">
-            <DropdownMenu.Label>
-              Return this item for free: <br />
-              <span class="font-light">
-                We offer easy, convenient returns for any item. <br />
-                <span class="text-blue-500 font-bold">
-                  Read more about our return policy
-                </span>
-              </span>
-            </DropdownMenu.Label>
-          </DropdownMenu.Content>
-        </DropdownMenu.Root>
-      </div>
-      <hr class="mb-2" />
-      <p class="text-gray-500">{selectedProduct?.description}</p>
-      <br />
-      <h1 class="text-gray-900 my-3 text-md">
-        Qty
-        <select bind:value={selectedQuantity}>
-          {#each quantity as { value, label }}
-            <option {value}>{label}</option>
-          {/each}
-        </select>
-      </h1>
-    </div>
-    <div>
-      <br />
-      <br />
-      <hr />
-      <br />
-      <h1><span class="font-bold">Sold By:</span> Sock Vibes</h1>
-      <h1><span class="font-bold">Ships From:</span> Sock Vibes</h1>
-      <h1>
-        <span class="font-bold">Store locations:</span>
-        <span class="text-blue-700"> Read more </span>
-      </h1>
-      <h1>
-        <span class="font-bold">Return Policy:</span>
-        <span class="text-blue-700"> Read more </span>
-      </h1>
-      <br />
-    </div>
-    <br />
-  </div>
+   
 </div>
 {/if}
-<style>
-  * {
-    font-family: "Inter", sans-serif;
-  }
-</style>
+  <div class="space-y-6">
+    {#each cartItems as item}
+      <hr class="bg-gray-900" />
+      <div class="flex items-center justify-between p-4 bg-white rounded-lg w-full">
+      
+        <img src="{item.image}" alt="{item.name}" class="w-24 h-24 object-cover rounded-md" />
+    
+        <div class="flex-1 ml-4">
+          <h3 class="text-lg font-semibold text-gray-800">{item.name}</h3>
+          <p class="text-gray-600">Quantity: {item.quantity}</p>
+          {#if item.category !== undefined}
+          <p class="text-gray-600">Category: {item.category}</p>
+          {/if}
+          <br />
+          <button on:click={(decrement)}
+            on:click={() => removeItem(item.id)}
+
+          >
+         
+            <p>Remove</p>
+            
+          </button> 
+        </div>
+        
+        <h1 class="text-xl font-bold">{item.price}$</h1>
+      </div>
+      
+    {/each}
+    {#if loading}
+    <Button class='w-full ' disabled>Redirecting to Checkout...</Button>
+    {:else}
+    <Button on:click={loadCheck}  on:click={checkout} class='w-full '>Check Out ({cartItems.length} Items)</Button>
+    {/if}
+
+
+  </div>
+</div>
+<br>
+<br>
+<br>
+{:else}
+
+<h1 class="text-md my-5 text-center text-gray-500">
+Your cart is empty. 
+<a href='/' class='text-blue-600 my-3 inline-flex items-center'>
+  Start Shopping
+  <RightArrow  />
+  
+</a>
+</h1>
+
+
+{/if}
+
+<MightLike></MightLike>

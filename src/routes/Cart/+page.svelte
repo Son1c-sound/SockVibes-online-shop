@@ -23,10 +23,7 @@
         console.error('Error parsing cart from localStorage:', error);
     }
 
-    let loadingitem = false
-    function loadit() {
-      loadingitem = true
-    }
+   
 
     function removeItem(itemid: number): void {
         const index = cartItems.findIndex(item => item.id === itemid);
@@ -35,21 +32,9 @@
             cartItems.splice(index, 1);
 
             localStorage.setItem('cart', JSON.stringify(cartItems));
-            window.location.reload();
+       
         }
     }
-
-    function clearLocalStorageAfterDelay(delay: number): void {
-        setTimeout(() => {
-            localStorage.removeItem('cart');
-            cartItems = [];
-            addnumber.set(0);
-        }, delay);
-    }
-
-    onMount(() => {
-        clearLocalStorageAfterDelay(21600000);
-    });
 
 
 
@@ -94,11 +79,7 @@
     }
 </script>
 
-{#if loadingitem}
-                
-      <Loading></Loading>
-            
-{:else}
+
 <br>
 <br>
 <h1 class="text-2xl font-arial text-center font-bold ">Review Shopping Cart</h1>
@@ -143,7 +124,7 @@
             <br />
             <button on:click={(decrement)}
               on:click={() => removeItem(item.id)}
-              on:click={loadit} class="text-blue-600 hover:text-blue-800 font-medium focus:outline-none"
+
             >
            
               <p>Remove</p>
@@ -180,5 +161,5 @@
 
 
 {/if}
-{/if}
+
 <MightLike></MightLike>
