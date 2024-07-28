@@ -33,4 +33,5 @@ export interface Item {
   status: string;
   logo: any;
   onsale: string;
+
 }

@@ -8,42 +8,42 @@
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
   import DropIcon from "../../../../lib/Icons/dropdwon.svelte";
   import type { CarouselAPI } from "$lib/components/ui/carousel/context.js";
-  import { quantity } from '../../../types'
+  import { quantity } from '../../../types';
   import { onMount } from "svelte";
   import toast, { Toaster } from "svelte-french-toast";
   import LoaderCircle from "lucide-svelte/icons/loader-circle";
   import supabase from "$lib/db";
   import Badge from "$lib/components/ui/badge/badge.svelte";
   import { addnumber, increment } from "../../../CheckOut/products/fresh/store";
-  import Categ from '$lib/loading/categoryloading.svelte'
+  import Categ from '$lib/loading/categoryloading.svelte';
   import type { Item } from "../../../types";
-  let selectedProduct: any = null;
+
+  let selectedProduct: Item | null = null;
   let errorMessage = "";
-
-  
   let items: Item[] = [];
-
   let selectedQuantity = quantity[0].value;
-  let loading = true
+  let loading = true;
+
+  // Generate quantity options based on storage
+  $: availableQuantities = Array.from({ length: Math.min(20, selectedProduct?.storage || 0) }, (_, i) => i + 1);
+
   async function loaditems() {
     try {
       const { data, error } = await supabase.from("allitems").select("*");
 
-if (error) {
-  errorMessage = `Error loading items: ${error.message}`;
-  console.error(error);
-} else {
-  items = data;
-}
-const menId: string = $page.params.menId;
-
-selectedProduct = items.find((men) => men.id === parseInt(menId)) || null;
-    }catch (error) {
-      console.log("error",error)
-    }finally {
-      loading = false
+      if (error) {
+        errorMessage = `Error loading items: ${error.message}`;
+        console.error(error);
+      } else {
+        items = data;
+        const menId: string = $page.params.menId;
+        selectedProduct = items.find((men) => men.id === parseInt(menId)) || null;
+      }
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      loading = false;
     }
-    
   }
 
   let api: CarouselAPI;
@@ -62,10 +62,20 @@ selectedProduct = items.find((men) => men.id === parseInt(menId)) || null;
   let showActivityBar: boolean = false;
   let showPanel: boolean = false;
 
-  // localStorage test
-
+  // Add to cart function
   function addToCart() {
-    if (!selectedProduct && !selectedQuantity) return; //
+    if (!selectedProduct || !selectedQuantity) return;
+
+    if (selectedProduct.storage <= 0) {
+      toast.error("Item is sold out");
+      return;
+    }
+
+    // Ensure quantity does not exceed storage
+    if (selectedQuantity > selectedProduct.storage) {
+      toast.error("Insufficient stock available");
+      return;
+    }
 
     const cartItem = {
       name: selectedProduct.name,
@@ -86,6 +96,7 @@ selectedProduct = items.find((men) => men.id === parseInt(menId)) || null;
     localStorage.setItem("cart", JSON.stringify(cart));
 
     console.log("Cart updated:", cart);
+    // Optional: Update selectedProduct storage here if you want to decrement it in UI
   }
 
   onMount(() => {
@@ -96,7 +107,6 @@ selectedProduct = items.find((men) => men.id === parseInt(menId)) || null;
 {#if loading}
   <Categ></Categ>
 {:else}
-
 
 <Toaster />
 
@@ -140,7 +150,17 @@ selectedProduct = items.find((men) => men.id === parseInt(menId)) || null;
 
     <!-- Selected Items -->
     <div class="w-full md:w-1/2 mt-4 md:mt-0">
-  
+      {#if selectedProduct.storage === 0}
+        <Button
+          class="w-full bg-gray-300 text-black my-5 text-md"
+          disabled
+        >
+          Item Sold Out
+        </Button>
+      {:else}
+        {#if selectedProduct.storage <= 20}
+          <p class='text-red-800'>Only {selectedProduct.storage} left in stock</p>
+        {/if}
         <Button
           class="w-full bg-yellow-300 hover:bg-yellow-400 text-black my-5 text-md"
           on:click={addToCart}
@@ -148,7 +168,7 @@ selectedProduct = items.find((men) => men.id === parseInt(menId)) || null;
         >
           Add to Cart
         </Button>
-   
+      {/if}
 
       <div class="p-6 my-4 border border-gradient-purple-blue">
         <h2 class="text-3xl mb-2 font-bold">{selectedProduct.name}</h2>
@@ -182,22 +202,15 @@ selectedProduct = items.find((men) => men.id === parseInt(menId)) || null;
         <h1 class="text-gray-900 my-3 text-md">
           Qty
           <select bind:value={selectedQuantity}>
-            {#each quantity as { value, label }}
-              <option value={value}>{label}</option>
+            {#each availableQuantities as qty}
+              <option value={qty}>{qty}</option>
             {/each}
           </select>
         </h1>
       </div>
-
       {#if selectedProduct.saleprecent > 0}
         <Badge class="bg-red-500 rounded-none">Limited time deal</Badge>
         <Badge class="bg-red-500 rounded-none">{selectedProduct.saleprecent}% Sale</Badge>
-      {/if}
-
-      {#if selectedProduct.status === "In Stock"}
-        <Badge class="rounded-none bg-green-500 text-white">{selectedProduct.status}</Badge>
-      {:else}
-        <Badge class="rounded-none bg-red-500 text-white">{selectedProduct.status}</Badge>
       {/if}
 
       <div>
@@ -223,7 +236,4 @@ selectedProduct = items.find((men) => men.id === parseInt(menId)) || null;
 {:else}
   <p class="text-gray-500">Loading product details...</p>
 {/if}
-
 {/if}
-<style>
-</style>
