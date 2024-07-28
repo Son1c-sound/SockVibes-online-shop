@@ -30,7 +30,7 @@
 
         if (index !== -1) {
             cartItems.splice(index, 1);
-
+            window.location.reload();
             localStorage.setItem('cart', JSON.stringify(cartItems));
        
         }
