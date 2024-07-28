@@ -14,6 +14,7 @@
 
       // Update Supabase and ensure it completes before clearing localStorage
       await updateInventory(cartItems);
+      await updatePopular(cartItems)
 
       // Clear cart and reset addnumber after updating inventory
       clearLocalStorageAndResetStore();
@@ -43,6 +44,38 @@
       // Update the storage value
       const { error: updateError } = await supabase
         .from('allitems')
+        .update({ storage: newStorageValue })
+        .eq('name', name);
+
+      if (updateError) {
+        console.error('Error updating inventory:', updateError);
+      }
+    }
+  }
+
+  async function updatePopular(cartItems: { name: string, quantity: number }[]) {
+    console.log('Updating inventory with:', cartItems);
+    for (const item of cartItems) {
+      const { name, quantity } = item;
+
+      // Retrieve the current storage value
+      const { data: currentData, error: fetchError } = await supabase
+        .from('popularItems')
+        .select('storage')
+        .eq('name', name)
+        .single();
+
+      if (fetchError) {
+        console.error('Error fetching current storage:', fetchError);
+        continue;
+      }
+
+      // Calculate new storage value
+      const newStorageValue = currentData.storage - quantity;
+
+      // Update the storage value
+      const { error: updateError } = await supabase
+        .from('popularItems')
         .update({ storage: newStorageValue })
         .eq('name', name);
 
