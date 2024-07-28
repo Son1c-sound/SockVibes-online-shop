@@ -1,165 +1,250 @@
 <script lang="ts">
-  import { addnumber, increment, decrement } from "../../../../../routes/CheckOut/products/fresh/store";
-  import { onMount } from 'svelte';
-  import toast, { Toaster } from 'svelte-french-toast';
-  import Button from "$lib/components/ui/button/button.svelte"; 
-  import { goto } from '$app/navigation'
-  import Loading from '$lib/loading/categoryloading.svelte'
-  import RightArrow from '$lib/Icons/rightarrow.svelte'
-  import MightLike from '../../../../../lib/HeroSlider/braclet/MightLike/mightlike.svelte'
+  import { page } from "$app/stores";
+  import Button from "$lib/components/ui/button/button.svelte";
+  import * as Select from "$lib/components/ui/select/index.js";
+  import * as Card from "$lib/components/ui/card/index.js";
+  import * as Carousel from "$lib/components/ui/carousel/index.js";
+  import { Progress } from "$lib/components/ui/progress/index.js";
+  import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
+  import DropIcon from "../../../../../lib/Icons/dropdwon.svelte";
+  import type { CarouselAPI } from "$lib/components/ui/carousel/context.js";
+  import { quantity } from '../../../../types';
+  import { onMount } from "svelte";
+  import toast, { Toaster } from "svelte-french-toast";
+  import LoaderCircle from "lucide-svelte/icons/loader-circle";
+  import supabase from "$lib/db";
+  import Badge from "$lib/components/ui/badge/badge.svelte";
+  import { addnumber, increment } from "../../fresh/store";
+  import Categ from '$lib/loading/categoryloading.svelte';
+  import type { Item } from "../../../../types";
+  import { goto } from "$app/navigation";
 
-  import DoneMark from '$lib/Icons/donemark.svelte'
-import Cartfooter from "$lib/Footer/cartFoot/cartfooter.svelte";
-    import type { CartItem } from '../../../../../app';
+  let selectedProduct: Item | null = null;
+  let errorMessage = "";
+  let items: Item[] = [];
+  let selectedQuantity = quantity[0].value;
+  let loading = true;
 
-  let cartItems: CartItem[] = [];
+  // Generate quantity options based on storage
+  $: availableQuantities = Array.from({ length: Math.min(20, selectedProduct?.storage || 0) }, (_, i) => i + 1);
 
-  try {
-      const storedCart = localStorage.getItem('cart');
-      if (storedCart) {
-          cartItems = JSON.parse(storedCart);
+  async function loaditems() {
+    try {
+      const { data, error } = await supabase.from("popular3").select("*");
+
+      if (error) {
+        errorMessage = `Error loading items: ${error.message}`;
+        console.error(error);
+      } else {
+        items = data;
+        const otherId: string = $page.params.otherId;
+        selectedProduct = items.find((item) => item.id === parseInt(otherId)) || null;
       }
-  } catch (error) {
-      console.error('Error parsing cart from localStorage:', error);
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      loading = false;
+    }
   }
 
- 
+  let api: CarouselAPI;
+  let count = 0;
+  let current = 0;
 
-  function removeItem(itemid: number): void {
-      const index = cartItems.findIndex(item => item.id === itemid);
-
-      if (index !== -1) {
-          cartItems.splice(index, 1);
-
-          localStorage.setItem('cart', JSON.stringify(cartItems));
-     
-      }
+  $: if (api) {
+    count = api.scrollSnapList().length;
+    current = api.selectedScrollSnap() + 1;
+    api.on("select", () => {
+      current = api.selectedScrollSnap() + 1;
+    });
   }
 
+  let showStatusBar: boolean = true;
+  let showActivityBar: boolean = false;
+  let showPanel: boolean = false;
+
+  // Add to cart function
+  function addToCart() {
+    if (!selectedProduct || !selectedQuantity) return;
+
+    if (selectedProduct.storage <= 0) {
+        toast.error("Item is sold out");
+        return;
+    }
+
+    // Ensure quantity does not exceed storage
+    if (selectedQuantity > selectedProduct.storage) {
+        toast.error("Insufficient stock available");
+        return;
+    }
+
+    const cartItem = {
+        id: selectedProduct.id, // Ensure each item has a unique ID
+        name: selectedProduct.name,
+        image: selectedProduct.img,
+        price: selectedProduct.price,
+        quantity: selectedQuantity,
+        status: selectedProduct.status,
+        description: selectedProduct.description,
+        category: selectedProduct.category,
+    };
+
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+    // Find if the item already exists in the cart
+    const existingItemIndex = cart.findIndex((item: { id: number; }) => item.id === cartItem.id);
+
+    if (existingItemIndex !== -1) {
+        // Update quantity if item exists
+        cart[existingItemIndex].quantity = selectedQuantity;
+    } else {
+        // Add new item to cart
+        cart.push(cartItem);
+    }
+
+    toast.success("Added to Cart");
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    console.log("Cart updated:", cart);
+}
 
 
-  function calculateSubtotal(): number {
-      return cartItems.reduce((total, item) => {
-
-          const price = parseFloat(item.price);
-          return total + (price * item.quantity);
-      }, 0);
-  }
-
-  async function checkout() {
-      try {
-          const response = await fetch("../Cart/checkout", {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                  items: cartItems
-              }),
-          });
-
-          if (!response.ok) {
-              throw new Error('Checkout failed');
-          }
-
-          const data = await response.json();
-          window.location.replace(data.url);
-
- 
-          window.location.replace(data.url);
-      } catch (error) {
-          console.error('Error during checkout:', error);
-          toast.error('Failed to proceed with checkout.');
-      }
-  }
-
-  let loading = false
-  function loadCheck() {
-    loading = true
-  }
+  onMount(() => {
+    loaditems();
+  });
 </script>
 
-
-<br>
-<br>
-<h1 class="text-2xl font-arial text-center font-bold ">Review Shopping Cart</h1>
-{#if cartItems.length > 0}
-<div style="display: flex; justify-content: center; align-items: center; gap: 10px;" >
-<DoneMark />
-<h2 class="font-arial my-2">No Sing Up required</h2>
-</div>
-<div style="display: flex; justify-content: center; align-items: center; gap: 10px;" >
-  <DoneMark />
-  <h2 class="font-arial my-2">Your order qualifies for FREE returns</h2>
-</div>
-
-
-<div class="p-6 max-w-2xl mx-auto lg:border-2 lg:border-gray-900 rounded-md">
-  {#if loading}
- 
-    <Button class='my-4' disabled>Redirecting to Checkout...</Button>
-    <br>
-  {:else}
- 
-  <div class="my-4 flex justify-between items-center">
-    <Button  on:click={checkout} on:click={loadCheck}>Check Out ({cartItems.length} Items)</Button>
-    <h1 class="text-xl "><span class="font-arial ">Subtotal:</span> ${calculateSubtotal().toFixed(2)}</h1>
-
-   
-</div>
-{/if}
-  <div class="space-y-6">
-    {#each cartItems as item}
-      <hr class="bg-gray-900" />
-      <div class="flex items-center justify-between p-4 bg-white rounded-lg w-full">
-      
-        <img src="{item.image}" alt="{item.name}" class="w-24 h-24 object-cover rounded-md" />
-    
-        <div class="flex-1 ml-4">
-          <h3 class="text-lg font-semibold text-gray-800">{item.name}</h3>
-          <p class="text-gray-600">Quantity: {item.quantity}</p>
-          {#if item.category !== undefined}
-          <p class="text-gray-600">Category: {item.category}</p>
-          {/if}
-          <br />
-          <button on:click={(decrement)}
-            on:click={() => removeItem(item.id)}
-
-          >
-         
-            <p>Remove</p>
-            
-          </button> 
-        </div>
-        
-        <h1 class="text-xl font-bold">{item.price}$</h1>
-      </div>
-      
-    {/each}
-    {#if loading}
-    <Button class='w-full ' disabled>Redirecting to Checkout...</Button>
-    {:else}
-    <Button on:click={loadCheck}  on:click={checkout} class='w-full '>Check Out ({cartItems.length} Items)</Button>
-    {/if}
-
-
-  </div>
-</div>
-<br>
-<br>
-<br>
+{#if loading}
+  <Categ></Categ>
 {:else}
 
-<h1 class="text-md my-5 text-center text-gray-500">
-Your cart is empty. 
-<a href='/' class='text-blue-600 my-3 inline-flex items-center'>
-  Start Shopping
-  <RightArrow  />
-  
+<Toaster />
+
+<!-- Product Details -->
+<br />
+<br />
+<br />
+
+<a href="/categories/men" class="text-blue-600 underline">
+  <i class="mx-6 fa-solid fa-chevron-left"></i>Go back to Men
 </a>
-</h1>
 
-
+{#if errorMessage}
+  <p class="text-red-600">{errorMessage}</p>
 {/if}
 
-<MightLike></MightLike>
+{#if selectedProduct}
+  <div class="flex flex-col mx-4 md:mx-20 md:flex-row md:space-x-8">
+    <!-- Product Images -->
+    <div class="w-full">
+      <Carousel.Root bind:api class="w-full md:w-3/4 mx-auto my-4 md:my-6">
+        <Carousel.Content class="md:-ml-1">
+          {#each [selectedProduct.img, selectedProduct.img2, selectedProduct.img3, selectedProduct.img4].filter(url => url) as url}
+            <Carousel.Item class="flex-shrink-0 w-full">
+              <Card.Root class="border-none bg-transparent shadow-none">
+                <img
+                  src={url}
+                  alt={selectedProduct.name || "Product image"}
+                  class="w-full h-64 object-cover lg:h-1/2"
+                />
+              </Card.Root>
+            </Carousel.Item>
+          {/each}
+        </Carousel.Content>
+        <div class="my-3 rounded-md">
+          <h1 class="text-center my-2">{current}</h1>
+          <Progress value={current} max={count} class="h-1" />
+        </div>
+      </Carousel.Root>
+    </div>
+
+    <!-- Selected Items -->
+    <div class="w-full md:w-1/2 mt-4 md:mt-0">
+      {#if selectedProduct.storage === 0}
+        <Button
+          class="w-full bg-gray-300 text-black my-5 text-md"
+          disabled
+        >
+          Item Sold Out
+        </Button>
+      {:else}
+        {#if selectedProduct.storage <= 20}
+          <p class='text-red-800'>Only {selectedProduct.storage} left in stock</p>
+        {/if}
+        <Button
+          class="w-full bg-yellow-300 hover:bg-yellow-400 text-black my-5 text-md"
+          on:click={addToCart}
+          on:click={() => goto('/Cart')}
+        >
+          Add to Cart
+        </Button>
+      {/if}
+
+      <div class="p-6 my-4 border border-gradient-purple-blue">
+        <h2 class="text-3xl mb-2 font-bold">{selectedProduct.name}</h2>
+        <div class="mb-2">
+          <p class="text-2xl">{selectedProduct.price}</p>
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger asChild let:builder>
+              <Button class="bg-white hover:bg-white mx-8 w-10 text-blue-600">
+                Free returns <DropIcon />
+              </Button>
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Content class="w-56">
+              <DropdownMenu.Label>
+                Return this item for free: <br />
+                <span class="font-light">
+                  We offer easy, convenient returns for any item. <br />
+                  <span class="text-blue-500 font-bold">
+                    Read more about our return policy
+                  </span>
+                </span>
+              </DropdownMenu.Label>
+            </DropdownMenu.Content>
+          </DropdownMenu.Root>
+        </div>
+
+        <hr class="mb-2" />
+
+        <p class="text-gray-500">{selectedProduct.description}</p>
+
+        <br />
+        <h1 class="text-gray-900 my-3 text-md ">
+          Select Quantity
+          <select  class="w-1/4 rounded-lg bg-gray-100 p-2" bind:value={selectedQuantity}> 
+            {#each availableQuantities as qty}
+              <option  value={qty}>{qty}</option>
+            {/each}
+          </select>
+        </h1>
+      </div>
+      {#if selectedProduct.saleprecent > 0}
+        <Badge class="bg-red-500 rounded-none">Limited time deal</Badge>
+        <Badge class="bg-red-500 rounded-none">{selectedProduct.saleprecent}% Sale</Badge>
+      {/if}
+
+      <div>
+        <br />
+        <br />
+        <hr />
+        <br />
+        <h1><span class="font-bold">Sold By:</span> Sock Vibes</h1>
+        <h1><span class="font-bold">Ships From:</span> Sock Vibes</h1>
+        <h1>
+          <span class="font-bold">Store locations:</span>
+          <span class="text-blue-700">Read more</span>
+        </h1>
+        <h1>
+          <span class="font-bold">Return Policy:</span>
+          <span class="text-blue-700">Read more</span>
+        </h1>
+        <br />
+      </div>
+      <br />
+    </div>
+  </div>
+{:else}
+  <p class="text-gray-500">Loading product details...</p>
+{/if}
+{/if}
