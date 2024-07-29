@@ -146,7 +146,7 @@
                 <img
                   src={url}
                   alt={selectedProduct.name || "Product image"}
-                  class="w-full h-64 object-cover lg:h-1/2"
+                  class="object-cover w-80 h-80 md:w-80 md:h-80 mx-auto"
                 />
               </Card.Root>
             </Carousel.Item>
