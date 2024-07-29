@@ -38,7 +38,7 @@
       } else {
         items = data;
         const giftId: string = $page.params.giftId;
-        selectedProduct = items.find((men) => men.id === parseInt(giftId)) || null;
+        selectedProduct = items.find((woman) => woman.id === parseInt(giftId)) || null;
       }
     } catch (error) {
       console.log("error", error);
@@ -126,8 +126,8 @@
 <br />
 <br />
 
-<a href="/categories/men" class="text-blue-600 underline">
-  <i class="mx-6 fa-solid fa-chevron-left"></i>Go back to Men
+<a href="/categories/woman" class="text-blue-600 underline">
+  <i class="mx-6 fa-solid fa-chevron-left"></i>Go back 
 </a>
 
 {#if errorMessage}
