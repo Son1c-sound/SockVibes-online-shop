@@ -162,24 +162,31 @@
     <!-- Selected Items -->
     <div class="w-full md:w-1/2 mt-4 md:mt-0">
       {#if selectedProduct.storage === 0}
-        <Button
-          class="w-full bg-gray-300 text-black my-5 text-md"
-          disabled
-        >
-          Item Sold Out
-        </Button>
-      {:else}
-        {#if selectedProduct.storage <= 20}
-          <p class='text-red-800'>Only {selectedProduct.storage} left in stock</p>
-        {/if}
-        <Button
-          class="w-full bg-yellow-300 hover:bg-yellow-400 text-black my-5 text-md"
-          on:click={addToCart}
-          on:click={() => goto('/Cart')}
-        >
-          Add to Cart
-        </Button>
+      <Button
+        class="w-full bg-gray-300 text-black my-5 text-md"
+        disabled
+      >
+        Item Sold Out
+      </Button>
+    {:else}
+      {#if selectedProduct.storage <= 20}
+        <p class='text-red-800'>Only {selectedProduct.storage} left in stock</p>
       {/if}
+      <Button
+        class="w-full bg-yellow-300 hover:bg-yellow-400 text-black my-4 text-md"
+        on:click={addToCart}
+    
+      >
+        Add to Cart
+      </Button>
+      <Button
+      class="w-full bg-yellow-400 hover:bg-yellow-500 text-black  text-md"
+      on:click={addToCart}
+      on:click={() => goto('/Cart')}
+    >
+      Buy now
+    </Button>
+    {/if}
 
       <div class="p-6 my-4 border border-gradient-purple-blue">
         <h2 class="text-3xl mb-2 font-bold">{selectedProduct.name}</h2>
