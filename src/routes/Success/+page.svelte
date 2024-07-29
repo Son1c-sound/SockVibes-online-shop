@@ -18,7 +18,7 @@
       await updatePopular2(cartItems)
       await updatePopular3(cartItems)
       await updateSlippers(cartItems)
-
+      await updateGifts(cartItems)
       // Clear cart and reset addnumber after updating inventory
       clearLocalStorageAndResetStore();
     }
@@ -176,6 +176,39 @@
       // Update the storage value
       const { error: updateError } = await supabase
         .from('slippers')
+        .update({ storage: newStorageValue })
+        .eq('name', name);
+
+      if (updateError) {
+        console.error('Error updating inventory:', updateError);
+      }
+    }
+  }
+
+
+  async function updateGifts(cartItems: { name: string, quantity: number }[]) {
+    console.log('Updating inventory with:', cartItems);
+    for (const item of cartItems) {
+      const { name, quantity } = item;
+
+      // Retrieve the current storage value
+      const { data: currentData, error: fetchError } = await supabase
+        .from('giftboxes')
+        .select('storage')
+        .eq('name', name)
+        .single();
+
+      if (fetchError) {
+        console.error('Error fetching current storage:', fetchError);
+        continue;
+      }
+
+      // Calculate new storage value
+      const newStorageValue = currentData.storage - quantity;
+
+      // Update the storage value
+      const { error: updateError } = await supabase
+        .from('giftboxes')
         .update({ storage: newStorageValue })
         .eq('name', name);
 
