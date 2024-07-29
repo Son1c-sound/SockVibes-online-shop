@@ -84,11 +84,8 @@
 <br>
 <h1 class="text-2xl font-arial text-center font-bold ">Review Shopping Cart</h1>
 {#if cartItems.length > 0}
-<div style="display: flex; justify-content: center; align-items: center; gap: 10px;" >
-  <DoneMark />
-  <h2 class="font-arial my-2">No Sing Up required</h2>
-</div>
-  <div style="display: flex; justify-content: center; align-items: center; gap: 10px;" >
+
+  <div style="display: flex; justify-content: center; align-items: center; gap: 10px;"  class="my-3">
     <DoneMark />
     <h2 class="font-arial my-2">Your order qualifies for FREE returns</h2>
   </div>
