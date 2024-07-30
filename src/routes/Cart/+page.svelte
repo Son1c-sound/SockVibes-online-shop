@@ -159,4 +159,3 @@
 
 {/if}
 
-<MightLike></MightLike>
