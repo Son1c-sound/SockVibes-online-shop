@@ -82,7 +82,6 @@
     loading = true;
   }
 </script>
-
 <Sheet.Root>
   <Sheet.Trigger asChild let:builder>
     <Button
@@ -94,7 +93,7 @@
       Open Cart <i class="ml-2 fa-solid fa-angle-right"></i>
     </Button>
   </Sheet.Trigger>
-  <Sheet.Content side="right" style="width: 400px;"> <!-- Increased width -->
+  <Sheet.Content side="right" style="width: 400px; max-height: 90vh; overflow-y: auto;"> <!-- Added max-height and overflow-y -->
     <Sheet.Header>
       <Sheet.Title>Review Shopping Cart</Sheet.Title>
       <Sheet.Description>

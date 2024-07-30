@@ -126,7 +126,7 @@
 <br />
 <br />
 
-<a href="/categories/woman" class="text-blue-600 underline">
+<a href="/categories/slippers" class="text-blue-600 underline">
   <i class="mx-6 fa-solid fa-chevron-left"></i>Go back 
 </a>
 
