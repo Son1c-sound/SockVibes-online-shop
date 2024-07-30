@@ -28,7 +28,7 @@
   let hasMorePages: boolean = true;
   let loading = true;
   let page = 1;
-  const pageSize = 20;
+  const pageSize = 15;
 
   async function loadItems() {
     try {
@@ -125,7 +125,8 @@
 
 {:else}
   <body>
-    <h1 class="text-gray-900 text-center my-9">Sock Vibes</h1>
+<br>
+<br>
     <div class="mx-3 sm:mx-auto">
       <h1 class="text-center text-5xl p-2 rounded-md font-bold  text-gray-900">
         Slippers
@@ -133,10 +134,11 @@
     </div>
 
     <div class="flex flex-col items-center">
-      <h1 class="text-center mb-3">Swipe Pictures to preview items</h1>
-      <div class="flex">
-        <Swipe />
-      </div>
+      <p class='text-center my-5'>Currently showing page {page}</p>
+      <div class="flex justify-center space-x-2 ">
+        <Button on:click={loadPreviousPage} disabled={page === 1}>Previous</Button>
+        
+        <Button on:click={loadNextPage} disabled={!hasMorePages}>Next page</Button>
     </div>
 
     <div class="my-3 flex justify-center space-x-4 mx-auto"></div>
@@ -338,14 +340,16 @@
         {/if}
       {/each}
     </div>
-
+    <p class='text-center my-5'>Currently showing page {page}</p>
     <div class="flex items-center justify-center">
-      <div class="my-5 mx-auto flex space-x-4">
-        <button on:click={loadPreviousPage} disabled={page === 1} class="bg-gray-300 px-4 py-2 rounded-md">Previous</button>
-        <button on:click={loadNextPage} disabled={!hasMorePages} class="bg-gray-300 px-4 py-2 rounded-md">Next</button>
-      </div>
+   
+      <div class="flex justify-center space-x-2 ">
+        <Button on:click={loadPreviousPage} disabled={page === 1}>Previous</Button>
+        
+        <Button on:click={loadNextPage} disabled={!hasMorePages}>Next page</Button>
     </div>
   </body>
+  <br>
 
 
 

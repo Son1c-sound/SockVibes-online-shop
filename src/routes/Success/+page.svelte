@@ -14,26 +14,26 @@
 
       // Update Supabase and ensure it completes before clearing localStorage
       await updateInventory(cartItems);
-      await updatePopular(cartItems)
-      await updatePopular2(cartItems)
-      await updatePopular3(cartItems)
-      await updateSlippers(cartItems)
-      await updateGifts(cartItems)
+      await updatePopular(cartItems);
+      await updatePopular2(cartItems);
+      await updatePopular3(cartItems);
+      await updateSlippers(cartItems);
+      await updateGifts(cartItems);
       // Clear cart and reset addnumber after updating inventory
       clearLocalStorageAndResetStore();
     }
   });
 
-  async function updateInventory(cartItems: { name: string, quantity: number }[]) {
+  async function updateInventory(cartItems: { id: string, quantity: number }[]) {
     console.log('Updating inventory with:', cartItems);
     for (const item of cartItems) {
-      const { name, quantity } = item;
+      const { id, quantity } = item;
 
       // Retrieve the current storage value
       const { data: currentData, error: fetchError } = await supabase
         .from('allitems')
         .select('storage')
-        .eq('name', name)
+        .eq('id', id)
         .single();
 
       if (fetchError) {
@@ -48,7 +48,7 @@
       const { error: updateError } = await supabase
         .from('allitems')
         .update({ storage: newStorageValue })
-        .eq('name', name);
+        .eq('id', id);
 
       if (updateError) {
         console.error('Error updating inventory:', updateError);
@@ -56,16 +56,16 @@
     }
   }
 
-  async function updatePopular(cartItems: { name: string, quantity: number }[]) {
+  async function updatePopular(cartItems: { id: string, quantity: number }[]) {
     console.log('Updating inventory with:', cartItems);
     for (const item of cartItems) {
-      const { name, quantity } = item;
+      const { id, quantity } = item;
 
       // Retrieve the current storage value
       const { data: currentData, error: fetchError } = await supabase
         .from('popularItems')
         .select('storage')
-        .eq('name', name)
+        .eq('id', id)
         .single();
 
       if (fetchError) {
@@ -80,7 +80,7 @@
       const { error: updateError } = await supabase
         .from('popularItems')
         .update({ storage: newStorageValue })
-        .eq('name', name);
+        .eq('id', id);
 
       if (updateError) {
         console.error('Error updating inventory:', updateError);
@@ -88,16 +88,16 @@
     }
   }
 
-  async function updatePopular2(cartItems: { name: string, quantity: number }[]) {
+  async function updatePopular2(cartItems: { id: string, quantity: number }[]) {
     console.log('Updating inventory with:', cartItems);
     for (const item of cartItems) {
-      const { name, quantity } = item;
+      const { id, quantity } = item;
 
       // Retrieve the current storage value
       const { data: currentData, error: fetchError } = await supabase
         .from('popular2')
         .select('storage')
-        .eq('name', name)
+        .eq('id', id)
         .single();
 
       if (fetchError) {
@@ -112,7 +112,7 @@
       const { error: updateError } = await supabase
         .from('popular2')
         .update({ storage: newStorageValue })
-        .eq('name', name);
+        .eq('id', id);
 
       if (updateError) {
         console.error('Error updating inventory:', updateError);
@@ -120,16 +120,16 @@
     }
   }
 
-  async function updatePopular3(cartItems: { name: string, quantity: number }[]) {
+  async function updatePopular3(cartItems: { id: string, quantity: number }[]) {
     console.log('Updating inventory with:', cartItems);
     for (const item of cartItems) {
-      const { name, quantity } = item;
+      const { id, quantity } = item;
 
       // Retrieve the current storage value
       const { data: currentData, error: fetchError } = await supabase
         .from('popular3')
         .select('storage')
-        .eq('name', name)
+        .eq('id', id)
         .single();
 
       if (fetchError) {
@@ -144,7 +144,7 @@
       const { error: updateError } = await supabase
         .from('popular3')
         .update({ storage: newStorageValue })
-        .eq('name', name);
+        .eq('id', id);
 
       if (updateError) {
         console.error('Error updating inventory:', updateError);
@@ -152,17 +152,62 @@
     }
   }
 
-
-  async function updateSlippers(cartItems: { name: string, quantity: number }[]) {
-    console.log('Updating inventory with:', cartItems);
+  async function updateSlippers(cartItems: { id: string, quantity: number }[]) {
+    console.log('Updating slippers inventory with:', cartItems);
     for (const item of cartItems) {
-      const { name, quantity } = item;
+      const { id, quantity } = item;
 
       // Retrieve the current storage value
       const { data: currentData, error: fetchError } = await supabase
         .from('slippers')
         .select('storage')
-        .eq('name', name)
+        .eq('id', id)
+        .single();
+
+      if (fetchError) {
+        console.error('Error fetching current storage for item ID', id, ':', fetchError.message);
+        continue;
+      }
+
+      if (currentData) {
+        console.log('Current storage for item ID', id, ':', currentData.storage);
+
+        // Calculate new storage value
+        const newStorageValue = currentData.storage - quantity;
+        console.log('New storage value for item ID', id, ':', newStorageValue);
+
+        if (newStorageValue < 0) {
+          console.warn('New storage value for item ID', id, 'is negative:', newStorageValue);
+          continue;
+        }
+
+        // Update the storage value
+        const { error: updateError } = await supabase
+          .from('slippers')
+          .update({ storage: newStorageValue })
+          .eq('id', id);
+
+        if (updateError) {
+          console.error('Error updating inventory for item ID', id, ':', updateError.message);
+        } else {
+          console.log('Successfully updated inventory for item ID', id);
+        }
+      } else {
+        console.warn('No data found for item ID', id);
+      }
+    }
+  }
+
+  async function updateGifts(cartItems: { id: string, quantity: number }[]) {
+    console.log('Updating inventory with:', cartItems);
+    for (const item of cartItems) {
+      const { id, quantity } = item;
+
+      // Retrieve the current storage value
+      const { data: currentData, error: fetchError } = await supabase
+        .from('giftboxes')
+        .select('storage')
+        .eq('id', id)
         .single();
 
       if (fetchError) {
@@ -175,42 +220,9 @@
 
       // Update the storage value
       const { error: updateError } = await supabase
-        .from('slippers')
-        .update({ storage: newStorageValue })
-        .eq('name', name);
-
-      if (updateError) {
-        console.error('Error updating inventory:', updateError);
-      }
-    }
-  }
-
-
-  async function updateGifts(cartItems: { name: string, quantity: number }[]) {
-    console.log('Updating inventory with:', cartItems);
-    for (const item of cartItems) {
-      const { name, quantity } = item;
-
-      // Retrieve the current storage value
-      const { data: currentData, error: fetchError } = await supabase
-        .from('giftboxes')
-        .select('storage')
-        .eq('name', name)
-        .single();
-
-      if (fetchError) {
-        console.error('Error fetching current storage:', fetchError);
-        continue;
-      }
-
-      // Calculate new storage value
-      const newStorageValue = currentData.storage - quantity;
-
-      // Update the storage value
-      const { error: updateError } = await supabase
         .from('giftboxes')
         .update({ storage: newStorageValue })
-        .eq('name', name);
+        .eq('id', id);
 
       if (updateError) {
         console.error('Error updating inventory:', updateError);
@@ -228,17 +240,12 @@
   }
 </script>
 
-
-  
-  <div class="my-40 flex flex-col items-center justify-center text-center">
-
-    <h2 class="text-2xl font-bold mb-2">Payment Successful</h2>
-    <p class="text-lg">
-      Your order has been confirmed and is now being processed. We will email the receipt and shipping date.
-      <br>
-      Thank you for shopping with us!
-    </p>
+<div class="my-40 flex flex-col items-center justify-center text-center">
+  <h2 class="text-2xl font-bold mb-2">Payment Successful</h2>
+  <p class="text-lg">
+    Your order has been confirmed and is now being processed. We will email the receipt and shipping date.
     <br>
-  
-  </div>
-  
+    Thank you for shopping with us!
+  </p>
+  <br>
+</div>
