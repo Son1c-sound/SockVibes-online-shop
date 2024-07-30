@@ -16,7 +16,6 @@ Contractor: sock vibes management - miami,fl
 
 ## 🛒 How the Shop Works
 
-## 💳 Stripe Integration
 
 Stripe handles the checkout process by:
 
@@ -28,6 +27,9 @@ Stripe handles the checkout process by:
 - **PostgreSQL**:  stores all data related to products, inventory, transactions and any data that is loaded on pages.
 - Upon entering to web load function is initialized which fetches all the necessary info , panignation implemented for smoother experience.
 - **Node.js as server**
+- **built in storage manager**: the storage is managed by algorithmm so client and customers can track which items are still available and which is not.
+
+  
 
 ##libraries on UI
 - **Shadcn Components:** 
