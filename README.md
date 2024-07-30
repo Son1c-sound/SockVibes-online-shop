@@ -1,39 +1,38 @@
 # SockVibes - Online Shop
 
-**SockVibes**, a dynamic online shopping platform for a major U.S. brand with over 11 stores across the country. 
-(Freelance project)
+**SockVibes** is a dynamic online shopping platform for a major U.S. brand with over 11 stores across the country. This project is a freelance contract.
 
-Contractor: sock vibes management - miami,fl
+**Contractor:** Sock Vibes Management - Miami, FL
 
-## Tech used
+## Tech Stack
 
 - **Frontend:** [SvelteKit](https://kit.svelte.dev/)
 - **Backend:** [Node.js](https://nodejs.org/)
-- **Database:** [PostgreSQL](https://www.postgresql.org/) 
+- **Database:** [PostgreSQL](https://www.postgresql.org/)
 - **Payments:** [Stripe](https://stripe.com/)
-- **Host** [Supabase](https://supabase.com/) [Vercel](https://vercel.com/)
+- **Hosting:** [Supabase](https://supabase.com/), [Vercel](https://vercel.com/)
 - **Libraries:** [Shadcn](https://shadcn.dev/), [Tailwind CSS](https://tailwindcss.com/)
 
 ## 🛒 How the Shop Works
 
-
-Stripe handles the checkout process by:
-
-- items array is passed to stripe in which cart items are stored and passed to stripe allows dynamic checkouts
-- Stripe Collecting user shipping addresses, email, and phone numbers which helps in shipping the product.
+- **Checkout Process:**
+  - Items array is passed to Stripe for dynamic checkouts.
+  - Stripe collects user shipping addresses, email, and phone numbers to handle product shipping.
 
 ## 🗃️ Database
 
-- **PostgreSQL**:  stores all data related to products, inventory, transactions and any data that is loaded on pages.
-- Upon entering to web load function is initialized which fetches all the necessary info , panignation implemented for smoother experience.
-- **Node.js as server**
-- **built in storage manager**: the storage is managed by algorithmm so client and customers can track which items are still available and which is not.
+- **PostgreSQL**:
+  - Stores data related to products, inventory, transactions, and page content.
+  - On page load, a function fetches necessary info. Pagination is implemented for a smoother experience.
+- **Backend:** Node.js as server.
+- **Storage Management:**
+  - Built-in storage manager tracks item availability.
 
-  
+## UI Libraries
 
-##libraries on UI
-- **Shadcn Components:** 
-project has alot of reusable custom ui components you can use
+- **Shadcn Components:**
+  - Provides reusable custom UI components.
 
-## Usage
-You can clone code npm install , npm run dev and run it locally, dont forget to add your en variables of stripe api and supabase url with apikey, this way u can redsign code as you want.
+
+
+
