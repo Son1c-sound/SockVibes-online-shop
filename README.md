@@ -33,6 +33,7 @@ Stripe handles the checkout process by:
 
 ##libraries on UI
 - **Shadcn Components:** 
+project has alot of reusable custom ui components you can use
 
 ## Usage
 You can clone code npm install , npm run dev and run it locally, dont forget to add your en variables of stripe api and supabase url with apikey, this way u can redsign code as you want.
