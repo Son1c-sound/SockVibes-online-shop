@@ -130,7 +130,7 @@
                 <p>Remove</p>
               </button>
             </div>
-            <h1 class="text-xl font-bold">${item.price}</h1>
+            <h1 class="text-md font-bold">${item.price}</h1>
           </div>
           <hr class="bg-gray-300 mt-4 mb-4" /> <!-- Adjusted line color -->
         {/each}
