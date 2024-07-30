@@ -97,6 +97,7 @@
       <div class="relative mx-1 mt-4 overflow-hidden text-gray-700 bg-clip-border">
         <button class="w-full p-1 rounded-md text-black" on:click={() => goto(`/categories/Sales/${item.id}`)}>
           <Carousel.Root class="my-4 w-full mx-auto max-w-full" bind:api>
+            
             <Carousel.Content>
               {#if item.img}
                 <Carousel.Item>
