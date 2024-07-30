@@ -128,7 +128,7 @@
   <body>
     <h1 class="text-gray-900 text-center my-9">Sock Vibes</h1>
     <div class="mx-3 sm:mx-auto">
-      <h1 class="text-center text-5xl p-2 rounded-md font-bold font-mono text-gray-900">
+      <h1 class="text-center text-5xl p-2 rounded-md font-bold  text-gray-900">
         Items in Men Category
       </h1>
     </div>
@@ -145,7 +145,7 @@
     <div class="my-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 mx-auto max-w-screen-xl gap-4">
       {#each filterMen as item}
         {#if item.img || item.img2 || item.img3 || item.img4}
-          <div class="relative flex flex-col bg-clip-border m-1 text-gray-900 rounded-md">
+          <div class="relative flex flex-col bg-clip-border m-1 text-gray-900 rounded-md hover:border-gray-900 hover:border-2">
             <div class="relative mx-1 mt-4 overflow-hidden text-gray-700 bg-clip-border">
               <button class="w-full p-1 rounded-md text-black" on:click={() => navigateToProductDetail(item.id)}>
                 <Carousel.Root class="my-4 w-full mx-auto max-w-full" bind:api>
@@ -238,10 +238,13 @@
       {/each}
 
       {#each filterUni as item}
+
         {#if item.img || item.img2 || item.img3 || item.img4}
+    
           <div class="relative flex flex-col bg-clip-border m-1 text-gray-900 rounded-md">
             <div class="relative mx-1 mt-4 overflow-hidden text-gray-700 bg-clip-border">
               <button class="w-full p-1 rounded-md text-black" on:click={() => navigateToProductDetail(item.id)}>
+   
                 <Carousel.Root class="my-4 w-full mx-auto max-w-full" bind:api>
                   <Carousel.Content>
                     {#if item.img}
@@ -294,6 +297,7 @@
                   </Carousel.Content>
                 </Carousel.Root>
               </button>
+       
             </div>
             <div class="p-4 sm:p-6 flex flex-col justify-between h-64"> <!-- Fixed height for button container -->
               <div class="flex-grow">
@@ -327,6 +331,7 @@
               </div>
             </div>
           </div>
+  
         {/if}
       {/each}
     </div>
