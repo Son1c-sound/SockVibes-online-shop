@@ -119,7 +119,7 @@
   <Categ></Categ>
 {:else}
 
-<Toaster />
+
 
 <!-- Product Details -->
 <br />
@@ -178,6 +178,7 @@
       
         >
           Add to Cart
+          
         </Button>
         <Button
         class="w-full bg-yellow-400 hover:bg-yellow-500 text-black  text-md"

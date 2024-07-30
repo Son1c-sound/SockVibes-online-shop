@@ -7,16 +7,18 @@
   import { Badge } from "$lib/components/ui/badge/index.js";
   import * as Select from "$lib/components/ui/select/index.js";
   import Loadcategory from '$lib/loading/categoryloading.svelte';
- 
+  import Sidebar from '$lib/cartSidebar/sidebar.svelte'
   import { onMount } from "svelte";
   import Swipe from "$lib/Icons/swipe.svelte";
   import { goto } from '$app/navigation';
   import supabase from "$lib/db";
   import type { Item } from '../../types';
-  import toast from "svelte-french-toast";
+  import toast, { Toaster } from "svelte-french-toast";
+
   let api: CarouselAPI;
   let count = 0;
   let current = 0;
+  
   
 
   let items: Item[] = [];
@@ -121,6 +123,7 @@
   });
 </script>
 
+<Toaster/>
 {#if loading}
   <Loadcategory></Loadcategory>
 
@@ -226,11 +229,15 @@
                 {/if}
               </div>
               <div class="flex-shrink-0"> <!-- Button stays fixed -->
-                {#if item.storage !== 0}
-                  <Button class='rounded-3xl w-full my-9' on:click={() => addToCart(item, 1)}>Add to Cart</Button>
-                {:else }
-                  <Button class='rounded-3xl w-full my-9'>Item sold out</Button>
-                {/if}
+                <div class="flex flex-col items-center">
+                  {#if item.storage !== 0}
+                    <Button class='rounded-3xl w-full my-2' on:click={() => addToCart(item, 1)}>Add to Cart</Button>
+                    <Sidebar></Sidebar>
+                  {:else}
+                    <Button class='rounded-3xl w-full my-2'>Item sold out</Button>
+                  {/if}
+                </div>
+                
               </div>
             </div>
           </div>
@@ -343,6 +350,7 @@
       </div>
     </div>
   </body>
+
 
 
 
