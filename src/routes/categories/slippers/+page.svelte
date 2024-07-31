@@ -226,6 +226,12 @@
                 {:else}
                   <p class="text-red-500 text-sm">{item.status}</p>
                 {/if}
+                {#if item.seller === 'yes'}
+                <Badge class='text-white bg-orange-700 rounded-none  my-2'>Best seller</Badge>   
+                {/if }
+                {#if item.newitem === 'yes'}
+                <Badge class='text-white rounded-none bg-green-500  my-2'>New</Badge>   
+                {/if }
               </div>
               <div class="flex-shrink-0"> <!-- Button stays fixed -->
                 <div class="flex flex-col items-center">

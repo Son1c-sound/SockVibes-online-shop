@@ -216,6 +216,12 @@
                 {#if item.saleprecent > 0}
                   <Badge class='text-white rounded-none bg-red-600 my-2'>Sale {item.saleprecent}%</Badge>
                 {/if}
+                {#if item.seller === 'yes'}
+                <Badge class='text-white bg-orange-700 rounded-none  my-2'>Best seller</Badge>   
+                {/if }
+                {#if item.newitem === 'yes'}
+                <Badge class='text-white rounded-none bg-green-500  my-2'>New</Badge>   
+                {/if }
               </div>
               {#if item.storage !== 0}
               <Button class='rounded-3xl w-full my-2' on:click={() => addToCart(item, 1)}>Add to Cart</Button>
@@ -309,6 +315,7 @@
               {:else}
                 <p class="text-red-500 text-sm">{item.status}</p>
               {/if}
+              
   
                 <div class="flex flex-col items-center">
                   {#if item.storage !== 0}
