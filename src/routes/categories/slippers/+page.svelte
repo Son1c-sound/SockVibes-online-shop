@@ -41,7 +41,7 @@
         errorMessage = `Error loading items: ${error.message}`;
       } else {
         items = data;
-        
+        hasMorePages = data.length === pageSize
         scrollToTop();
       }
     } catch (error) {
@@ -51,6 +51,7 @@
     }
   }
 
+ 
   async function loadNextPage() {
     page += 1;
     await loadItems();
@@ -342,12 +343,11 @@
     </div>
     <p class='text-center my-5'>Currently showing page {page}</p>
     <div class="flex items-center justify-center">
-   
-      <div class="flex justify-center space-x-2 ">
+      <div class="flex justify-center space-x-2 my-5">
         <Button on:click={loadPreviousPage} disabled={page === 1}>Previous</Button>
         
         <Button on:click={loadNextPage} disabled={!hasMorePages}>Next page</Button>
-    </div>
+      </div>
   </body>
   <br>
 

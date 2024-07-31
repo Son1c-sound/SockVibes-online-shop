@@ -28,7 +28,7 @@
   let hasMorePages: boolean = true;
   let loading = true;
   let page = 1;
-  const pageSize = 9;
+  const pageSize = 13;
 
   async function loadItems() {
     try {
@@ -229,14 +229,14 @@
               <div class="flex-grow">
                 <div class="flex items-center justify-between mb-2">
                   
-                  <p class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900">
+                  <p class="block font-sans sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900">
                     {item.name}
                     
                   </p>
                   <p class="text-black ml-2">{item.price}$</p>
                   
                 </div>
-                <p class='text-gray-500'> Category   {item.category}</p>
+                <p class='text-gray-500'> Category:  {item.category}</p>
                 {#if item.saleprecent > 0}
                   <Badge class='text-white rounded-none bg-red-600 my-2'>Sale {item.saleprecent}%</Badge>
                 {/if}
@@ -251,6 +251,90 @@
           </div>
         {/if}
       {/each}
+
+      {#each filterUni as item}
+        {#if item.img || item.img2 || item.img3 || item.img4}
+          <div class="relative flex flex-col bg-clip-border m-1 text-gray-900 rounded-md hover:border-gray-900 hover:border-2">
+            <div class="relative mx-1 mt-4 overflow-hidden text-gray-700 bg-clip-border">
+              <button class="w-full p-1 rounded-md text-black" on:click={() => navigateToProductDetail(item.id)}>
+                <Carousel.Root class="my-4 w-full mx-auto max-w-full" bind:api>
+                  <Carousel.Content>
+                    {#if item.img}
+                      <Carousel.Item>
+                        <div class="p-1">
+                          <Card.Root>
+                            <Card.Content class="flex aspect-square items-center justify-center p-4 sm:p-6">
+                              <img src={item.img} loading="lazy" class="w-full h-full object-cover text-2xl font-semibold" alt="item" />
+                            </Card.Content>
+                          </Card.Root>
+                        </div>
+                      </Carousel.Item>
+                    {/if}
+                    {#if item.img2}
+                      <Carousel.Item>
+                        <div class="p-1">
+                          <Card.Root>
+                            <Card.Content class="flex aspect-square items-center justify-center p-4 sm:p-6">
+                              <img src={item.img2} loading="lazy" class="w-full h-full object-cover text-2xl font-semibold" alt="item" />
+                            </Card.Content>
+                          </Card.Root>
+                        </div>
+                      </Carousel.Item>
+                    {/if}
+                    {#if item.img3}
+                      <Carousel.Item>
+                        <div class="p-1">
+                          <Card.Root>
+                            <Card.Content class="flex aspect-square items-center justify-center p-4 sm:p-6">
+                              <img src={item.img3} loading="lazy" class="w-full h-full object-cover text-2xl font-semibold" alt="item" />
+                            </Card.Content>
+                          </Card.Root>
+                        </div>
+                      </Carousel.Item>
+                    {/if}
+                    {#if item.img4}
+                      <Carousel.Item>
+                        <div class="p-1">
+                          <Card.Root>
+                            <Card.Content class="flex aspect-square items-center justify-center p-4 sm:p-6">
+                              <img src={item.img4} loading="lazy" class="w-full h-full object-cover text-2xl font-semibold" alt="item" />
+                            </Card.Content>
+                          </Card.Root>
+                        </div>
+                      </Carousel.Item>
+                    {/if}
+                  </Carousel.Content>
+                </Carousel.Root>
+              </button>
+            </div>
+            <div class="p-4 sm:p-6 flex flex-col justify-between h-64">
+              <div class="flex-grow">
+                <div class="flex items-center justify-between mb-2">
+                  
+                  <p class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900">
+                    {item.name}
+                    
+                  </p>
+                  <p class="text-black ml-2">{item.price}$</p>
+                  
+                </div>
+                <p class='text-gray-500'> Category:   {item.category}</p>
+                {#if item.saleprecent > 0}
+                  <Badge class='text-white rounded-none bg-red-600 my-2'>Sale {item.saleprecent}%</Badge>
+                {/if}
+              </div>
+              {#if item.storage !== 0}
+              <Button class='rounded-3xl w-full my-2' on:click={() => addToCart(item, 1)}>Add to Cart</Button>
+              <Sidebar></Sidebar>
+            {:else}
+              <Button class='rounded-3xl w-full my-2'>Item sold out</Button>
+            {/if}
+            </div>
+          </div>
+        {/if}
+      {/each}
+
+
       {#each filterwoman as item}
       {#if item.img || item.img2 || item.img3 || item.img4}
         <div class="relative flex flex-col bg-clip-border m-1 text-gray-900 rounded-md hover:border-gray-900 hover:border-2">
@@ -314,7 +398,7 @@
                 </p>
                 <p class="text-black ml-2">{item.price}$</p>
               </div>
-              <p class='text-gray-500'> Category   {item.category}</p>
+              <p class='text-gray-500'> Category:   {item.category}</p>
               {#if item.saleprecent > 0}
                 <Badge class='text-white rounded-none bg-red-600 my-2'>Sale {item.saleprecent}%</Badge>
               {/if}
@@ -329,83 +413,7 @@
         </div>
       {/if}
     {/each}
-    {#each filterUni as item}
-    {#if item.img || item.img2 || item.img3 || item.img4}
-      <div class="relative flex flex-col bg-clip-border m-1 text-gray-900 rounded-md hover:border-gray-900 hover:border-2">
-        <div class="relative mx-1 mt-4 overflow-hidden text-gray-700 bg-clip-border">
-          <button class="w-full p-1 rounded-md text-black" on:click={() => goto(`categories/woman/${item.id}`)}>
-            <Carousel.Root class="my-4 w-full mx-auto max-w-full" bind:api>
-              <Carousel.Content>
-                {#if item.img}
-                  <Carousel.Item>
-                    <div class="p-1">
-                      <Card.Root>
-                        <Card.Content class="flex aspect-square items-center justify-center p-4 sm:p-6">
-                          <img src={item.img} loading="lazy" class="w-full h-full object-cover text-2xl font-semibold" alt="item" />
-                        </Card.Content>
-                      </Card.Root>
-                    </div>
-                  </Carousel.Item>
-                {/if}
-                {#if item.img2}
-                  <Carousel.Item>
-                    <div class="p-1">
-                      <Card.Root>
-                        <Card.Content class="flex aspect-square items-center justify-center p-4 sm:p-6">
-                          <img src={item.img2} loading="lazy" class="w-full h-full object-cover text-2xl font-semibold" alt="item" />
-                        </Card.Content>
-                      </Card.Root>
-                    </div>
-                  </Carousel.Item>
-                {/if}
-                {#if item.img3}
-                  <Carousel.Item>
-                    <div class="p-1">
-                      <Card.Root>
-                        <Card.Content class="flex aspect-square items-center justify-center p-4 sm:p-6">
-                          <img src={item.img3} loading="lazy" class="w-full h-full object-cover text-2xl font-semibold" alt="item" />
-                        </Card.Content>
-                      </Card.Root>
-                    </div>
-                  </Carousel.Item>
-                {/if}
-                {#if item.img4}
-                  <Carousel.Item>
-                    <div class="p-1">
-                      <Card.Root>
-                        <Card.Content class="flex aspect-square items-center justify-center p-4 sm:p-6">
-                          <img src={item.img4} loading="lazy" class="w-full h-full object-cover text-2xl font-semibold" alt="item" />
-                        </Card.Content>
-                      </Card.Root>
-                    </div>
-                  </Carousel.Item>
-                {/if}
-              </Carousel.Content>
-            </Carousel.Root>
-          </button>
-        </div>
-        <div class="p-4 sm:p-6 flex flex-col justify-between h-64">
-          <div class="flex-grow">
-            <div class="flex items-center justify-between mb-2">
-              <p class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900">
-                {item.name}
-              </p>
-              <p class="text-black ml-2">{item.price}$</p>
-            </div>
-            {#if item.saleprecent > 0}
-              <Badge class='text-white rounded-none bg-red-600 my-2'>Sale {item.saleprecent}%</Badge>
-            {/if}
-          </div>
-          {#if item.storage !== 0}
-          <Button class='rounded-3xl w-full my-2' on:click={() => addToCart(item, 1)}>Add to Cart</Button>
-          <Sidebar></Sidebar>
-        {:else}
-          <Button class='rounded-3xl w-full my-2'>Item sold out</Button>
-        {/if}
-        </div>
-      </div>
-    {/if}
-  {/each}
+   
   {#each items as item}
   {#if item.img || item.img2 || item.img3 || item.img4}
     <div class="relative flex flex-col bg-clip-border m-1 text-gray-900 rounded-md hover:border-gray-900 hover:border-2">
@@ -466,9 +474,12 @@
           <div class="flex items-center justify-between mb-2">
             <p class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900">
               {item.name}
+              
             </p>
+          
             <p class="text-black ml-2">{item.price}$</p>
           </div>
+          <p class="text-gray-500">Category: Unisex</p>
           {#if item.saleprecent > 0}
             <Badge class='text-white rounded-none bg-red-600 my-2'>Sale {item.saleprecent}%</Badge>
           {/if}
