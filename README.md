@@ -15,6 +15,8 @@
 
 ## 🛒 How the Shop Works
 
+![image](https://github.com/user-attachments/assets/ec093782-3ca4-4544-88c5-34a6a775947d)
+
 - **Checkout Process:**
   - Items array is passed to Stripe for dynamic checkouts.
   - Stripe collects user shipping addresses, email, and phone numbers to handle product shipping.
