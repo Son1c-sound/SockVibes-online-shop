@@ -229,7 +229,7 @@
               <div class="flex-grow">
                 <div class="flex items-center justify-between mb-2">
                   
-                  <p class="block font-sans sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900">
+                  <p class="block font-sans text-sm antialiased font-medium leading-relaxed text-blue-gray-900">
                     {item.name}
                     
                   </p>
@@ -490,7 +490,7 @@
       <div class="p-4 sm:p-6 flex flex-col justify-between h-64">
         <div class="flex-grow">
           <div class="flex items-center justify-between mb-2">
-            <p class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900">
+            <p class="block font-sans text-sm  antialiased font-medium leading-relaxed text-blue-gray-900">
               {item.name}
               
             </p>
