@@ -129,17 +129,12 @@
 
 {:else}
   <body>
-    <h1 class="text-gray-900 text-center my-9">Sock Vibes</h1>
-    <div class="mx-3 sm:mx-auto">
-      <h1 class="text-center text-5xl p-2 rounded-md font-bold  text-gray-900">
-        Items in Men Category
-      </h1>
-    </div>
-
-    <div class="flex flex-col items-center">
-      <h1 class="text-center mb-3">Swipe Pictures to preview items</h1>
-      <div class="flex">
-        <Swipe />
+    <div   class="gradient-bg">
+      <div class="mx-3 sm:mx-auto">
+        <h1 class="text-center text-7xl  p-10 rounded-md font-bold text-gray-900">
+          <span class='ml-3 font-bold'>SOCK</span>
+           <span class='mx-3 font-bold'>VIBES</span>
+        </h1>
       </div>
     </div>
 
@@ -355,4 +350,22 @@
 
 {/if}
 
+<style>
 
+  .gradient-bg {
+      background: rgba(255, 105, 180, 0.3); /* Semi-transparent pink background */
+      backdrop-filter: blur(15px); /* Blur effect */
+  
+      padding: 1.25rem; /* Tailwind's p-5 */
+      margin: 1.25rem 0; /* Tailwind's my-5 */
+  
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      position: relative;
+      overflow: hidden;
+  }
+  
+  * {
+    font-family: "Poppins", sans-serif;
+  
+  }
+  </style>

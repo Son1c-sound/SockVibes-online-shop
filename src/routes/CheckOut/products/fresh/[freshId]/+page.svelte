@@ -141,15 +141,15 @@
       <Carousel.Root bind:api class="w-full md:w-3/4 mx-auto my-4 md:my-6">
         <Carousel.Content class="md:-ml-1">
           {#each [selectedProduct.img, selectedProduct.img2, selectedProduct.img3, selectedProduct.img4].filter(url => url) as url}
-            <Carousel.Item class="flex-shrink-0 w-full">
-              <Card.Root class="border-none bg-transparent shadow-none">
-                <img
-                  src={url}
-                  alt={selectedProduct.name || "Product image"}
-                  class="w-full h-64 object-cover lg:h-1/2"
-                />
-              </Card.Root>
-            </Carousel.Item>
+          <Carousel.Item class="flex-shrink-0 w-full">
+            <Card.Root class="border-none bg-transparent shadow-none flex justify-center">
+              <img
+                src={url}
+                alt={selectedProduct.name || "Product image"}
+                class="w-1/2 h-64 object-cover lg:h-1/2"
+              />
+            </Card.Root>
+          </Carousel.Item>
           {/each}
         </Carousel.Content>
         <div class="my-3 rounded-md">

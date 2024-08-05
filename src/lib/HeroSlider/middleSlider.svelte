@@ -74,19 +74,19 @@ onMount(() => {
    on:mousenter={plugin.stop}
    on:mouseleave={plugin.reset} 
    class="w-3/4 mx-auto my-5">
-   <h1 class="text-5xl  text-center mb-10 bg-gradient-to-r from-gray-700 to-blue-500 text-transparent bg-clip-text  italic">Popular  Items in store</h1>
+   <h1 class="text-3xl  text-center mb-10 bg-gradient-to-r from-gray-700 to-blue-500 text-transparent bg-clip-text  italic">Popular  Items in store</h1>
 
   
     <Carousel.Content class="-ml-1">
       {#each items as slide}
-        <Carousel.Item class="pl-4 md:basis-1/2 lg:basis-1/4">
+        <Carousel.Item class="pl-6 md:basis-1/2 lg:basis-1/5">
           <button on:click={() => navigateToSocks(slide.id)}>
                 
             <Card.Root class='border-none shadow-none bg-transparent'>
               <Card.Content>
               </Card.Content>
 
-                <div class=" h-96 flex flex-col justify-center items-center">
+                <div class=" flex flex-col justify-center items-center">
                   <img src={slide.img} alt="" class="h-full  object-cover">
                   <p class="text-center  mt-2 text-xl text-gray-900">{slide.name}</p>
                   <p class="text-center  mt-2 text-xl text-gray-900">{slide.price}$</p>
@@ -106,7 +106,7 @@ onMount(() => {
     <Carousel.Previous />
     
     <Carousel.Next />
-    <Progress value={current} max={6} class='h-1 my-10' />
+    <Progress value={current} max={5} class='h-1 my-10' />
   </Carousel.Root>
 {/if}
  

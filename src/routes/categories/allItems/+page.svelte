@@ -160,16 +160,7 @@
     </div>
   </div>
   
-    <p class='text-center my-5'>Currently showing page {page}</p>
-    <div class="flex justify-center space-x-2 my-5">
-      
-      <Button on:click={loadPreviousPage} disabled={page === 1}>Previous</Button>
-      
-      <Button on:click={loadNextPage} disabled={!hasMorePages}>Next page</Button>
-    </div>
-    <div class="flex flex-col items-center">
- 
-    </div>
+
 
     <div class="my-3 flex justify-center space-x-4 mx-auto"></div>
 
