@@ -28,7 +28,7 @@
   let hasMorePages: boolean = true;
   let loading = true;
   let page = 1;
-  const pageSize = 20;
+  const pageSize = 22;
 
   async function loadItems() {
     try {
@@ -337,12 +337,14 @@
       
     </div>
 
-    <div class="flex items-center justify-center">
-      <div class="my-5 mx-auto flex space-x-4">
-        <button on:click={loadPreviousPage} disabled={page === 1} class="bg-gray-300 px-4 py-2 rounded-md">Previous</button>
-        <button on:click={loadNextPage} disabled={!hasMorePages} class="bg-gray-300 px-4 py-2 rounded-md">Next</button>
-      </div>
+    <p class='text-center my-5'>Currently showing page {page}</p>
+    <div class="flex justify-center space-x-2 my-5">
+      
+      <Button on:click={loadPreviousPage} disabled={page === 1}>Previous</Button>
+      
+      <Button on:click={loadNextPage} disabled={!hasMorePages}>Next page</Button>
     </div>
+    <div class="flex flex-col items-center">
   </body>
 
 

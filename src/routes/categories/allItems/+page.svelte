@@ -28,7 +28,7 @@
   let hasMorePages: boolean = true;
   let loading = true;
   let page = 1;
-  const pageSize = 13;
+  const pageSize = 15;
 
   async function loadItems() {
     try {
@@ -148,14 +148,18 @@
 
 
   <div>
- <br>
- <br>
+  
+ <div   class="gradient-bg">
     <div class="mx-3 sm:mx-auto">
-      <h1 class="text-center text-5xl p-2 rounded-md font-bold text-gray-900">
-        All Items
+      <h1 class="text-center text-7xl  p-10 rounded-md font-bold text-gray-900">
+        <span class='ml-3 font-bold'>SOCK</span>
+         <span class='mx-3 font-bold'>VIBES</span>
+
+      
       </h1>
     </div>
-    
+  </div>
+  
     <p class='text-center my-5'>Currently showing page {page}</p>
     <div class="flex justify-center space-x-2 my-5">
       
@@ -233,7 +237,7 @@
                     {item.name}
                     
                   </p>
-                  <p class="text-black ml-2">{item.price}$</p>
+                  <p class="text-black ml-2">${item.price}</p>
                   
                 </div>
                 <p class='text-gray-500'> Category:  {item.category}</p>
@@ -321,7 +325,7 @@
                     {item.name}
                     
                   </p>
-                  <p class="text-black ml-2">{item.price}$</p>
+                  <p class="text-black ml-2">${item.price}</p>
                   
                 </div>
                 <p class='text-gray-500'> Category:   {item.category}</p>
@@ -408,7 +412,7 @@
                 <p class="block font-sans text-sm sm:text-base antialiased font-medium leading-relaxed text-blue-gray-900">
                   {item.name}
                 </p>
-                <p class="text-black ml-2">{item.price}$</p>
+                <p class="text-black ml-2">${item.price}</p>
               </div>
               <p class='text-gray-500'> Category:   {item.category}</p>
               {#if item.saleprecent > 0}
@@ -495,7 +499,7 @@
               
             </p>
           
-            <p class="text-black ml-2">{item.price}$</p>
+            <p class="text-black ml-2">${item.price}</p>
           </div>
           <p class="text-gray-500">Category: Unisex</p>
           {#if item.saleprecent > 0}
@@ -529,3 +533,22 @@
 {/if}
 
 
+<style>
+
+.gradient-bg {
+    background: rgba(255, 105, 180, 0.3); /* Semi-transparent pink background */
+    backdrop-filter: blur(15px); /* Blur effect */
+
+    padding: 1.25rem; /* Tailwind's p-5 */
+    margin: 1.25rem 0; /* Tailwind's my-5 */
+
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    position: relative;
+    overflow: hidden;
+}
+
+* {
+  font-family: "Poppins", sans-serif;
+
+}
+</style>
