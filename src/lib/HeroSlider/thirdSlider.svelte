@@ -73,29 +73,30 @@
 
 
  
-   <Carousel.Content class="-ml-1">
-     {#each items as slide}
-       <Carousel.Item class="pl-5 md:basis-1/2 lg:basis-1/5">
-         <button on:click={() => navigateToSocks(slide.id)}>
-               
-           <Card.Root class='border-none shadow-none bg-transparent'>
-             <Card.Content>
-             </Card.Content>
-
-               <div class=" flex flex-col justify-center items-center">
-                 <img src={slide.img} alt="" class="h-full  object-cover">
-                 <p class="text-center  mt-2 text-xl text-gray-900">{slide.name}</p>
-                 <p class="text-center  mt-2 text-xl text-gray-900">{slide.price}$</p>
-               </div>
  
+  <Carousel.Content class="-ml-1">
+    {#each items as slide}
+      <Carousel.Item class="pl-4 md:basis-1/2 lg:basis-1/4">
+        <button on:click={() => navigateToSocks(slide.id)}>
+              
+          <Card.Root class='border-none shadow-none bg-transparent'>
+            <Card.Content>
+            </Card.Content>
 
-           </Card.Root>
-         </button>
-       </Carousel.Item>
-     {/each}
+              <div class=" h-96 flex flex-col justify-center items-center">
+                <img src={slide.img} alt="" class="h-full  object-cover">
+                <p class="text-center  mt-2 text-xl text-gray-900">{slide.name}</p>
+                <p class="text-center  mt-2 text-xl text-gray-900">{slide.price}$</p>
+              </div>
 
 
-   </Carousel.Content>
+          </Card.Root>
+        </button>
+      </Carousel.Item>
+    {/each}
+
+
+  </Carousel.Content>
 
 
 
