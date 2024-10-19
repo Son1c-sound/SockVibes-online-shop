@@ -12,14 +12,12 @@
       const cartItems = JSON.parse(storedCart);
       console.log('Cart Items:', cartItems);
 
-      // Update Supabase and ensure it completes before clearing localStorage
       await updateInventory(cartItems);
       await updatePopular(cartItems);
       await updatePopular2(cartItems);
       await updatePopular3(cartItems);
       await updateSlippers(cartItems);
       await updateGifts(cartItems);
-      // Clear cart and reset addnumber after updating inventory
       clearLocalStorageAndResetStore();
     }
   });
@@ -29,7 +27,6 @@
     for (const item of cartItems) {
       const { id, quantity } = item;
 
-      // Retrieve the current storage value
       const { data: currentData, error: fetchError } = await supabase
         .from('allitems')
         .select('storage')
@@ -41,10 +38,8 @@
         continue;
       }
 
-      // Calculate new storage value
       const newStorageValue = currentData.storage - quantity;
 
-      // Update the storage value
       const { error: updateError } = await supabase
         .from('allitems')
         .update({ storage: newStorageValue })
@@ -73,10 +68,8 @@
         continue;
       }
 
-      // Calculate new storage value
       const newStorageValue = currentData.storage - quantity;
 
-      // Update the storage value
       const { error: updateError } = await supabase
         .from('popularItems')
         .update({ storage: newStorageValue })
@@ -93,7 +86,6 @@
     for (const item of cartItems) {
       const { id, quantity } = item;
 
-      // Retrieve the current storage value
       const { data: currentData, error: fetchError } = await supabase
         .from('popular2')
         .select('storage')
@@ -105,10 +97,8 @@
         continue;
       }
 
-      // Calculate new storage value
       const newStorageValue = currentData.storage - quantity;
 
-      // Update the storage value
       const { error: updateError } = await supabase
         .from('popular2')
         .update({ storage: newStorageValue })
@@ -137,10 +127,8 @@
         continue;
       }
 
-      // Calculate new storage value
       const newStorageValue = currentData.storage - quantity;
 
-      // Update the storage value
       const { error: updateError } = await supabase
         .from('popular3')
         .update({ storage: newStorageValue })
@@ -157,7 +145,6 @@
     for (const item of cartItems) {
       const { id, quantity } = item;
 
-      // Retrieve the current storage value
       const { data: currentData, error: fetchError } = await supabase
         .from('slippers')
         .select('storage')
@@ -172,7 +159,6 @@
       if (currentData) {
         console.log('Current storage for item ID', id, ':', currentData.storage);
 
-        // Calculate new storage value
         const newStorageValue = currentData.storage - quantity;
         console.log('New storage value for item ID', id, ':', newStorageValue);
 
@@ -181,7 +167,6 @@
           continue;
         }
 
-        // Update the storage value
         const { error: updateError } = await supabase
           .from('slippers')
           .update({ storage: newStorageValue })
@@ -203,7 +188,6 @@
     for (const item of cartItems) {
       const { id, quantity } = item;
 
-      // Retrieve the current storage value
       const { data: currentData, error: fetchError } = await supabase
         .from('giftboxes')
         .select('storage')
@@ -215,10 +199,8 @@
         continue;
       }
 
-      // Calculate new storage value
       const newStorageValue = currentData.storage - quantity;
 
-      // Update the storage value
       const { error: updateError } = await supabase
         .from('giftboxes')
         .update({ storage: newStorageValue })
@@ -231,11 +213,9 @@
   }
 
   function clearLocalStorageAndResetStore() {
-    // Remove all relevant items from localStorage
     localStorage.removeItem('cart');
     localStorage.removeItem('addnumber'); // Ensure to remove 'addnumber' if it was stored directly
 
-    // Reset the Svelte store value
     addnumber.set(0);
   }
 </script>
